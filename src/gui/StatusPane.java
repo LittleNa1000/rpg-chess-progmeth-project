@@ -19,9 +19,8 @@ public class StatusPane extends VBox {
     Button quitBtn = new Button("Quit");
     quitBtn.setOnAction(e -> {
       try {
-        Parent root = FXMLLoader.load(getClass().getResource("../resources/fxml/MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../application/resources/fxml/MainMenu.fxml"));
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        ;
         stage.setScene(new Scene(root));
         stage.show();
       } catch (Exception err) {
