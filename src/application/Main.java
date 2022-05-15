@@ -14,11 +14,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("resources/fxml/MainMenu.fxml"));
-            Parent root = loader.load();
-            stage.setTitle("Title");
+            Parent root = FXMLLoader.load(getClass().getResource("resources/fxml/MainMenu.fxml"));
+            stage.setTitle("RPG Chess");
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
             stage.show();
 
         } catch (Exception e) {
