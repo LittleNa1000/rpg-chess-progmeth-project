@@ -24,7 +24,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="exit" mnemonicParsing="false" text="Exit">
+            <Button fx:id="exit" mnemonicParsing="false" onAction="#exit" text="Exit">
                <font>
                   <Font size="18.0" />
                </font>
@@ -35,9 +35,9 @@
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <right>
-            <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextInfo" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
                <graphic>
-                  <ImageView fx:id="nextButton" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/right-arrow.png" />
                      </image>
@@ -45,9 +45,9 @@
                </graphic></Button>
          </right>
          <left>
-            <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backInfo" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
                <graphic>
-                  <ImageView fx:id="backButton" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                      <image>
                         <Image url="@../images/right-arrow.png" />
                      </image>
@@ -59,9 +59,12 @@
             <Insets />
          </BorderPane.margin>
          <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="imageInfo" fitHeight="150.0" fitWidth="200.0" layoutX="64.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageInfo" fitHeight="150.0" fitWidth="200.0" layoutX="89.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="89.0">
+                     <image>
+                        <Image url="@../images/objective.png" />
+                     </image></ImageView>
                   <Text fx:id="headingInfo" layoutX="53.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Heading">
                      <font>
                         <Font size="36.0" />
@@ -72,6 +75,7 @@
                         <Font size="14.0" />
                      </font>
                   </Text>
+                  <Text fx:id="page" layoutX="291.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children>
             </AnchorPane>
          </center>
