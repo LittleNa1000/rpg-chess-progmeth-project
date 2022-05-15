@@ -13,6 +13,11 @@ public class UnitConstant {
     static final public int SHOOTER_UNIT_MAX_HP = 35;
     static final public int SHOOTER_UNIT_POWER = 3;
 
+    static final public String VENOM_UNIT_NAME = "VENOM UNIT";
+    static final public int VENOM_UNIT_MAX_HP = 35;
+    static final public int VENOM_UNIT_POISON_POWER = 1;
+    static final public int VENOM_UNIT_POISON_ROUND = 3;
+
     static final public String HEALER_UNIT_NAME = "HEALER UNIT";
     static final public int HEALER_UNIT_MAX_HP = 35;
     static final public int HEALER_UNIT_HEALING_POINT = 3;
