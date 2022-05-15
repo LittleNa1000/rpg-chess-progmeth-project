@@ -1,4 +1,4 @@
-package application.Game;
+package gui;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;

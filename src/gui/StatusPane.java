@@ -1,4 +1,4 @@
-package application.Game;
+package gui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -1,4 +1,4 @@
-package application.Game;
+package gui;
 
 import constant.BoardConstant;
 import javafx.geometry.Insets;
