@@ -1,14 +1,18 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Game.GameInit;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 public class MainController implements Initializable {
@@ -25,6 +29,9 @@ public class MainController implements Initializable {
   private Text page;
   @FXML
   private ImageView imageInfo;
+
+  @FXML
+  private Button nextButton;
 
   private void loadInfo() {
     imageInfo.setImage(new Image(getClass().getResourceAsStream("resources/images/" + image[idx])));
@@ -55,5 +62,19 @@ public class MainController implements Initializable {
 
   public void exit(ActionEvent e) {
     Platform.exit();
+  }
+
+  public void newGame(ActionEvent e) throws IOException {
+    GameInit.init(e);
+  }
+
+  public void mouseEntered(MouseEvent e) {
+    Button btn = (Button) e.getTarget();
+    btn.setOpacity(0.5);
+  }
+
+  public void mouseExited(MouseEvent e) {
+    Button btn = (Button) e.getTarget();
+    btn.setOpacity(1);
   }
 }
