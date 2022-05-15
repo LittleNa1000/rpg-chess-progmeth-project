@@ -1,9 +1,9 @@
 package application;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -12,14 +12,17 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
-        StackPane root = new StackPane();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("hello world");
+    public void start(Stage stage) throws Exception {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("resources/fxml/MainMenu.fxml"));
+            Parent root = loader.load();
+            stage.setTitle("Title");
+            stage.setScene(new Scene(root));
+            stage.show();
 
-        Canvas canvas = new Canvas(400, 200);
-        root.getChildren().add(canvas);
-        stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
