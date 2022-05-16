@@ -75,7 +75,7 @@ public class BoardSquare extends VBox {
         this.getChildren().add(new Text("HP: " + unit.getCurrentHealth()));
         this.setStyle(
                 StringUtil.getCss("-fx-background-image: url('" + unit.getImageUrl() + "');",
-                        "-fx-background-size: 10 10;",
+                        "-fx-background-size: 75% 75%;",
                         "-fx-background-position: center center;", "-fx-background-repeat: stretch;",
                         "-fx-background-color: " + color + ";"));
     }
