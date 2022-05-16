@@ -4,6 +4,7 @@ import base.BaseUnit;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -65,7 +66,10 @@ public class BoardSquare extends VBox {
     }
 
     private void draw(BaseUnit unit, String color) {
-        this.getChildren().add(new Text("HP: " + unit.getCurrentHealth()));
+        ProgressBar hBar = new ProgressBar(((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth()));
+        hBar.setStyle(StringUtil.getCss("-fx-accent: green;"));
+        hBar.setPrefWidth(70);
+        this.getChildren().add(hBar);
         this.setStyle(
                 StringUtil.getCss("-fx-background-image: url('" + unit.getImageUrl() + "');",
                         "-fx-background-size: 75% 75%;",

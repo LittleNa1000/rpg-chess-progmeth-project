@@ -11,7 +11,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import util.StringUtil;
 
 public class StatsPane extends HBox {
   private ImageView image;
@@ -28,15 +30,15 @@ public class StatsPane extends HBox {
 
   public void showStats(BaseUnit unit, int xPosition, int yPosition) {
     System.out.println(unit.getName());
-    image.setImage(new Image(unit.getImageUrl(), 120, 120, true, false));
-    movePtrn.setImage(new Image(unit.getImageUrl(), 120, 120, true, false));
-    atkPtrn.setImage(new Image(unit.getImageUrl(), 120, 120, true, false));
-    name.setText("[ " + String.valueOf(xPosition) + " , " + String
-        .valueOf(yPosition) + " ] " + unit.getName());
-    hp.setText(String.valueOf(unit.getCurrentHealth()) + " / " + String.valueOf(unit.getMaxHealth()));
-    hBar.setPrefWidth(400);
-    hBar.setPrefHeight(30);
-    hBar.setProgress(((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth()));
+    image.setImage(new Image(unit.getImageUrl(), 125, 125, false, false));
+    movePtrn.setImage(new Image(StringUtil.getImageUrl("normal-unit-move.jpg"), 125, 125, false, false));
+    atkPtrn.setImage(new Image(StringUtil.getImageUrl("normal-unit-attack.jpg"), 125, 125, false, false));
+    name.setText("[" + String.valueOf(xPosition) + " , " + String
+        .valueOf(yPosition) + "] " + unit.getName());
+    double progress = ((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth());
+    hp.setText("HP: " + String.valueOf(unit.getCurrentHealth()) + " / " + String.valueOf(unit.getMaxHealth()) + " ("
+        + String.valueOf(Math.round(progress * 100)) + "%)");
+    hBar.setProgress(progress);
     hBar.setVisible(true);
     String mainStatString = "Stats";
     mainStatString += "\nPower: " + String.valueOf(unit.getPower());
@@ -55,15 +57,23 @@ public class StatsPane extends HBox {
     detailsPane = new VBox();
     header = new BorderPane();
     name = new Text();
+    name.setFont(new Font(20));
     hp = new Text();
+    hp.setFont(new Font(18));
     hBar = new ProgressBar();
+    hBar.setPrefWidth(350);
+    hBar.setStyle(StringUtil.getCss("-fx-accent: green;"));
     hBar.setVisible(false);
     allStats = new HBox();
     mainStats = new Text();
+    mainStats.setFont(new Font(16));
     debuffs = new Text();
+    debuffs.setFont(new Font(16));
+    allStats.setSpacing(50);
     allStats.getChildren().addAll(mainStats, debuffs);
     header.setLeft(name);
     header.setRight(hp);
+    detailsPane.setSpacing(5);
     detailsPane.getChildren().addAll(header, hBar, allStats);
     setPrefWidth(780);
     setSpacing(10);
