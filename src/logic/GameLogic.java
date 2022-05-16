@@ -114,6 +114,15 @@ public class GameLogic {
     }
 
     public static void resetSelectedAndRerender() {
+        // Remove dead unit
+        for (int i = 0; i < BoardConstant.ROW_NUMBER; i++) {
+            for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
+                if (boardUnits[i][j] != null && boardUnits[i][j].getCurrentHealth() <= 0) {
+                    boardState[i][j] = BoardSquareState.EMPTY;
+                    boardUnits[i][j] = null;
+                }
+            }
+        }
         selectedXPosition = -1;
         selectedYPosition = -1;
         setCurrentPlayerState(PlayerState.NONE);
