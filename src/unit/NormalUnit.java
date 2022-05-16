@@ -7,7 +7,8 @@ import constant.UnitConstant;
 public class NormalUnit extends BaseUnit implements Attackable {
 
     public NormalUnit() {
-        super(UnitConstant.NORMAL_UNIT_NAME, UnitConstant.NORMAL_UNIT_MAX_HP, UnitConstant.NORMAL_UNIT_POWER);
+        super(UnitConstant.NORMAL_UNIT_NAME, UnitConstant.NORMAL_UNIT_MAX_HP, UnitConstant.NORMAL_UNIT_POWER,
+                UnitConstant.NORMAL_UNIT_IMAGE_URL);
     }
 
     @Override

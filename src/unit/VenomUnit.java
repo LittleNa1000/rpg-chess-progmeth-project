@@ -10,7 +10,7 @@ public class VenomUnit extends BaseUnit implements Debuffable {
     private int poisonRound;
 
     public VenomUnit() {
-        super(UnitConstant.VENOM_UNIT_NAME, UnitConstant.VENOM_UNIT_MAX_HP, 0);
+        super(UnitConstant.VENOM_UNIT_NAME, UnitConstant.VENOM_UNIT_MAX_HP, 0, UnitConstant.VENOM_UNIT_IMAGE_URL);
         this.poisonPower = UnitConstant.VENOM_UNIT_POISON_POWER;
         this.poisonRound = UnitConstant.VENOM_UNIT_POISON_ROUND;
     }

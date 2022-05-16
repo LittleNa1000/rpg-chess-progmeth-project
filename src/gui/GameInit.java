@@ -15,7 +15,7 @@ public class GameInit {
     root.setPrefSize(980, 720);
     root.setRight(new StatusPane());
     root.setTop(new ActionPane());
-    root.setCenter(new Board());
+    root.setCenter(new BoardPane());
     stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
     scene = new Scene(root);
     stage.setScene(scene);

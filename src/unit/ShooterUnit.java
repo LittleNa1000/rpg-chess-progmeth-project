@@ -6,7 +6,8 @@ import constant.UnitConstant;
 
 public class ShooterUnit extends BaseUnit implements Attackable {
     public ShooterUnit() {
-        super(UnitConstant.SHOOTER_UNIT_NAME, UnitConstant.SHOOTER_UNIT_MAX_HP, UnitConstant.SHOOTER_UNIT_POWER);
+        super(UnitConstant.SHOOTER_UNIT_NAME, UnitConstant.SHOOTER_UNIT_MAX_HP, UnitConstant.SHOOTER_UNIT_POWER,
+                UnitConstant.SHOOTER_UNIT_IMAGE_URL);
     }
 
     @Override
