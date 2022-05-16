@@ -3,6 +3,7 @@ package gui;
 import base.BaseUnit;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -12,12 +13,15 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import logic.GameLogic;
 import logic.PlayerState;
 import util.StringUtil;
 
-public class BoardSquare extends Pane {
+public class BoardSquare extends VBox {
     private int xPosition;
     private int yPosition;
 
@@ -26,11 +30,8 @@ public class BoardSquare extends Pane {
         setyPosition(y);
         if (state == PlayerState.MOVE) {
             draw("#33FF8A");
-            this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    GameLogic.move(xPosition, yPosition);
-                }
+            this.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                GameLogic.move(xPosition, yPosition);
             });
         } else if (state == PlayerState.ATTACK) {
             draw("#FFB233");
@@ -40,39 +41,38 @@ public class BoardSquare extends Pane {
     }
 
     public BoardSquare(int x, int y, BaseUnit unit, PlayerState state) {
-
         setxPosition(x);
         setyPosition(y);
+        setAlignment(Pos.TOP_CENTER);
+        setPadding(new Insets(3));
         if (state == PlayerState.MOVE) {
-            draw(unit.getImageUrl(), "#33FF8A");
+            draw(unit, "#33FF8A");
         } else if (state == PlayerState.ATTACK) {
-            draw(unit.getImageUrl(), "#FFB233");
+            draw(unit, "#FFB233");
         } else {
-            draw(unit.getImageUrl(), "#FFEED1");
+            draw(unit, "#FFEED1");
         }
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            MouseButton button = event.getButton();
+            if (button == MouseButton.PRIMARY) {
+                GameLogic.movePreview(xPosition, yPosition);
+                System.out.println("CLICK PRIMARY" + xPosition + yPosition);
+            } else if (button == MouseButton.SECONDARY) {
+                GameLogic.attackPreview(xPosition, yPosition);
 
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                MouseButton button = event.getButton();
-                if (button == MouseButton.PRIMARY) {
-                    GameLogic.movePreview(xPosition, yPosition);
-                    System.out.println("CLICK PRIMARY" + xPosition + yPosition);
-
-                } else if (button == MouseButton.SECONDARY) {
-                    GameLogic.attackPreview(xPosition, yPosition);
-
-                    System.out.println("CLICK SECONDARY" + xPosition + yPosition);
-                }
+                System.out.println("CLICK SECONDARY" + xPosition + yPosition);
             }
         });
+
     }
 
-    private void draw(String url, String color) {
+    private void draw(BaseUnit unit, String color) {
+        this.getChildren().add(new Text("HP: " + unit.getCurrentHealth()));
         this.setStyle(
-                StringUtil.getCss("-fx-background-image: url('" + url + "');", "-fx-background-size: 75% 75%;",
+                StringUtil.getCss("-fx-background-image: url('" + unit.getImageUrl() + "');",
+                        "-fx-background-size: 75% 75%;",
                         "-fx-background-position: center center;", "-fx-background-repeat: stretch;",
-                        "-fx-background-color: " + color, "-fx-border-width: 1;", "-fx-border-color:black"));
+                        "-fx-background-color: " + color + ";"));
     }
 
     private void draw(String color) {

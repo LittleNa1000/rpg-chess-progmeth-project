@@ -13,14 +13,14 @@ public class UnitConstant {
         static final public String FLYING_UNIT_NAME = "FLYING UNIT";
         static final public int FLYING_UNIT_MAX_HP = 25;
         static final public int FLYING_UNIT_POWER = 3;
-        static final public String FLYING_UNIT_IMAGE_URL = "normalUnit.jpg";
+        static final public String FLYING_UNIT_IMAGE_URL = "flying-unit.jpg";
         static final public int[][] FLYING_UNIT_MOVE = { { -1, 0 }, { 0, -1 }, { 0, 1 }, { 1, 0 } };
         static final public int[][] FLYING_UNIT_ATTACK = NORMAL_UNIT_ATTACK;
 
         static final public String SHOOTER_UNIT_NAME = "SHOOTER UNIT";
         static final public int SHOOTER_UNIT_MAX_HP = 35;
         static final public int SHOOTER_UNIT_POWER = 3;
-        static final public String SHOOTER_UNIT_IMAGE_URL = "normalUnit.jpg";
+        static final public String SHOOTER_UNIT_IMAGE_URL = "shooter-unit.png";
         static final public int[][] SHOOTER_UNIT_MOVE = { { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
         static final public int[][] SHOOTER_UNIT_ATTACK = { { -1, -1 }, { -1, 0 }, { -1, 1 }, { 0, -1 }, { 0, 1 },
                         { 1, -1 }, { 1, 0 }, { 1, 1 }, { -2, -2 }, { -2, 0 }, { -2, 2 }, { 0, -2 }, { 0, 2 }, { 2, -2 },

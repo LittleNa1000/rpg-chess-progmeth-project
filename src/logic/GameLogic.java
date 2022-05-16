@@ -3,13 +3,15 @@ package logic;
 import base.BaseUnit;
 import constant.BoardConstant;
 import gui.BoardPane;
+import unit.FlyingUnit;
 import unit.NormalUnit;
+import unit.ShooterUnit;
 import util.Timer;
 import gui.TimerPane;
 import javafx.application.Platform;
 
 public class GameLogic {
-    private static int currentPlayer = 0;
+    private static BoardSquareState currentPlayer = BoardSquareState.PLAYER1;
     private static int selectedXPosition = -1;
     private static int selectedYPosition = -1;
     private static PlayerState currentPlayerState = PlayerState.NONE;
@@ -34,14 +36,14 @@ public class GameLogic {
 
     private static void initPlayer(BoardSquareState state) {
         int row = state == BoardSquareState.PLAYER1 ? 0 : BoardConstant.ROW_NUMBER - 1;
-        setBoardSquare(new NormalUnit(), BoardSquareState.PLAYER1, row, 0);
-        setBoardSquare(new NormalUnit(), BoardSquareState.PLAYER1, row, 1);
-        setBoardSquare(new NormalUnit(), BoardSquareState.PLAYER1, row, 2);
-        setBoardSquare(new NormalUnit(), BoardSquareState.PLAYER1, row, 3);
-        setBoardSquare(new NormalUnit(), BoardSquareState.PLAYER1, row, 4);
-        setBoardSquare(new NormalUnit(), BoardSquareState.PLAYER1, row, 5);
-        setBoardSquare(new NormalUnit(), BoardSquareState.PLAYER1, row, 6);
-        setBoardSquare(new NormalUnit(), BoardSquareState.PLAYER1, row, 7);
+        setBoardSquare(new NormalUnit(), state, row, 0);
+        setBoardSquare(new ShooterUnit(), state, row, 1);
+        setBoardSquare(new FlyingUnit(), state, row, 2);
+        setBoardSquare(new NormalUnit(), state, row, 3);
+        setBoardSquare(new NormalUnit(), state, row, 4);
+        setBoardSquare(new NormalUnit(), state, row, 5);
+        setBoardSquare(new NormalUnit(), state, row, 6);
+        setBoardSquare(new NormalUnit(), state, row, 7);
     }
 
     private static void setBoardSquare(BaseUnit unit, BoardSquareState state, int xPosition, int yPosition) {
@@ -51,7 +53,9 @@ public class GameLogic {
 
     public static void movePreview(int xPosition, int yPosition) {
         boardPane.resetBoard();
-        if (selectedXPosition == xPosition && selectedYPosition == yPosition) {
+
+        if ((selectedXPosition == xPosition && selectedYPosition == yPosition)
+                || (boardState[xPosition][yPosition] != currentPlayer)) {
             resetSelected();
         } else {
             boardPane.movePreview(xPosition, yPosition);
@@ -63,7 +67,8 @@ public class GameLogic {
 
     public static void attackPreview(int xPosition, int yPosition) {
         boardPane.resetBoard();
-        if (selectedXPosition == xPosition && selectedYPosition == yPosition) {
+        if ((selectedXPosition == xPosition && selectedYPosition == yPosition)
+                || (boardState[xPosition][yPosition] != currentPlayer)) {
             resetSelected();
         } else {
             boardPane.attackPreview(xPosition, yPosition);
@@ -80,12 +85,25 @@ public class GameLogic {
         boardUnits[selectedXPosition][selectedYPosition] = null;
         resetSelected();
         boardPane.resetBoard();
+        toggleCurrentPlayer();
+    }
+
+    public static void attack(int xPosition, int yPosition) {
+
     }
 
     private static void resetSelected() {
         selectedXPosition = -1;
         selectedYPosition = -1;
         setCurrentPlayerState(PlayerState.NONE);
+    }
+
+    public static void toggleCurrentPlayer() {
+        if (currentPlayer == BoardSquareState.PLAYER1)
+            GameLogic.currentPlayer = BoardSquareState.PLAYER2;
+        else
+            GameLogic.currentPlayer = BoardSquareState.PLAYER1;
+
     }
 
     // TIMER
@@ -145,7 +163,7 @@ public class GameLogic {
         return boardPane;
     }
 
-    public static int getCurrentPlayer() {
+    public static BoardSquareState getCurrentPlayer() {
         return currentPlayer;
     }
 
