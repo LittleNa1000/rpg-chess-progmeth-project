@@ -13,24 +13,35 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import logic.PlayerState;
 import util.StringUtil;
 
 public class BoardSquare extends Pane {
     private int xPosition;
     private int yPosition;
 
-    private String url;
-
-    public BoardSquare(int x, int y) {
+    public BoardSquare(int x, int y, PlayerState state) {
         setxPosition(x);
         setyPosition(y);
+        if (state == PlayerState.MOVE) {
+            draw("#33FF8A");
+        } else if (state == PlayerState.ATTACK) {
+            draw("#FFB233");
+        }
     }
 
-    public BoardSquare(int x, int y, BaseUnit unit) {
+    public BoardSquare(int x, int y, BaseUnit unit, PlayerState state) {
 
         setxPosition(x);
         setyPosition(y);
-        this.draw(unit.getImageUrl(), "#f5f5dc");
+        if (state == PlayerState.MOVE) {
+            draw(unit.getImageUrl(), "#33FF8A");
+        } else if (state == PlayerState.ATTACK) {
+            draw(unit.getImageUrl(), "#FFB233");
+        } else {
+            draw(unit.getImageUrl(), "#FFEED1");
+        }
+
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -50,7 +61,16 @@ public class BoardSquare extends Pane {
         this.setStyle(
                 StringUtil.getCss("-fx-background-image: url('" + url + "');", "-fx-background-size: 10 10;",
                         "-fx-background-position: center center;", "-fx-background-repeat: stretch;",
-                        "-fx-background-color: " + color));
+                        "-fx-background-color: " + color, "-fx-border-width: 1;", "-fx-border-color:black"));
+    }
+
+    private void draw(String color) {
+        this.setStyle(
+                StringUtil.getCss("-fx-background-color: " + color));
+    }
+
+    private void leftClickHandler() {
+
     }
 
     public void setxPosition(int xPosition) {
@@ -59,14 +79,6 @@ public class BoardSquare extends Pane {
 
     public void setyPosition(int yPosition) {
         this.yPosition = yPosition;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getUrl() {
-        return url;
     }
 
     public int getxPosition() {

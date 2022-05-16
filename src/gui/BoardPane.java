@@ -17,6 +17,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import logic.GameLogic;
+import logic.PlayerState;
+import unit.NormalUnit;
 
 public class BoardPane extends GridPane {
   private BoardSquare[][] allSquares = new BoardSquare[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
@@ -24,9 +26,11 @@ public class BoardPane extends GridPane {
   public BoardPane() {
     super();
     GameLogic.init();
-    setHgap(8);
-    setVgap(8);
+    // setHgap(8);
+    // setVgap(8);
     setPadding(new Insets(8));
+
+    // setPadding(new Insets(15, 15, 15, 15));
     setGridLinesVisible(true);
     // setBorder(new Border(
     // new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
@@ -47,13 +51,19 @@ public class BoardPane extends GridPane {
       for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
         BoardSquare boardSquare;
         if (boardUnits[i][j] != null)
-          boardSquare = new BoardSquare(i, j, boardUnits[i][j]);
+          boardSquare = new BoardSquare(i, j, boardUnits[i][j], PlayerState.NONE);
         else
-          boardSquare = new BoardSquare(i, j);
+          boardSquare = new BoardSquare(i, j, PlayerState.NONE);
 
         allSquares[i][j] = boardSquare;
         this.add(boardSquare, j, i);
       }
     // setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+  }
+
+  public static void changeBackground(int xPosition, int yPosition, BaseUnit unit) {
+    if (unit instanceof NormalUnit) {
+
+    }
   }
 }

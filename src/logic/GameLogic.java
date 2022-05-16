@@ -41,7 +41,7 @@ public class GameLogic {
     }
 
     public static void moveSelect(int xPosition, int yPosition) {
-
+        
     }
 
     public static void attackSelect(int xPosition, int yPosition) {
