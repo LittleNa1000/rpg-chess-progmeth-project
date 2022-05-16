@@ -13,7 +13,7 @@ public class HealerUnit extends BaseUnit implements Buffable {
     }
 
     @Override
-    public void buffUnit() {
+    public void buffUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
 
     }

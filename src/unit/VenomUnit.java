@@ -16,7 +16,7 @@ public class VenomUnit extends BaseUnit implements Debuffable {
     }
 
     @Override
-    public void debuffUnit() {
+    public void debuffUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
 
     }

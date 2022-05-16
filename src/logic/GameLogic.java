@@ -2,6 +2,8 @@ package logic;
 
 import base.Attackable;
 import base.BaseUnit;
+import base.Buffable;
+import base.Debuffable;
 import constant.BoardConstant;
 import gui.ActionPane;
 import gui.BoardPane;
@@ -91,12 +93,22 @@ public class GameLogic {
         BaseUnit selectedUnit = boardUnits[selectedXPosition][selectedYPosition];
         BaseUnit targetUnit = boardUnits[xPosition][yPosition];
         System.out.println("atkk" + selectedUnit);
-        if (boardState[xPosition][yPosition] == currentPlayer) {
-            return;
-        }
+
         if (selectedUnit instanceof Attackable) {
+            if (boardState[xPosition][yPosition] == currentPlayer)
+                return;
             Attackable attacker = (Attackable) selectedUnit;
             attacker.attackUnit(targetUnit);
+        } else if (selectedUnit instanceof Debuffable) {
+            if (boardState[xPosition][yPosition] == currentPlayer)
+                return;
+            Debuffable attacker = (Debuffable) selectedUnit;
+            attacker.debuffUnit(targetUnit);
+        } else if (selectedUnit instanceof Buffable) {
+            if (boardState[xPosition][yPosition] != currentPlayer)
+                return;
+            Buffable healer = (Buffable) selectedUnit;
+            healer.buffUnit(targetUnit);
         }
         resetSelectedAndRerender();
         toggleCurrentPlayer();

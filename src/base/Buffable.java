@@ -1,5 +1,5 @@
 package base;
 
 public interface Buffable {
-    public void buffUnit();
+    public void buffUnit(BaseUnit unit);
 }
