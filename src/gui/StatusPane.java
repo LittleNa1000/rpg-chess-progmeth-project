@@ -18,10 +18,16 @@ import javafx.stage.Stage;
 
 public class StatusPane extends VBox {
   private Button quitBtn;
-  private Button pauseBtn;
+  private Button toggleTimerBtn;
+  private Button skipTurnBtn;
 
-  private void initPauseBtn() {
-    pauseBtn = new Button("Pause");
+  private void initSkipTurnBtn() {
+    skipTurnBtn = new Button("Skip Turn");
+
+  }
+
+  private void initToggleTimerBtn() {
+    toggleTimerBtn = new Button("toggleTimer");
 
   }
 
@@ -50,8 +56,10 @@ public class StatusPane extends VBox {
     super();
     setPrefWidth(200);
     setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, null)));
+    setSpacing(30);
     initQuitBtn();
-    initPauseBtn();
-    getChildren().addAll(quitBtn, pauseBtn);
+    initToggleTimerBtn();
+    initSkipTurnBtn();
+    getChildren().addAll(toggleTimerBtn, skipTurnBtn, quitBtn);
   }
 }
