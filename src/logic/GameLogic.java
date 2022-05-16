@@ -14,8 +14,12 @@ public class GameLogic {
     private static int selectedYPosition = -1;
     private static PlayerState currentPlayerState = PlayerState.NONE;
     private static BoardPane boardPane;
+    private static TimerPane timerPane;
     private static BoardSquareState[][] boardState = new BoardSquareState[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
     private static BaseUnit[][] boardUnits = new BaseUnit[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
+    private static boolean gameActive = false;
+    private static boolean timerActive = false;
+    private static Thread thread = null;
 
     public static void init() {
         for (int i = 0; i < BoardConstant.ROW_NUMBER; i++) {
@@ -85,10 +89,10 @@ public class GameLogic {
     }
 
     // TIMER
-    public static void startTimer(TimerPane timerPane) {
-        Thread thread = new Thread(() -> {
+    public static void startTimer() {
+        thread = new Thread(() -> {
             try {
-                while (!Timer.istimeOver()) {
+                while (!Timer.isTimeOver() && isTimerActive() && isGameActive()) {
                     Thread.sleep(20);
                     Platform.runLater(new Runnable() {
                         @Override
@@ -98,7 +102,7 @@ public class GameLogic {
                         }
                     });
                 }
-                if (Timer.istimeOver()) {
+                if (Timer.isTimeOver() && isGameActive()) {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -107,13 +111,24 @@ public class GameLogic {
                     });
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                // e.printStackTrace();
+                System.out.println("Timer Thread Interrupted");
             }
         });
         thread.start();
     }
 
+    public static void stopTimer() {
+        if (thread != null) {
+            thread.interrupt();
+        }
+    }
+
     public static void gameOver() {
+        if (!isGameActive()) {
+            return;
+        }
+        setGameActive(false);
         System.out.println("Game Over");
     }
 
@@ -152,5 +167,34 @@ public class GameLogic {
 
     public static void setCurrentPlayerState(PlayerState currentPlayerState) {
         GameLogic.currentPlayerState = currentPlayerState;
+    }
+
+    public static boolean isGameActive() {
+        return gameActive;
+    }
+
+    public static boolean isTimerActive() {
+        return timerActive;
+    }
+
+    public static void setGameActive(boolean b) {
+        gameActive = b;
+    }
+
+    public static void setTimerActive(boolean b) {
+        timerActive = b;
+        if (isTimerActive()) {
+            startTimer();
+        } else {
+            stopTimer();
+        }
+    }
+
+    public static TimerPane getTimerPane() {
+        return timerPane;
+    }
+
+    public static void setTimerPane(TimerPane tPane) {
+        timerPane = tPane;
     }
 }

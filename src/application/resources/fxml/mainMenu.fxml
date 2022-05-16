@@ -11,12 +11,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="620.0">
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="620.0" style="-fx-background-color: LightGrey;">
          <right>
-            <Button fx:id="nextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nextInfo" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="200.0" prefWidth="40.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER_RIGHT">
+            <Button fx:id="nextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nextInfo" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="400.0" prefWidth="40.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER_LEFT">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="20.0" pickOnBounds="true">
                      <image>
@@ -27,7 +26,7 @@
             </Button>
          </right>
          <left>
-            <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backInfo" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="200.0" prefWidth="40.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER_LEFT">
+            <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backInfo" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="400.0" prefWidth="40.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER_LEFT">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="20.0" pickOnBounds="true" rotate="180.0">
                      <image>
@@ -38,26 +37,26 @@
             </Button>
          </left>
          <center>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="500.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fx:id="imageInfo" fitHeight="214.0" fitWidth="212.0" layoutX="148.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="148.0">
                      <image>
                         <Image url="@../images/objective.png" />
                      </image>
                   </ImageView>
-                  <Text fx:id="headingInfo" layoutX="49.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Heading">
+                  <Text fx:id="headingInfo" fill="WHITE" layoutX="49.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Heading">
                      <font>
                         <Font size="40.0" />
                      </font>
                   </Text>
-                  <Text fx:id="descriptionInfo" layoutX="49.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paragraph">
+                  <Text fx:id="descriptionInfo" fill="WHITE" layoutX="49.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paragraph">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Text>
-                  <Text fx:id="page" layoutX="411.0" layoutY="617.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                  <Text fx:id="page" fill="#e1e1e1" layoutX="246.0" layoutY="611.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="16.0" />
                      </font>
                   </Text>
                </children>

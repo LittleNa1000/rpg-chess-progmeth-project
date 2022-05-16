@@ -70,7 +70,7 @@ public class BoardSquare extends Pane {
 
     private void draw(String url, String color) {
         this.setStyle(
-                StringUtil.getCss("-fx-background-image: url('" + url + "');", "-fx-background-size: 10 10;",
+                StringUtil.getCss("-fx-background-image: url('" + url + "');", "-fx-background-size: 75% 75%;",
                         "-fx-background-position: center center;", "-fx-background-repeat: stretch;",
                         "-fx-background-color: " + color, "-fx-border-width: 1;", "-fx-border-color:black"));
     }
