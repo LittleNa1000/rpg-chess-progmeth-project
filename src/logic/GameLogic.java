@@ -2,12 +2,13 @@ package logic;
 
 import base.BaseUnit;
 import constant.BoardConstant;
+import gui.ActionPane;
 import gui.BoardPane;
+import gui.StatusPane;
 import unit.FlyingUnit;
 import unit.NormalUnit;
 import unit.ShooterUnit;
 import util.Timer;
-import gui.TimerPane;
 import javafx.application.Platform;
 
 public class GameLogic {
@@ -16,7 +17,8 @@ public class GameLogic {
     private static int selectedYPosition = -1;
     private static PlayerState currentPlayerState = PlayerState.NONE;
     private static BoardPane boardPane;
-    private static TimerPane timerPane;
+    private static ActionPane actionPane;
+    private static StatusPane statusPane;
     private static BoardSquareState[][] boardState = new BoardSquareState[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
     private static BaseUnit[][] boardUnits = new BaseUnit[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
     private static boolean gameActive = false;
@@ -103,7 +105,7 @@ public class GameLogic {
             GameLogic.currentPlayer = BoardSquareState.PLAYER2;
         else
             GameLogic.currentPlayer = BoardSquareState.PLAYER1;
-
+        getStatusPane().toggleTurn();
     }
 
     // TIMER
@@ -116,7 +118,7 @@ public class GameLogic {
                         @Override
                         public void run() {
                             Timer.setTimer(Timer.getTimer() - 20);
-                            timerPane.setTime();
+                            actionPane.getTimerPane().setTime();
                         }
                     });
                 }
@@ -208,11 +210,19 @@ public class GameLogic {
         }
     }
 
-    public static TimerPane getTimerPane() {
-        return timerPane;
+    public static ActionPane getActionPane() {
+        return actionPane;
     }
 
-    public static void setTimerPane(TimerPane tPane) {
-        timerPane = tPane;
+    public static void setActionPane(ActionPane aPane) {
+        actionPane = aPane;
+    }
+
+    public static StatusPane getStatusPane() {
+        return statusPane;
+    }
+
+    public static void setStatusPane(StatusPane sPane) {
+        statusPane = sPane;
     }
 }
