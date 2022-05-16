@@ -4,7 +4,7 @@ public class UnitConstant {
         static final public String NORMAL_UNIT_NAME = "NORMAL UNIT";
         static final public int NORMAL_UNIT_MAX_HP = 30;
         static final public int NORMAL_UNIT_POWER = 3;
-        static final public String NORMAL_UNIT_IMAGE_URL = "normalUnit.jpg";
+        static final public String NORMAL_UNIT_IMAGE_URL = "normal-unit.jpg";
         static final public int[][] NORMAL_UNIT_MOVE = { { -1, -1 }, { -1, 0 }, { -1, 1 }, { 0, -1 }, { 0, 1 },
                         { 1, -1 },
                         { 1, 0 }, { 1, 1 } };

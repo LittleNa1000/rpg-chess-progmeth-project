@@ -8,11 +8,13 @@ import javafx.scene.paint.Color;
 
 public class ActionPane extends HBox {
   private TimerPane timerPane;
+  private StatsPane statsPane;
 
   public ActionPane() {
     super();
     setPrefHeight(125);
     timerPane = new TimerPane();
+    statsPane = new StatsPane();
     setAlignment(Pos.CENTER_RIGHT);
     setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
     getChildren().add(timerPane);
@@ -24,5 +26,13 @@ public class ActionPane extends HBox {
 
   public TimerPane getTimerPane() {
     return timerPane;
+  }
+
+  public void setStatsPane(StatsPane sPane) {
+    statsPane = sPane;
+  }
+
+  public StatsPane getStatsPane() {
+    return statsPane;
   }
 }

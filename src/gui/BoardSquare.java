@@ -81,6 +81,7 @@ public class BoardSquare extends VBox {
     private void initPreviewHandler() {
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             MouseButton button = event.getButton();
+            GameLogic.getActionPane().getStatsPane().showStats();
             if (button == MouseButton.PRIMARY) {
                 GameLogic.movePreview(xPosition, yPosition);
                 System.out.println("CLICK PRIMARY" + xPosition + yPosition);

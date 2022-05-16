@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import constant.BoardConstant;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,7 +17,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import logic.BoardSquareState;
 import logic.GameLogic;
@@ -31,29 +34,36 @@ public class StatusPane extends VBox {
   public void toggleTurn() {
     if (GameLogic.getCurrentPlayer() == BoardSquareState.PLAYER1) {
       currentTurn.setText(BoardConstant.PLAYER1_NAME);
+      skipTurnBtn.setText("Skip to " + BoardConstant.PLAYER2_NAME + "'s Turn");
     } else {
       currentTurn.setText(BoardConstant.PLAYER2_NAME);
+      skipTurnBtn.setText("Skip to " + BoardConstant.PLAYER1_NAME + "'s Turn");
     }
   }
 
   private void initSkipTurnBtn() {
-    skipTurnBtn = new Button("Skip Turn");
+    skipTurnBtn = new Button("Skip to " + BoardConstant.PLAYER2_NAME + "'s Turn");
     skipTurnBtn.setOnAction(e -> {
       GameLogic.toggleCurrentPlayer();
     });
   }
 
   private void initToggleTimerBtn() {
-    toggleTimerBtn = new Button("toggleTimer");
+    toggleTimerBtn = new Button("Pause Timer");
     toggleTimerBtn.setOnAction(e -> {
       GameLogic.setTimerActive(!GameLogic.isTimerActive());
+      if (GameLogic.isTimerActive()) {
+        toggleTimerBtn.setText("Pause Timer");
+      } else {
+        toggleTimerBtn.setText("Resume Timer");
+      }
     });
   }
 
   private void initQuitBtn() {
     quitBtn = new Button("Quit");
     quitBtn.setOnAction(e -> {
-      Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to quit the game and return to main menu?",
+      Alert alert = new Alert(AlertType.CONFIRMATION, "Return to main menu?",
           ButtonType.NO, ButtonType.YES);
       alert.setTitle("Quit Confirmation");
       alert.setHeaderText(null);
@@ -74,9 +84,15 @@ public class StatusPane extends VBox {
 
   private void initDisplayCurrentTurn() {
     displayCurrentTurn = new VBox();
+    displayCurrentTurn.setPrefHeight(100);
     displayCurrentTurn.setBackground(new Background(new BackgroundFill(Color.LIGHTSALMON, null, null)));
+    displayCurrentTurn.setAlignment(Pos.CENTER_LEFT);
+    displayCurrentTurn.setPadding(new Insets(10, 10, 10, 10));
     currentTurn = new Text(BoardConstant.PLAYER1_NAME);
-    displayCurrentTurn.getChildren().addAll(new Text("Current Turn"), currentTurn);
+    currentTurn.setFont(new Font(36));
+    Text text = new Text("Current Turn:");
+    text.setFont(new Font(20));
+    displayCurrentTurn.getChildren().addAll(text, currentTurn);
   }
 
   public StatusPane() {
@@ -84,7 +100,7 @@ public class StatusPane extends VBox {
     setPrefWidth(200);
     setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, null)));
     setSpacing(30);
-    setAlignment(Pos.CENTER);
+    setAlignment(Pos.TOP_CENTER);
     initQuitBtn();
     initToggleTimerBtn();
     initSkipTurnBtn();
