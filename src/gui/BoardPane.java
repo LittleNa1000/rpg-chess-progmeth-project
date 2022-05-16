@@ -57,6 +57,7 @@ public class BoardPane extends GridPane {
   }
 
   public void movePreview(int unitX, int unitY) {
+    resetBoard();
     BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
     BaseUnit unit = boardUnits[unitX][unitY];
     int[][] directionArrays;
@@ -78,6 +79,7 @@ public class BoardPane extends GridPane {
   }
 
   public void attackPreview(int unitX, int unitY) {
+    resetBoard();
     BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
     BaseUnit unit = boardUnits[unitX][unitY];
     int[][] directionArrays;

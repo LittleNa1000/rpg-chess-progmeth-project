@@ -53,11 +53,9 @@ public class GameLogic {
     }
 
     public static void movePreview(int xPosition, int yPosition) {
-        boardPane.resetBoard();
-
         if ((selectedXPosition == xPosition && selectedYPosition == yPosition)
                 || (boardState[xPosition][yPosition] != currentPlayer)) {
-            resetSelected();
+            resetSelectedAndRerender();
         } else {
             boardPane.movePreview(xPosition, yPosition);
             selectedXPosition = xPosition;
@@ -67,10 +65,9 @@ public class GameLogic {
     }
 
     public static void attackPreview(int xPosition, int yPosition) {
-        boardPane.resetBoard();
         if ((selectedXPosition == xPosition && selectedYPosition == yPosition)
                 || (boardState[xPosition][yPosition] != currentPlayer)) {
-            resetSelected();
+            resetSelectedAndRerender();
         } else {
             boardPane.attackPreview(xPosition, yPosition);
             selectedXPosition = xPosition;
@@ -84,23 +81,30 @@ public class GameLogic {
         boardState[selectedXPosition][selectedYPosition] = BoardSquareState.EMPTY;
         boardUnits[xPosition][yPosition] = boardUnits[selectedXPosition][selectedYPosition];
         boardUnits[selectedXPosition][selectedYPosition] = null;
-        resetSelected();
-        boardPane.resetBoard();
+        resetSelectedAndRerender();
         toggleCurrentPlayer();
     }
 
     public static void attack(int xPosition, int yPosition) {
         BaseUnit selectedUnit = boardUnits[selectedXPosition][selectedYPosition];
+        BaseUnit targetUnit = boardUnits[xPosition][yPosition];
+        System.out.println("atkk" + selectedUnit);
+        if (boardState[xPosition][yPosition] == currentPlayer) {
+            return;
+        }
         if (selectedUnit instanceof Attackable) {
             Attackable attacker = (Attackable) selectedUnit;
-            attacker.attackUnit(boardUnits[xPosition][yPosition]);
+            attacker.attackUnit(targetUnit);
         }
+        resetSelectedAndRerender();
+        toggleCurrentPlayer();
     }
 
-    private static void resetSelected() {
+    public static void resetSelectedAndRerender() {
         selectedXPosition = -1;
         selectedYPosition = -1;
         setCurrentPlayerState(PlayerState.NONE);
+        boardPane.resetBoard();
     }
 
     public static void toggleCurrentPlayer() {

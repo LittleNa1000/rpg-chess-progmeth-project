@@ -36,10 +36,10 @@ public class BoardSquare extends VBox {
             });
         } else if (state == PlayerState.ATTACK) {
             draw("#FFB233");
+        } else if (state == PlayerState.NONE) {
             this.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                GameLogic.attack(xPosition, yPosition);
+                GameLogic.resetSelectedAndRerender();
             });
-        } else {
             draw("#FFEED1");
         }
     }
@@ -52,23 +52,16 @@ public class BoardSquare extends VBox {
         setPadding(new Insets(3));
         if (state == PlayerState.MOVE) {
             draw(unit, "#33FF8A");
+            initPreviewHandler();
         } else if (state == PlayerState.ATTACK) {
             draw(unit, "#FFB233");
+            this.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                GameLogic.attack(xPosition, yPosition);
+            });
         } else {
             draw(unit, "#FFEED1");
+            initPreviewHandler();
         }
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            MouseButton button = event.getButton();
-            if (button == MouseButton.PRIMARY) {
-                GameLogic.movePreview(xPosition, yPosition);
-                System.out.println("CLICK PRIMARY" + xPosition + yPosition);
-            } else if (button == MouseButton.SECONDARY) {
-                GameLogic.attackPreview(xPosition, yPosition);
-
-                System.out.println("CLICK SECONDARY" + xPosition + yPosition);
-            }
-        });
-
     }
 
     private void draw(BaseUnit unit, String color) {
@@ -83,6 +76,20 @@ public class BoardSquare extends VBox {
     private void draw(String color) {
         this.setStyle(
                 StringUtil.getCss("-fx-background-color: " + color));
+    }
+
+    private void initPreviewHandler() {
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            MouseButton button = event.getButton();
+            if (button == MouseButton.PRIMARY) {
+                GameLogic.movePreview(xPosition, yPosition);
+                System.out.println("CLICK PRIMARY" + xPosition + yPosition);
+            } else if (button == MouseButton.SECONDARY) {
+                GameLogic.attackPreview(xPosition, yPosition);
+
+                System.out.println("CLICK SECONDARY" + xPosition + yPosition);
+            }
+        });
     }
 
     public void setxPosition(int xPosition) {
