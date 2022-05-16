@@ -3,7 +3,7 @@ package util;
 public class Timer {
   private static int ms;
 
-  public static boolean istimeOver() {
+  public static boolean isTimeOver() {
     return ms <= 0;
   }
 

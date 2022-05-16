@@ -13,16 +13,17 @@ public class GameInit {
 
   public static void init(ActionEvent e) {
     BorderPane root = new BorderPane();
-    TimerPane timerPane = new TimerPane();
     root.setPrefSize(980, 720);
     root.setRight(new StatusPane());
-    root.setTop(new ActionPane(timerPane));
+    GameLogic.setTimerPane(new TimerPane());
+    root.setTop(new ActionPane(GameLogic.getTimerPane()));
     GameLogic.setBoardPane(new BoardPane());
     root.setCenter(GameLogic.getBoardPane());
     stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
     scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
-    GameLogic.startTimer(timerPane);
+    GameLogic.setGameActive(true);
+    GameLogic.setTimerActive(true);
   }
 }
