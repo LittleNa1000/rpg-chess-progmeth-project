@@ -3,7 +3,9 @@ package logic;
 import base.BaseUnit;
 import constant.BoardConstant;
 import gui.BoardPane;
+import unit.FlyingUnit;
 import unit.NormalUnit;
+import unit.ShooterUnit;
 import util.Timer;
 import gui.TimerPane;
 import javafx.application.Platform;
@@ -31,8 +33,8 @@ public class GameLogic {
     private static void initPlayer(BoardSquareState state) {
         int row = state == BoardSquareState.PLAYER1 ? 0 : BoardConstant.ROW_NUMBER - 1;
         setBoardSquare(new NormalUnit(), state, row, 0);
-        setBoardSquare(new NormalUnit(), state, row, 1);
-        setBoardSquare(new NormalUnit(), state, row, 2);
+        setBoardSquare(new ShooterUnit(), state, row, 1);
+        setBoardSquare(new FlyingUnit(), state, row, 2);
         setBoardSquare(new NormalUnit(), state, row, 3);
         setBoardSquare(new NormalUnit(), state, row, 4);
         setBoardSquare(new NormalUnit(), state, row, 5);
