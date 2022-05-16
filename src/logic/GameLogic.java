@@ -5,6 +5,7 @@ import base.BaseUnit;
 import base.Buffable;
 import base.Debuffable;
 import constant.BoardConstant;
+import constant.TimeConstant;
 import gui.ActionPane;
 import gui.BoardPane;
 import gui.StatusPane;
@@ -85,7 +86,6 @@ public class GameLogic {
         boardState[selectedXPosition][selectedYPosition] = BoardSquareState.EMPTY;
         boardUnits[xPosition][yPosition] = boardUnits[selectedXPosition][selectedYPosition];
         boardUnits[selectedXPosition][selectedYPosition] = null;
-        resetSelectedAndRerender();
         toggleCurrentPlayer();
     }
 
@@ -110,7 +110,6 @@ public class GameLogic {
             Buffable healer = (Buffable) selectedUnit;
             healer.buffUnit(targetUnit);
         }
-        resetSelectedAndRerender();
         toggleCurrentPlayer();
     }
 
@@ -122,10 +121,14 @@ public class GameLogic {
     }
 
     public static void toggleCurrentPlayer() {
+        resetSelectedAndRerender();
+        GameLogic.setTimerActive(false);
+        Timer.setTimer(TimeConstant.TIME_PER_TURN);
         if (currentPlayer == BoardSquareState.PLAYER1)
             GameLogic.currentPlayer = BoardSquareState.PLAYER2;
         else
             GameLogic.currentPlayer = BoardSquareState.PLAYER1;
+        GameLogic.setTimerActive(true);
         getStatusPane().toggleTurn();
     }
 
