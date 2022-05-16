@@ -50,10 +50,12 @@ public class BoardSquare extends Pane {
             public void handle(MouseEvent event) {
                 MouseButton button = event.getButton();
                 if (button == MouseButton.PRIMARY) {
-
+                    GameLogic.movePreview(xPosition, yPosition);
                     System.out.println("CLICK PRIMARY" + xPosition + yPosition);
-                    leftClickHandler();
+
                 } else if (button == MouseButton.SECONDARY) {
+                    GameLogic.attackPreview(xPosition, yPosition);
+
                     System.out.println("CLICK SECONDARY" + xPosition + yPosition);
                 }
             }
@@ -70,10 +72,6 @@ public class BoardSquare extends Pane {
     private void draw(String color) {
         this.setStyle(
                 StringUtil.getCss("-fx-background-color: " + color));
-    }
-
-    private void leftClickHandler() {
-        GameLogic.moveSelect(xPosition, yPosition);
     }
 
     public void setxPosition(int xPosition) {

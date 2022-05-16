@@ -41,20 +41,28 @@ public class GameLogic {
         boardUnits[xPosition][yPosition] = unit;
     }
 
-    public static void moveSelect(int xPosition, int yPosition) {
+    public static void movePreview(int xPosition, int yPosition) {
         boardPane.resetBoard();
         if (selectedXPosition == xPosition && selectedYPosition == yPosition) {
             selectedXPosition = -1;
             selectedYPosition = -1;
         } else {
-            boardPane.changeBackground(xPosition, yPosition);
+            boardPane.movePreview(xPosition, yPosition);
             selectedXPosition = xPosition;
             selectedYPosition = yPosition;
         }
     }
 
-    public static void attackSelect(int xPosition, int yPosition) {
-
+    public static void attackPreview(int xPosition, int yPosition) {
+        boardPane.resetBoard();
+        if (selectedXPosition == xPosition && selectedYPosition == yPosition) {
+            selectedXPosition = -1;
+            selectedYPosition = -1;
+        } else {
+            boardPane.attackPreview(xPosition, yPosition);
+            selectedXPosition = xPosition;
+            selectedYPosition = yPosition;
+        }
     }
 
     public static BoardSquareState[][] getBoardState() {

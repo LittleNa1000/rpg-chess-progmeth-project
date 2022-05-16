@@ -19,7 +19,12 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import logic.GameLogic;
 import logic.PlayerState;
+import unit.FlyingUnit;
+import unit.FreezerUnit;
+import unit.HealerUnit;
 import unit.NormalUnit;
+import unit.ShooterUnit;
+import unit.VenomUnit;
 
 public class BoardPane extends GridPane {
   private BoardSquare[][] allSquares = new BoardSquare[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
@@ -51,25 +56,46 @@ public class BoardPane extends GridPane {
     // setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
   }
 
-  public void changeBackground(int unitX, int unitY) {
+  public void movePreview(int unitX, int unitY) {
     BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
     BaseUnit unit = boardUnits[unitX][unitY];
-    if (unit instanceof NormalUnit) {
-      for (int i = 0; i < UnitConstant.NORMAL_UNIT_MOVE.length; i++) {
-        int xPosition = unitX + UnitConstant.NORMAL_UNIT_MOVE[i][0];
-        int yPosition = unitY + UnitConstant.NORMAL_UNIT_MOVE[i][1];
-        if (xPosition < 0 || xPosition >= BoardConstant.ROW_NUMBER || yPosition < 0
-            || yPosition >= BoardConstant.COLOUMN_NUMBER)
-          continue;
-        this.getChildren().remove(allSquares[xPosition][yPosition]);
-        BoardSquare boardSquare;
-        if (boardUnits[xPosition][yPosition] != null)
-          boardSquare = new BoardSquare(xPosition, yPosition, boardUnits[xPosition][yPosition], PlayerState.MOVE);
-        else
-          boardSquare = new BoardSquare(xPosition, yPosition, PlayerState.MOVE);
-        this.add(boardSquare, yPosition, xPosition);
-      }
-    }
+    int[][] directionArrays;
+    if (unit instanceof NormalUnit)
+      directionArrays = UnitConstant.NORMAL_UNIT_MOVE;
+    else if (unit instanceof FlyingUnit)
+      directionArrays = UnitConstant.FLYING_UNIT_MOVE;
+    else if (unit instanceof ShooterUnit)
+      directionArrays = UnitConstant.SHOOTER_UNIT_MOVE;
+    else if (unit instanceof VenomUnit)
+      directionArrays = UnitConstant.VENOM_UNIT_MOVE;
+    else if (unit instanceof HealerUnit)
+      directionArrays = UnitConstant.HEALER_UNIT_MOVE;
+    else if (unit instanceof FreezerUnit)
+      directionArrays = UnitConstant.FREEZER_UNIT_MOVE;
+    else
+      return;
+    previewHelper(directionArrays, PlayerState.MOVE, unitX, unitY);
+  }
+
+  public void attackPreview(int unitX, int unitY) {
+    BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
+    BaseUnit unit = boardUnits[unitX][unitY];
+    int[][] directionArrays;
+    if (unit instanceof NormalUnit)
+      directionArrays = UnitConstant.NORMAL_UNIT_ATTACK;
+    else if (unit instanceof FlyingUnit)
+      directionArrays = UnitConstant.FLYING_UNIT_ATTACK;
+    else if (unit instanceof ShooterUnit)
+      directionArrays = UnitConstant.SHOOTER_UNIT_ATTACK;
+    else if (unit instanceof VenomUnit)
+      directionArrays = UnitConstant.VENOM_UNIT_ATTACK;
+    else if (unit instanceof HealerUnit)
+      directionArrays = UnitConstant.HEALER_UNIT_HEAL_RANGE;
+    else if (unit instanceof FreezerUnit)
+      directionArrays = UnitConstant.FREEZER_UNIT_FREEZE_RANGE;
+    else
+      return;
+    previewHelper(directionArrays, PlayerState.ATTACK, unitX, unitY);
   }
 
   public void resetBoard() {
@@ -86,5 +112,23 @@ public class BoardPane extends GridPane {
         this.getChildren().removeAll();
         this.add(boardSquare, j, i);
       }
+  }
+
+  private void previewHelper(int[][] directionArrays, PlayerState state, int unitX, int unitY) {
+    BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
+    for (int i = 0; i < directionArrays.length; i++) {
+      int xPosition = unitX + directionArrays[i][0];
+      int yPosition = unitY + directionArrays[i][1];
+      if (xPosition < 0 || xPosition >= BoardConstant.ROW_NUMBER || yPosition < 0
+          || yPosition >= BoardConstant.COLOUMN_NUMBER)
+        continue;
+      this.getChildren().remove(allSquares[xPosition][yPosition]);
+      BoardSquare boardSquare;
+      if (boardUnits[xPosition][yPosition] != null)
+        boardSquare = new BoardSquare(xPosition, yPosition, boardUnits[xPosition][yPosition], state);
+      else
+        boardSquare = new BoardSquare(xPosition, yPosition, state);
+      this.add(boardSquare, yPosition, xPosition);
+    }
   }
 }
