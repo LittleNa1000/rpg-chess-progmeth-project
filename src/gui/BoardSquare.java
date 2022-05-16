@@ -26,11 +26,8 @@ public class BoardSquare extends Pane {
         setyPosition(y);
         if (state == PlayerState.MOVE) {
             draw("#33FF8A");
-            this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    GameLogic.move(xPosition, yPosition);
-                }
+            this.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                GameLogic.move(xPosition, yPosition);
             });
         } else if (state == PlayerState.ATTACK) {
             draw("#FFB233");
@@ -50,20 +47,15 @@ public class BoardSquare extends Pane {
         } else {
             draw(unit.getImageUrl(), "#FFEED1");
         }
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            MouseButton button = event.getButton();
+            if (button == MouseButton.PRIMARY) {
+                GameLogic.movePreview(xPosition, yPosition);
+                System.out.println("CLICK PRIMARY" + xPosition + yPosition);
+            } else if (button == MouseButton.SECONDARY) {
+                GameLogic.attackPreview(xPosition, yPosition);
 
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                MouseButton button = event.getButton();
-                if (button == MouseButton.PRIMARY) {
-                    GameLogic.movePreview(xPosition, yPosition);
-                    System.out.println("CLICK PRIMARY" + xPosition + yPosition);
-
-                } else if (button == MouseButton.SECONDARY) {
-                    GameLogic.attackPreview(xPosition, yPosition);
-
-                    System.out.println("CLICK SECONDARY" + xPosition + yPosition);
-                }
+                System.out.println("CLICK SECONDARY" + xPosition + yPosition);
             }
         });
     }
