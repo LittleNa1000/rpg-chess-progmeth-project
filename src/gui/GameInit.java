@@ -4,7 +4,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import logic.GameLogic;
-import util.GameUtil;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 
@@ -24,6 +23,6 @@ public class GameInit {
     scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
-    GameUtil.startTimer(timerPane);
+    GameLogic.startTimer(timerPane);
   }
 }

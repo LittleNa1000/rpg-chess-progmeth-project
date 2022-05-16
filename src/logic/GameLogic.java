@@ -4,6 +4,9 @@ import base.BaseUnit;
 import constant.BoardConstant;
 import gui.BoardPane;
 import unit.NormalUnit;
+import util.Timer;
+import gui.TimerPane;
+import javafx.application.Platform;
 
 public class GameLogic {
     private static int currentPlayer = 0;
@@ -74,6 +77,40 @@ public class GameLogic {
 
     }
 
+    // TIMER
+    public static void startTimer(TimerPane timerPane) {
+        Thread thread = new Thread(() -> {
+            try {
+                while (!Timer.istimeOver()) {
+                    Thread.sleep(20);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            Timer.setTimer(Timer.getTimer() - 20);
+                            timerPane.setTime();
+                        }
+                    });
+                }
+                if (Timer.istimeOver()) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            gameOver();
+                        }
+                    });
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+    }
+
+    public static void gameOver() {
+        System.out.println("Game Over");
+    }
+
+    // GETTER & SETTER
     public static BoardSquareState[][] getBoardState() {
         return boardState;
     }
