@@ -3,6 +3,7 @@ package gui;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import logic.GameLogic;
 import util.GameUtil;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -17,7 +18,8 @@ public class GameInit {
     root.setPrefSize(980, 720);
     root.setRight(new StatusPane());
     root.setTop(new ActionPane(timerPane));
-    root.setCenter(new BoardPane());
+    GameLogic.setBoardPane(new BoardPane());
+    root.setCenter(GameLogic.getBoardPane());
     stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
     scene = new Scene(root);
     stage.setScene(scene);

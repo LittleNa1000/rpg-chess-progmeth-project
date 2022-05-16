@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import base.BaseUnit;
 import constant.BoardConstant;
+import constant.UnitConstant;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -46,6 +47,32 @@ public class BoardPane extends GridPane {
       rowConst.setPercentHeight(100.0 / BoardConstant.ROW_NUMBER);
       getRowConstraints().add(rowConst);
     }
+    resetBoard();
+    // setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+  }
+
+  public void changeBackground(int unitX, int unitY) {
+    BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
+    BaseUnit unit = boardUnits[unitX][unitY];
+    if (unit instanceof NormalUnit) {
+      for (int i = 0; i < UnitConstant.NORMAL_UNIT_MOVE.length; i++) {
+        int xPosition = unitX + UnitConstant.NORMAL_UNIT_MOVE[i][0];
+        int yPosition = unitY + UnitConstant.NORMAL_UNIT_MOVE[i][1];
+        if (xPosition < 0 || xPosition >= BoardConstant.ROW_NUMBER || yPosition < 0
+            || yPosition >= BoardConstant.COLOUMN_NUMBER)
+          continue;
+        this.getChildren().remove(allSquares[xPosition][yPosition]);
+        BoardSquare boardSquare;
+        if (boardUnits[xPosition][yPosition] != null)
+          boardSquare = new BoardSquare(xPosition, yPosition, boardUnits[xPosition][yPosition], PlayerState.MOVE);
+        else
+          boardSquare = new BoardSquare(xPosition, yPosition, PlayerState.MOVE);
+        this.add(boardSquare, yPosition, xPosition);
+      }
+    }
+  }
+
+  public void resetBoard() {
     BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
     for (int i = 0; i < BoardConstant.ROW_NUMBER; i++)
       for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
@@ -56,14 +83,8 @@ public class BoardPane extends GridPane {
           boardSquare = new BoardSquare(i, j, PlayerState.NONE);
 
         allSquares[i][j] = boardSquare;
+        this.getChildren().removeAll();
         this.add(boardSquare, j, i);
       }
-    // setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
-  }
-
-  public static void changeBackground(int xPosition, int yPosition, BaseUnit unit) {
-    if (unit instanceof NormalUnit) {
-
-    }
   }
 }

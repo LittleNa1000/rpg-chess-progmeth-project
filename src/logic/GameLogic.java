@@ -2,13 +2,14 @@ package logic;
 
 import base.BaseUnit;
 import constant.BoardConstant;
+import gui.BoardPane;
 import unit.NormalUnit;
 
 public class GameLogic {
     private static int currentPlayer = 0;
     private static int selectedXPosition = -1;
     private static int selectedYPosition = -1;
-
+    private static BoardPane boardPane;
     private static BoardSquareState[][] boardState = new BoardSquareState[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
     private static BaseUnit[][] boardUnits = new BaseUnit[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
 
@@ -41,7 +42,15 @@ public class GameLogic {
     }
 
     public static void moveSelect(int xPosition, int yPosition) {
-        
+        boardPane.resetBoard();
+        if (selectedXPosition == xPosition && selectedYPosition == yPosition) {
+            selectedXPosition = -1;
+            selectedYPosition = -1;
+        } else {
+            boardPane.changeBackground(xPosition, yPosition);
+            selectedXPosition = xPosition;
+            selectedYPosition = yPosition;
+        }
     }
 
     public static void attackSelect(int xPosition, int yPosition) {
@@ -55,4 +64,25 @@ public class GameLogic {
     public static BaseUnit[][] getBoardUnits() {
         return boardUnits;
     }
+
+    public static BoardPane getBoardPane() {
+        return boardPane;
+    }
+
+    public static int getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public static int getSelectedXPosition() {
+        return selectedXPosition;
+    }
+
+    public static int getSelectedYPosition() {
+        return selectedYPosition;
+    }
+
+    public static void setBoardPane(BoardPane boardPane) {
+        GameLogic.boardPane = boardPane;
+    }
+
 }

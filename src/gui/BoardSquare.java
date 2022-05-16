@@ -13,6 +13,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import logic.GameLogic;
 import logic.PlayerState;
 import util.StringUtil;
 
@@ -27,6 +28,8 @@ public class BoardSquare extends Pane {
             draw("#33FF8A");
         } else if (state == PlayerState.ATTACK) {
             draw("#FFB233");
+        } else {
+            draw("#FFEED1");
         }
     }
 
@@ -49,7 +52,7 @@ public class BoardSquare extends Pane {
                 if (button == MouseButton.PRIMARY) {
 
                     System.out.println("CLICK PRIMARY" + xPosition + yPosition);
-
+                    leftClickHandler();
                 } else if (button == MouseButton.SECONDARY) {
                     System.out.println("CLICK SECONDARY" + xPosition + yPosition);
                 }
@@ -70,7 +73,7 @@ public class BoardSquare extends Pane {
     }
 
     private void leftClickHandler() {
-
+        GameLogic.moveSelect(xPosition, yPosition);
     }
 
     public void setxPosition(int xPosition) {
