@@ -14,11 +14,16 @@ public class GameInit {
   public static void init(ActionEvent e) {
     BorderPane root = new BorderPane();
     root.setPrefSize(980, 720);
-    root.setRight(new StatusPane());
-    GameLogic.setTimerPane(new TimerPane());
-    root.setTop(new ActionPane(GameLogic.getTimerPane()));
+
+    GameLogic.setStatusPane(new StatusPane());
+    root.setRight(GameLogic.getStatusPane());
+
+    GameLogic.setActionPane(new ActionPane());
+    root.setTop(GameLogic.getActionPane());
+
     GameLogic.setBoardPane(new BoardPane());
     root.setCenter(GameLogic.getBoardPane());
+
     stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
     scene = new Scene(root);
     stage.setScene(scene);
