@@ -48,9 +48,7 @@ public class GameLogic {
     public static void movePreview(int xPosition, int yPosition) {
         boardPane.resetBoard();
         if (selectedXPosition == xPosition && selectedYPosition == yPosition) {
-            selectedXPosition = -1;
-            selectedYPosition = -1;
-            setCurrentPlayerState(PlayerState.NONE);
+            resetSelected();
         } else {
             boardPane.movePreview(xPosition, yPosition);
             selectedXPosition = xPosition;
@@ -62,9 +60,7 @@ public class GameLogic {
     public static void attackPreview(int xPosition, int yPosition) {
         boardPane.resetBoard();
         if (selectedXPosition == xPosition && selectedYPosition == yPosition) {
-            selectedXPosition = -1;
-            selectedYPosition = -1;
-            setCurrentPlayerState(PlayerState.NONE);
+            resetSelected();
         } else {
             boardPane.attackPreview(xPosition, yPosition);
             selectedXPosition = xPosition;
@@ -74,7 +70,18 @@ public class GameLogic {
     }
 
     public static void move(int xPosition, int yPosition) {
+        boardState[xPosition][yPosition] = boardState[selectedXPosition][selectedYPosition];
+        boardState[selectedXPosition][selectedYPosition] = BoardSquareState.EMPTY;
+        boardUnits[xPosition][yPosition] = boardUnits[selectedXPosition][selectedYPosition];
+        boardUnits[selectedXPosition][selectedYPosition] = null;
+        resetSelected();
+        boardPane.resetBoard();
+    }
 
+    private static void resetSelected() {
+        selectedXPosition = -1;
+        selectedYPosition = -1;
+        setCurrentPlayerState(PlayerState.NONE);
     }
 
     // TIMER

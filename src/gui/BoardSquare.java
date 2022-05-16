@@ -26,6 +26,12 @@ public class BoardSquare extends Pane {
         setyPosition(y);
         if (state == PlayerState.MOVE) {
             draw("#33FF8A");
+            this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    GameLogic.move(xPosition, yPosition);
+                }
+            });
         } else if (state == PlayerState.ATTACK) {
             draw("#FFB233");
         } else {
