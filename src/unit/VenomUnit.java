@@ -1,6 +1,5 @@
 package unit;
 
-import base.Attackable;
 import base.BaseUnit;
 import base.Debuffable;
 import constant.UnitConstant;
@@ -18,6 +17,18 @@ public class VenomUnit extends BaseUnit implements Debuffable {
     @Override
     public void debuffUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
+        unit.setVenomRoundLeft(poisonRound);
+    }
 
+    public int getPoisonPower() {
+        return poisonPower;
+    }
+
+    public int getPoisonRound() {
+        return poisonRound;
+    }
+
+    public void setPoisonRound(int poisonRound) {
+        this.poisonRound = poisonRound;
     }
 }

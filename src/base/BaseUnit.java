@@ -59,4 +59,23 @@ public abstract class BaseUnit {
         setCurrentHealth(currentHealth - damage);
     }
 
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public void setStunRoundLeft(int stunRoundLeft) {
+        this.stunRoundLeft = stunRoundLeft;
+    }
+
+    public void setVenomRoundLeft(int venomRoundLeft) {
+        this.venomRoundLeft = venomRoundLeft;
+    }
 }

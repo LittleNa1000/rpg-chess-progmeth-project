@@ -15,6 +15,14 @@ public class FreezerUnit extends BaseUnit implements Debuffable {
     @Override
     public void debuffUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
+        unit.setStunRoundLeft(Math.max(unit.getStunRoundLeft(), this.stunRound));
+    }
 
+    public int getStunRound() {
+        return stunRound;
+    }
+
+    public void setStunRound(int stunRound) {
+        this.stunRound = stunRound;
     }
 }

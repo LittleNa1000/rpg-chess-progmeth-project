@@ -99,12 +99,14 @@ public class GameLogic {
                 return;
             Attackable attacker = (Attackable) selectedUnit;
             attacker.attackUnit(targetUnit);
-        } else if (selectedUnit instanceof Debuffable) {
+        }
+        if (selectedUnit instanceof Debuffable) {
             if (boardState[xPosition][yPosition] == currentPlayer)
                 return;
             Debuffable attacker = (Debuffable) selectedUnit;
             attacker.debuffUnit(targetUnit);
-        } else if (selectedUnit instanceof Buffable) {
+        }
+        if (selectedUnit instanceof Buffable) {
             if (boardState[xPosition][yPosition] != currentPlayer)
                 return;
             Buffable healer = (Buffable) selectedUnit;

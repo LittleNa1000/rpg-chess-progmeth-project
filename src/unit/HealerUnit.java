@@ -15,6 +15,14 @@ public class HealerUnit extends BaseUnit implements Buffable {
     @Override
     public void buffUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
+        setCurrentHealth(Math.min(unit.getMaxHealth(), unit.getCurrentHealth() + healingPoint));
+    }
 
+    public int getHealingPoint() {
+        return healingPoint;
+    }
+
+    public void setHealingPoint(int healingPoint) {
+        this.healingPoint = healingPoint;
     }
 }
