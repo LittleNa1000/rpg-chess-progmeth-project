@@ -9,6 +9,7 @@ public class GameLogic {
     private static int currentPlayer = 0;
     private static int selectedXPosition = -1;
     private static int selectedYPosition = -1;
+    private static PlayerState currentPlayerState = PlayerState.NONE;
     private static BoardPane boardPane;
     private static BoardSquareState[][] boardState = new BoardSquareState[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
     private static BaseUnit[][] boardUnits = new BaseUnit[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
@@ -46,10 +47,12 @@ public class GameLogic {
         if (selectedXPosition == xPosition && selectedYPosition == yPosition) {
             selectedXPosition = -1;
             selectedYPosition = -1;
+            setCurrentPlayerState(PlayerState.NONE);
         } else {
             boardPane.movePreview(xPosition, yPosition);
             selectedXPosition = xPosition;
             selectedYPosition = yPosition;
+            setCurrentPlayerState(PlayerState.MOVE);
         }
     }
 
@@ -58,11 +61,17 @@ public class GameLogic {
         if (selectedXPosition == xPosition && selectedYPosition == yPosition) {
             selectedXPosition = -1;
             selectedYPosition = -1;
+            setCurrentPlayerState(PlayerState.NONE);
         } else {
             boardPane.attackPreview(xPosition, yPosition);
             selectedXPosition = xPosition;
             selectedYPosition = yPosition;
+            setCurrentPlayerState(PlayerState.ATTACK);
         }
+    }
+
+    public static void move(int xPosition, int yPosition) {
+
     }
 
     public static BoardSquareState[][] getBoardState() {
@@ -93,4 +102,11 @@ public class GameLogic {
         GameLogic.boardPane = boardPane;
     }
 
+    public static PlayerState getCurrentPlayerState() {
+        return currentPlayerState;
+    }
+
+    public static void setCurrentPlayerState(PlayerState currentPlayerState) {
+        GameLogic.currentPlayerState = currentPlayerState;
+    }
 }
