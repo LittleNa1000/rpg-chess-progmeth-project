@@ -12,14 +12,9 @@ public class NormalUnit extends BaseUnit implements Attackable {
     }
 
     @Override
-    public void move() {
+    public void attackUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
-        super.move();
-    }
-
-    @Override
-    public void attackUnit() {
-        // TODO Auto-generated method stub
-
+        if (!(unit instanceof FlyingUnit))
+            unit.reduceHealth(this.getPower());
     }
 }

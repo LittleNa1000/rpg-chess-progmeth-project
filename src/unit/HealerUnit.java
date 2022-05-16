@@ -13,12 +13,6 @@ public class HealerUnit extends BaseUnit implements Buffable {
     }
 
     @Override
-    public void move() {
-        // TODO Auto-generated method stub
-        super.move();
-    }
-
-    @Override
     public void buffUnit() {
         // TODO Auto-generated method stub
 

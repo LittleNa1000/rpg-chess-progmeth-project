@@ -25,6 +25,7 @@ public class BoardSquare extends VBox {
     private int xPosition;
     private int yPosition;
 
+    // Empty Square
     public BoardSquare(int x, int y, PlayerState state) {
         setxPosition(x);
         setyPosition(y);
@@ -35,11 +36,15 @@ public class BoardSquare extends VBox {
             });
         } else if (state == PlayerState.ATTACK) {
             draw("#FFB233");
+            this.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                GameLogic.attack(xPosition, yPosition);
+            });
         } else {
             draw("#FFEED1");
         }
     }
 
+    // Unit Square
     public BoardSquare(int x, int y, BaseUnit unit, PlayerState state) {
         setxPosition(x);
         setyPosition(y);

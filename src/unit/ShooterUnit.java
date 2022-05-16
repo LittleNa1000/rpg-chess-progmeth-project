@@ -11,14 +11,9 @@ public class ShooterUnit extends BaseUnit implements Attackable {
     }
 
     @Override
-    public void move() {
-        // TODO Auto-generated method stub
-        super.move();
-    }
-
-    @Override
-    public void attackUnit() {
+    public void attackUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
 
+        unit.reduceHealth(this.getPower());
     }
 }

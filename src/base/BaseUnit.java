@@ -2,7 +2,7 @@ package base;
 
 import util.StringUtil;
 
-public abstract class BaseUnit implements Moveable {
+public abstract class BaseUnit {
     private final int maxHealth;
     private String name;
     private int power;
@@ -19,12 +19,6 @@ public abstract class BaseUnit implements Moveable {
         this.stunRoundLeft = 0;
         this.venomRoundLeft = 0;
         this.imageUrl = imageUrl;
-    }
-
-    @Override
-    public void move() {
-        // TODO Auto-generated method stub
-
     }
 
     public int getCurrentHealth() {
@@ -53,6 +47,16 @@ public abstract class BaseUnit implements Moveable {
 
     public int getVenomRoundLeft() {
         return venomRoundLeft;
+    }
+
+    public void setCurrentHealth(int currentHealth) {
+        if (currentHealth < 0)
+            currentHealth = 0;
+        this.currentHealth = currentHealth;
+    }
+
+    public void reduceHealth(int damage) {
+        setCurrentHealth(currentHealth - damage);
     }
 
 }

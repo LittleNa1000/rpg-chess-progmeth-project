@@ -1,5 +1,6 @@
 package logic;
 
+import base.Attackable;
 import base.BaseUnit;
 import constant.BoardConstant;
 import gui.BoardPane;
@@ -85,7 +86,11 @@ public class GameLogic {
     }
 
     public static void attack(int xPosition, int yPosition) {
-
+        BaseUnit selectedUnit = boardUnits[selectedXPosition][selectedYPosition];
+        if (selectedUnit instanceof Attackable) {
+            Attackable attacker = (Attackable) selectedUnit;
+            attacker.attackUnit(boardUnits[xPosition][yPosition]);
+        }
     }
 
     private static void resetSelected() {

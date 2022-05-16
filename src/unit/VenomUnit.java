@@ -16,12 +16,6 @@ public class VenomUnit extends BaseUnit implements Debuffable {
     }
 
     @Override
-    public void move() {
-        // TODO Auto-generated method stub
-        super.move();
-    }
-
-    @Override
     public void debuffUnit() {
         // TODO Auto-generated method stub
 
