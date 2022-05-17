@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import logic.BoardSquareState;
 import logic.GameLogic;
+import unit.FlyingUnit;
 import unit.FreezerUnit;
 import unit.HealerUnit;
 import unit.VenomUnit;
@@ -75,6 +76,8 @@ public class StatsPane extends HBox {
     } else if (unit instanceof VenomUnit) {
       abilityString += "Deals " + String.valueOf(((VenomUnit) unit).getPoisonPower()) + "";
       abilityString += "\ndamage to an\nenemy for " + String.valueOf(((VenomUnit) unit).getPoisonRound()) + " turn(s)";
+    } else if (unit instanceof FlyingUnit) {
+      abilityString += "Dodge\nNormal Unit's\nAttack";
     } else {
       abilityString += "\nNone";
     }

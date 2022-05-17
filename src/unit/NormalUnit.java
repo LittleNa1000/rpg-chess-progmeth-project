@@ -3,12 +3,14 @@ package unit;
 import base.Attackable;
 import base.BaseUnit;
 import constant.UnitConstant;
+import logic.BoardSquareState;
 
 public class NormalUnit extends BaseUnit implements Attackable {
 
-    public NormalUnit() {
+    public NormalUnit(BoardSquareState state) {
         super(UnitConstant.NORMAL_UNIT_NAME, UnitConstant.NORMAL_UNIT_MAX_HP, UnitConstant.NORMAL_UNIT_POWER,
-                UnitConstant.NORMAL_UNIT_IMAGE_URL);
+                state == BoardSquareState.PLAYER1 ? UnitConstant.NORMAL_UNIT_IMAGE_URL_1
+                        : UnitConstant.NORMAL_UNIT_IMAGE_URL_2);
     }
 
     @Override

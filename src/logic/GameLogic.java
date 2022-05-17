@@ -42,18 +42,19 @@ public class GameLogic {
         }
         initPlayer(BoardSquareState.PLAYER1);
         initPlayer(BoardSquareState.PLAYER2);
+        setBoardSquare(new NormalUnit(BoardSquareState.PLAYER1), BoardSquareState.PLAYER1, 3, 4);
     }
 
     private static void initPlayer(BoardSquareState state) {
         int row = state == BoardSquareState.PLAYER1 ? 0 : BoardConstant.ROW_NUMBER - 1;
-        setBoardSquare(new NormalUnit(), state, row, 0);
-        setBoardSquare(new FlyingUnit(), state, row, 1);
-        setBoardSquare(new ShooterUnit(), state, row, 2);
-        setBoardSquare(new HealerUnit(), state, row, 3);
-        setBoardSquare(new VenomUnit(), state, row, 4);
-        setBoardSquare(new FreezerUnit(), state, row, 5);
-        setBoardSquare(new NormalUnit(), state, row, 6);
-        setBoardSquare(new NormalUnit(), state, row, 7);
+        setBoardSquare(new NormalUnit(state), state, row, 0);
+        setBoardSquare(new FlyingUnit(state), state, row, 1);
+        setBoardSquare(new ShooterUnit(state), state, row, 2);
+        setBoardSquare(new HealerUnit(state), state, row, 3);
+        setBoardSquare(new VenomUnit(state), state, row, 4);
+        setBoardSquare(new FreezerUnit(state), state, row, 5);
+        setBoardSquare(new NormalUnit(state), state, row, 6);
+        setBoardSquare(new NormalUnit(state), state, row, 7);
     }
 
     private static void setBoardSquare(BaseUnit unit, BoardSquareState state, int xPosition, int yPosition) {

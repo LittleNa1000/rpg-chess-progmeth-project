@@ -3,11 +3,13 @@ package unit;
 import base.Attackable;
 import base.BaseUnit;
 import constant.UnitConstant;
+import logic.BoardSquareState;
 
 public class ShooterUnit extends BaseUnit implements Attackable {
-    public ShooterUnit() {
+    public ShooterUnit(BoardSquareState state) {
         super(UnitConstant.SHOOTER_UNIT_NAME, UnitConstant.SHOOTER_UNIT_MAX_HP, UnitConstant.SHOOTER_UNIT_POWER,
-                UnitConstant.SHOOTER_UNIT_IMAGE_URL);
+                state == BoardSquareState.PLAYER1 ? UnitConstant.SHOOTER_UNIT_IMAGE_URL_1
+                        : UnitConstant.SHOOTER_UNIT_IMAGE_URL_2);
     }
 
     @Override
