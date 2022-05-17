@@ -8,7 +8,7 @@ public class AudioUtil {
     sound.play();
   }
 
-  public static void playSound(String fileName, int volume) {
+  public static void playSound(String fileName, Double volume) {
     AudioClip sound = new AudioClip(StringUtil.getImageUrl(fileName));
     sound.play(volume);
   }

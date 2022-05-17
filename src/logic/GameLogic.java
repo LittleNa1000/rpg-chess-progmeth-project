@@ -107,7 +107,7 @@ public class GameLogic {
             if (selectedUnit instanceof NormalUnit) {
                 AudioUtil.playSound("attack-melee.wav");
             } else {
-                AudioUtil.playSound("attack-ranged.wav");
+                AudioUtil.playSound("attack-ranged.wav", 0.5);
             }
         }
         if (selectedUnit instanceof Debuffable) {
@@ -118,7 +118,7 @@ public class GameLogic {
             if (selectedUnit instanceof VenomUnit) {
                 AudioUtil.playSound("poison.wav");
             } else if (selectedUnit instanceof FreezerUnit) {
-                AudioUtil.playSound("freeze.wav");
+                AudioUtil.playSound("freeze.wav", 0.5);
             }
         }
         if (selectedUnit instanceof Buffable) {
@@ -127,7 +127,7 @@ public class GameLogic {
             Buffable healer = (Buffable) selectedUnit;
             healer.buffUnit(targetUnit);
             if (selectedUnit instanceof HealerUnit) {
-                AudioUtil.playSound("heal.wav");
+                AudioUtil.playSound("heal.wav", 0.5);
             }
         }
         toggleCurrentPlayer();
@@ -138,6 +138,7 @@ public class GameLogic {
         for (int i = 0; i < BoardConstant.ROW_NUMBER; i++) {
             for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
                 if (boardUnits[i][j] != null && boardUnits[i][j].getCurrentHealth() <= 0) {
+                    statusPane.reduceUnit(boardState[i][j]);
                     boardState[i][j] = BoardSquareState.EMPTY;
                     boardUnits[i][j] = null;
                 }
@@ -179,7 +180,8 @@ public class GameLogic {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            gameOver();
+                            // gameOver();
+                            toggleCurrentPlayer();
                         }
                     });
                 }
@@ -257,8 +259,10 @@ public class GameLogic {
     public static void setTimerActive(boolean b) {
         timerActive = b;
         if (isTimerActive()) {
+            statusPane.getToggleTimerBtn().setText("Pause Timer");
             startTimer();
         } else {
+            statusPane.getToggleTimerBtn().setText("Resume Timer");
             stopTimer();
         }
     }
