@@ -15,7 +15,7 @@ public class ActionPane extends HBox {
     setPrefHeight(125);
     timerPane = new TimerPane();
     statsPane = new StatsPane();
-    setAlignment(Pos.CENTER_RIGHT);
+    setAlignment(Pos.CENTER);
     setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
     getChildren().addAll(statsPane, timerPane);
   }

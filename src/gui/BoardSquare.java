@@ -80,6 +80,8 @@ public class BoardSquare extends VBox {
         }
 
         hBar.setPrefWidth(70);
+        hBar.setPrefHeight(12);
+        hBar.setMinHeight(12);
         this.getChildren().add(hBar);
         this.setStyle(
                 StringUtil.getCss("-fx-background-image: url('" + unit.getImageUrl() + "');",

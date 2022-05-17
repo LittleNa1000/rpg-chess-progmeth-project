@@ -104,7 +104,7 @@ public class StatusPane extends VBox {
     currentTurn = new Text(BoardConstant.PLAYER1_NAME);
     currentTurn.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
     currentTurn.setFont(new Font(36));
-    Text text = new Text("Current Turn:");
+    Text text = new Text("Current turn:");
     text.setFont(new Font(20));
     displayCurrentTurn.getChildren().addAll(text, currentTurn);
   }

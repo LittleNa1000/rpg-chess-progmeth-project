@@ -22,7 +22,7 @@ public class PlayerInfoPane extends VBox {
   public void reduceUnit() {
     unitCount -= 1;
     unitLeft.setText("Units left: " + String.valueOf(unitCount));
-    pBar.setProgress(((double) unitCount) / ((double) 8));
+    pBar.setProgress(((double) unitCount) / ((double) BoardConstant.TOTAL_UNIT));
   }
 
   public PlayerInfoPane(BoardSquareState state) {
@@ -35,7 +35,7 @@ public class PlayerInfoPane extends VBox {
       name = new Text(BoardConstant.PLAYER2_NAME);
       name.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
     }
-    unitCount = 8;
+    unitCount = BoardConstant.TOTAL_UNIT;
     player.setFont(new Font(18));
     name.setFont(new Font(36));
     unitLeft = new Text("Units left: " + String.valueOf(unitCount));
