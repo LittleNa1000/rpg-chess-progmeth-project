@@ -15,7 +15,10 @@ import unit.HealerUnit;
 import unit.NormalUnit;
 import unit.ShooterUnit;
 import unit.VenomUnit;
+<<<<<<< HEAD
 import util.AudioUtil;
+=======
+>>>>>>> 005ca41a08c26e49241a0a15ae31ff51639cb7f3
 import util.Timer;
 import javafx.application.Platform;
 
@@ -47,11 +50,19 @@ public class GameLogic {
     private static void initPlayer(BoardSquareState state) {
         int row = state == BoardSquareState.PLAYER1 ? 0 : BoardConstant.ROW_NUMBER - 1;
         setBoardSquare(new NormalUnit(), state, row, 0);
+<<<<<<< HEAD
         setBoardSquare(new ShooterUnit(), state, row, 1);
         setBoardSquare(new FlyingUnit(), state, row, 2);
         setBoardSquare(new FreezerUnit(), state, row, 3);
         setBoardSquare(new VenomUnit(), state, row, 4);
         setBoardSquare(new HealerUnit(), state, row, 5);
+=======
+        setBoardSquare(new FlyingUnit(), state, row, 1);
+        setBoardSquare(new ShooterUnit(), state, row, 2);
+        setBoardSquare(new HealerUnit(), state, row, 3);
+        setBoardSquare(new VenomUnit(), state, row, 4);
+        setBoardSquare(new FreezerUnit(), state, row, 5);
+>>>>>>> 005ca41a08c26e49241a0a15ae31ff51639cb7f3
         setBoardSquare(new NormalUnit(), state, row, 6);
         setBoardSquare(new NormalUnit(), state, row, 7);
     }
