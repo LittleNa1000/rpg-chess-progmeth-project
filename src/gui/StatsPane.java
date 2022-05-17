@@ -4,7 +4,6 @@ import base.BaseUnit;
 import constant.BoardConstant;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.effect.Effect;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +17,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import logic.BoardSquareState;
 import logic.GameLogic;
+import unit.FreezerUnit;
+import unit.HealerUnit;
+import unit.VenomUnit;
 import util.StringUtil;
 
 public class StatsPane extends HBox {
@@ -31,6 +33,7 @@ public class StatsPane extends HBox {
   private ProgressBar hBar;
   private HBox allStats;
   private Text mainStats;
+  private Text ability;
   private Text debuffs;
 
   public void showStats(BaseUnit unit, int xPosition, int yPosition) {
@@ -54,13 +57,28 @@ public class StatsPane extends HBox {
     }
     hBar.setProgress(progress);
     hBar.setVisible(true);
-    String mainStatString = "Power: " + String.valueOf(unit.getPower());
-    mainStatString += "\nPower: " + String.valueOf(unit.getPower());
+    String mainStatString = "Stats:\nPower: " + String.valueOf(unit.getPower());
     mainStats.setText(mainStatString);
     String debuffsString = "Debuffs:";
-    debuffsString += "\nStunned: " + String.valueOf(unit.getStunRoundLeft());
-    debuffsString += "\nVenom: " + String.valueOf(unit.getVenomRoundLeft());
+    if (unit.getStunRoundLeft() > 0) {
+      debuffsString += "\nFrozen: " + String.valueOf(unit.getStunRoundLeft());
+    }
+    if (unit.getVenomRoundLeft() > 0) {
+      debuffsString += "\nPoisoned: " + String.valueOf(unit.getVenomRoundLeft());
+    }
     debuffs.setText(debuffsString);
+    String abilityString = "Skill: ";
+    if (unit instanceof FreezerUnit) {
+      abilityString += "Freeze an\nenemy for " + String.valueOf(((FreezerUnit) unit).getStunRound()) + " turn(s)";
+    } else if (unit instanceof HealerUnit) {
+      abilityString += "Heal an\nally for " + String.valueOf(((HealerUnit) unit).getHealingPoint()) + " hp";
+    } else if (unit instanceof VenomUnit) {
+      abilityString += "Deals " + String.valueOf(((VenomUnit) unit).getPoisonPower()) + "";
+      abilityString += "\ndamage to an\nenemy for " + String.valueOf(((VenomUnit) unit).getPoisonRound()) + " turn(s)";
+    } else {
+      abilityString += "\nNone";
+    }
+    ability.setText(abilityString);
   }
 
   public StatsPane() {
@@ -75,15 +93,17 @@ public class StatsPane extends HBox {
     hp = new Text();
     hp.setFont(new Font(18));
     hBar = new ProgressBar();
-    hBar.setPrefWidth(350);
+    hBar.setPrefWidth(360);
     hBar.setVisible(false);
     allStats = new HBox();
     mainStats = new Text();
     mainStats.setFont(new Font(16));
     debuffs = new Text();
     debuffs.setFont(new Font(16));
-    allStats.setSpacing(50);
-    allStats.getChildren().addAll(mainStats, debuffs);
+    ability = new Text();
+    ability.setFont(new Font(16));
+    allStats.setSpacing(40);
+    allStats.getChildren().addAll(mainStats, debuffs, ability);
     header.setLeft(name);
     header.setRight(hp);
     detailsPane.setSpacing(5);

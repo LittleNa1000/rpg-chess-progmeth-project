@@ -22,6 +22,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logic.BoardSquareState;
 import logic.GameLogic;
+import util.StringUtil;
 
 public class StatusPane extends VBox {
   private Button quitBtn;
@@ -29,19 +30,35 @@ public class StatusPane extends VBox {
   private Button skipTurnBtn;
   private VBox displayCurrentTurn;
   private Text currentTurn;
+  private PlayerInfoPane player1Pane;
+  private PlayerInfoPane player2Pane;
+
+  public Button getToggleTimerBtn() {
+    return toggleTimerBtn;
+  }
+
+  public void reduceUnit(BoardSquareState state) {
+    if (state == BoardSquareState.PLAYER1) {
+      player1Pane.reduceUnit();
+    } else if (state == BoardSquareState.PLAYER2) {
+      player2Pane.reduceUnit();
+    }
+  }
 
   public void toggleTurn() {
     if (GameLogic.getCurrentPlayer() == BoardSquareState.PLAYER1) {
       currentTurn.setText(BoardConstant.PLAYER1_NAME);
-      skipTurnBtn.setText("Skip to " + BoardConstant.PLAYER2_NAME + "'s Turn");
+      currentTurn.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
     } else {
       currentTurn.setText(BoardConstant.PLAYER2_NAME);
-      skipTurnBtn.setText("Skip to " + BoardConstant.PLAYER1_NAME + "'s Turn");
+      currentTurn.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
     }
   }
 
   private void initSkipTurnBtn() {
-    skipTurnBtn = new Button("Skip to " + BoardConstant.PLAYER2_NAME + "'s Turn");
+    skipTurnBtn = new Button("Skip Turn");
+    skipTurnBtn.setFont(new Font(24));
+    skipTurnBtn.setWrapText(true);
     skipTurnBtn.setOnAction(e -> {
       GameLogic.toggleCurrentPlayer();
     });
@@ -49,18 +66,15 @@ public class StatusPane extends VBox {
 
   private void initToggleTimerBtn() {
     toggleTimerBtn = new Button("Pause Timer");
+    toggleTimerBtn.setFont(new Font(24));
     toggleTimerBtn.setOnAction(e -> {
       GameLogic.setTimerActive(!GameLogic.isTimerActive());
-      if (GameLogic.isTimerActive()) {
-        toggleTimerBtn.setText("Pause Timer");
-      } else {
-        toggleTimerBtn.setText("Resume Timer");
-      }
     });
   }
 
   private void initQuitBtn() {
     quitBtn = new Button("Quit");
+    quitBtn.setFont(new Font(24));
     quitBtn.setOnAction(e -> {
       Alert alert = new Alert(AlertType.CONFIRMATION, "Return to main menu?",
           ButtonType.NO, ButtonType.YES);
@@ -88,6 +102,7 @@ public class StatusPane extends VBox {
     displayCurrentTurn.setAlignment(Pos.CENTER_LEFT);
     displayCurrentTurn.setPadding(new Insets(10, 10, 10, 10));
     currentTurn = new Text(BoardConstant.PLAYER1_NAME);
+    currentTurn.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
     currentTurn.setFont(new Font(36));
     Text text = new Text("Current Turn:");
     text.setFont(new Font(20));
@@ -97,13 +112,15 @@ public class StatusPane extends VBox {
   public StatusPane() {
     super();
     setPrefWidth(200);
-    setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, null)));
-    setSpacing(30);
+    setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+    setSpacing(10);
     setAlignment(Pos.TOP_CENTER);
     initQuitBtn();
     initToggleTimerBtn();
     initSkipTurnBtn();
     initDisplayCurrentTurn();
-    getChildren().addAll(displayCurrentTurn, toggleTimerBtn, skipTurnBtn, quitBtn);
+    player1Pane = new PlayerInfoPane(BoardSquareState.PLAYER1);
+    player2Pane = new PlayerInfoPane(BoardSquareState.PLAYER2);
+    getChildren().addAll(displayCurrentTurn, toggleTimerBtn, skipTurnBtn, quitBtn, player1Pane, player2Pane);
   }
 }
