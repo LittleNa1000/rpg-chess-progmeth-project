@@ -10,8 +10,12 @@ import gui.ActionPane;
 import gui.BoardPane;
 import gui.StatusPane;
 import unit.FlyingUnit;
+import unit.FreezerUnit;
+import unit.HealerUnit;
 import unit.NormalUnit;
 import unit.ShooterUnit;
+import unit.VenomUnit;
+import util.AudioUtil;
 import util.Timer;
 import javafx.application.Platform;
 
@@ -45,9 +49,9 @@ public class GameLogic {
         setBoardSquare(new NormalUnit(), state, row, 0);
         setBoardSquare(new ShooterUnit(), state, row, 1);
         setBoardSquare(new FlyingUnit(), state, row, 2);
-        setBoardSquare(new NormalUnit(), state, row, 3);
-        setBoardSquare(new NormalUnit(), state, row, 4);
-        setBoardSquare(new NormalUnit(), state, row, 5);
+        setBoardSquare(new FreezerUnit(), state, row, 3);
+        setBoardSquare(new VenomUnit(), state, row, 4);
+        setBoardSquare(new HealerUnit(), state, row, 5);
         setBoardSquare(new NormalUnit(), state, row, 6);
         setBoardSquare(new NormalUnit(), state, row, 7);
     }
@@ -87,6 +91,7 @@ public class GameLogic {
         boardUnits[xPosition][yPosition] = boardUnits[selectedXPosition][selectedYPosition];
         boardUnits[selectedXPosition][selectedYPosition] = null;
         toggleCurrentPlayer();
+        AudioUtil.playSound("move.wav");
     }
 
     public static void attack(int xPosition, int yPosition) {
@@ -99,18 +104,31 @@ public class GameLogic {
                 return;
             Attackable attacker = (Attackable) selectedUnit;
             attacker.attackUnit(targetUnit);
+            if (selectedUnit instanceof NormalUnit) {
+                AudioUtil.playSound("attack-melee.wav");
+            } else {
+                AudioUtil.playSound("attack-ranged.wav");
+            }
         }
         if (selectedUnit instanceof Debuffable) {
             if (boardState[xPosition][yPosition] == currentPlayer)
                 return;
             Debuffable attacker = (Debuffable) selectedUnit;
             attacker.debuffUnit(targetUnit);
+            if (selectedUnit instanceof VenomUnit) {
+                AudioUtil.playSound("poison.wav");
+            } else if (selectedUnit instanceof FreezerUnit) {
+                AudioUtil.playSound("freeze.wav");
+            }
         }
         if (selectedUnit instanceof Buffable) {
             if (boardState[xPosition][yPosition] != currentPlayer)
                 return;
             Buffable healer = (Buffable) selectedUnit;
             healer.buffUnit(targetUnit);
+            if (selectedUnit instanceof HealerUnit) {
+                AudioUtil.playSound("heal.wav");
+            }
         }
         toggleCurrentPlayer();
     }
