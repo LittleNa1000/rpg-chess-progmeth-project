@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import logic.BoardSquareState;
+import logic.SquareOwnerState;
 import logic.GameLogic;
 import unit.FlyingUnit;
 import unit.FreezerUnit;
@@ -38,9 +38,11 @@ public class StatsPane extends HBox {
   private Text debuffs;
 
   public void showStats(BaseUnit unit, int xPosition, int yPosition) {
-    image.setImage(new Image(unit.getImageUrl(), 125, 125, false, false));
-    movePtrn.setImage(new Image(StringUtil.getImageUrl("normal-unit-move.jpg"), 125, 125, false, false));
-    atkPtrn.setImage(new Image(StringUtil.getImageUrl("normal-unit-attack.jpg"), 125, 125, false, false));
+    image.setImage(unit.getImage());
+    movePtrn.setImage(new Image(StringUtil.getImageUrl("normal-unit-move.jpg"),
+        125, 125, false, false));
+    atkPtrn.setImage(new Image(StringUtil.getImageUrl("normal-unit-attack.jpg"),
+        125, 125, false, false));
     name.setText("[" + String.valueOf(xPosition) + " , " + String
         .valueOf(yPosition) + "] " + unit.getName());
     double progress = ((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth());
@@ -51,7 +53,7 @@ public class StatsPane extends HBox {
     } else {
       hBar.setEffect(new SepiaTone(0));
     }
-    if (GameLogic.getBoardState()[xPosition][yPosition] == BoardSquareState.PLAYER1) {
+    if (GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.PLAYER1) {
       hBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
     } else {
       hBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
@@ -87,6 +89,8 @@ public class StatsPane extends HBox {
   public StatsPane() {
     super();
     image = new ImageView();
+    image.setFitWidth(125);
+    image.setFitHeight(125);
     movePtrn = new ImageView();
     atkPtrn = new ImageView();
     detailsPane = new VBox();

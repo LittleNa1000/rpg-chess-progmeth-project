@@ -1,6 +1,6 @@
 package base;
 
-import util.StringUtil;
+import javafx.scene.image.Image;
 
 public abstract class BaseUnit {
     private final int maxHealth;
@@ -9,24 +9,24 @@ public abstract class BaseUnit {
     private int currentHealth;
     private int stunRoundLeft;
     private int venomRoundLeft;
-    private String imageUrl;
+    private Image image;
 
-    public BaseUnit(String name, int maxHealth, int power, String imageUrl) {
+    public BaseUnit(String name, int maxHealth, int power, Image image) {
         this.maxHealth = maxHealth;
         this.name = name;
         this.power = power;
         this.currentHealth = maxHealth;
         this.stunRoundLeft = 0;
         this.venomRoundLeft = 0;
-        this.imageUrl = imageUrl;
+        this.image = image;
     }
 
     public int getCurrentHealth() {
         return currentHealth;
     }
 
-    public String getImageUrl() {
-        return StringUtil.getImageUrl(imageUrl);
+    public Image getImage() {
+        return image;
     }
 
     public int getMaxHealth() {
@@ -59,8 +59,8 @@ public abstract class BaseUnit {
         setCurrentHealth(currentHealth - damage);
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public void setName(String name) {
