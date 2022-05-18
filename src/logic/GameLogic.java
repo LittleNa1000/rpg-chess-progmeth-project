@@ -125,7 +125,7 @@ public class GameLogic {
             }
             if (targetUnit.getCurrentHealth() <= 0) {
                 selectedUnit.upgrade();
-                AudioUtil.playSound("death.wav");
+                AudioUtil.playSound("upgrade.wav");
             }
         }
         if (selectedUnit instanceof Debuffable) {
