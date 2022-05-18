@@ -3,7 +3,7 @@ package gui;
 import base.BasePotion;
 import base.BaseUnit;
 import constant.BoardConstant;
-
+import constant.ColorConstant;
 import constant.UnitConstant;
 import javafx.geometry.Insets;
 import javafx.scene.layout.ColumnConstraints;
@@ -17,6 +17,7 @@ import unit.HealerUnit;
 import unit.NormalUnit;
 import unit.ShooterUnit;
 import unit.VenomUnit;
+import util.StringUtil;
 
 public class BoardPane extends GridPane {
   private BoardSquare[][] allSquares = new BoardSquare[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
@@ -25,9 +26,9 @@ public class BoardPane extends GridPane {
     super();
     GameLogic.init();
 
-    setPadding(new Insets(8));
-
-    setGridLinesVisible(true);
+    setPadding(new Insets(5));
+    setStyle(StringUtil.getCss("-fx-border-color: " + ColorConstant.PALETTE_4 + ";",
+        "-fx-border-width: 4;", "-fx-background-color: " + ColorConstant.PALETTE_1 + ";"));
     // setPadding(new Insets(15, 15, 15, 15));
     // setBorder(new Border(
     // new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
