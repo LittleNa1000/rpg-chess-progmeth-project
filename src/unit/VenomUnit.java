@@ -11,8 +11,9 @@ public class VenomUnit extends BaseUnit implements Debuffable {
 
     public VenomUnit(SquareOwnerState state) {
         super(UnitConstant.VENOM_UNIT_NAME, UnitConstant.VENOM_UNIT_MAX_HP, 0,
-                state == SquareOwnerState.PLAYER1 ? UnitConstant.VENOM_UNIT_IMAGE_URL_1
-                        : UnitConstant.VENOM_UNIT_IMAGE_URL_2);
+                state == SquareOwnerState.PLAYER1 ? UnitConstant.VENOM_UNIT_IMAGE_1
+                        : UnitConstant.VENOM_UNIT_IMAGE_2,
+                UnitConstant.VENOM_UNIT_IMAGE_MOVE, UnitConstant.VENOM_UNIT_IMAGE_ATTACK);
         this.poisonRound = UnitConstant.VENOM_UNIT_POISON_ROUND;
     }
 

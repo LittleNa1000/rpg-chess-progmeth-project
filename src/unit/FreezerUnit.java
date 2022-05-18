@@ -10,8 +10,9 @@ public class FreezerUnit extends BaseUnit implements Debuffable {
 
     public FreezerUnit(SquareOwnerState state) {
         super(UnitConstant.FREEZER_UNIT_NAME, UnitConstant.FREEZER_UNIT_MAX_HP, 0,
-                state == SquareOwnerState.PLAYER1 ? UnitConstant.FREEZER_UNIT_IMAGE_URL_1
-                        : UnitConstant.FREEZER_UNIT_IMAGE_URL_2);
+                state == SquareOwnerState.PLAYER1 ? UnitConstant.FREEZER_UNIT_IMAGE_1
+                        : UnitConstant.FREEZER_UNIT_IMAGE_2,
+                UnitConstant.FREEZER_UNIT_IMAGE_MOVE, UnitConstant.FREEZER_UNIT_IMAGE_ATTACK);
         this.stunRound = UnitConstant.FREEZER_UNIT_STUN_ROUND;
     }
 

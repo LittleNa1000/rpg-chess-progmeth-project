@@ -10,8 +10,10 @@ public abstract class BaseUnit {
     private int stunRoundLeft;
     private int venomRoundLeft;
     private Image image;
+    private Image movePattern;
+    private Image atkPattern;
 
-    public BaseUnit(String name, int maxHealth, int power, Image image) {
+    public BaseUnit(String name, int maxHealth, int power, Image image, Image movePattern, Image atkPattern) {
         this.maxHealth = maxHealth;
         this.name = name;
         this.power = power;
@@ -19,6 +21,8 @@ public abstract class BaseUnit {
         this.stunRoundLeft = 0;
         this.venomRoundLeft = 0;
         this.image = image;
+        this.movePattern = movePattern;
+        this.atkPattern = atkPattern;
     }
 
     public int getCurrentHealth() {
@@ -47,6 +51,22 @@ public abstract class BaseUnit {
 
     public int getVenomRoundLeft() {
         return venomRoundLeft;
+    }
+
+    public Image getMovePattern() {
+        return this.movePattern;
+    }
+
+    public void setMovePattern(Image movePattern) {
+        this.movePattern = movePattern;
+    }
+
+    public Image getAtkPattern() {
+        return this.atkPattern;
+    }
+
+    public void setAtkPattern(Image atkPattern) {
+        this.atkPattern = atkPattern;
     }
 
     public void setCurrentHealth(int currentHealth) {

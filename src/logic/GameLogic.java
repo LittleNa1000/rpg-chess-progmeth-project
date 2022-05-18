@@ -224,6 +224,7 @@ public class GameLogic {
             return;
         }
         setGameActive(false);
+        currentPlayer = SquareOwnerState.PLAYER1;
         System.out.println("Game Over");
     }
 
