@@ -28,6 +28,7 @@ public class BoardPane extends GridPane {
     setPadding(new Insets(8));
 
     setGridLinesVisible(true);
+    // setPadding(new Insets(15, 15, 15, 15));
     // setBorder(new Border(
     // new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
     // BorderWidths.DEFAULT)));
