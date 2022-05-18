@@ -8,7 +8,8 @@ public class HealingPotion extends BasePotion {
     private final int healingPoint;
 
     public HealingPotion() {
-        super(PotionConstant.HEALING_POTION_NAME, PotionConstant.HEALING_POTION_IMAGE);
+        super(PotionConstant.HEALING_POTION_NAME, PotionConstant.HEALING_POTION_IMAGE,
+                PotionConstant.HEALING_POTION_AGE);
         this.healingPoint = PotionConstant.HEALING_POTION_ABLILITY;
     }
 

@@ -8,7 +8,7 @@ public class ToxicPotion extends BasePotion {
     private final int toxicPower;
 
     public ToxicPotion() {
-        super(PotionConstant.TOXIC_POTION_NAME, PotionConstant.TOXIC_POTION_IMAGE);
+        super(PotionConstant.TOXIC_POTION_NAME, PotionConstant.TOXIC_POTION_IMAGE, PotionConstant.TOXIC_POTION_AGE);
         this.toxicPower = PotionConstant.TOXIC_POTION_ABLILITY;
     }
 

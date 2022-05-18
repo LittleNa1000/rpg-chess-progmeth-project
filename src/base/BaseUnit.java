@@ -15,14 +15,14 @@ public abstract class BaseUnit {
 
     public BaseUnit(String name, int maxHealth, int power, Image image, Image movePattern, Image atkPattern) {
         this.maxHealth = maxHealth;
-        this.name = name;
-        this.power = power;
-        this.currentHealth = maxHealth;
-        this.stunRoundLeft = 0;
-        this.venomRoundLeft = 0;
-        this.image = image;
-        this.movePattern = movePattern;
-        this.atkPattern = atkPattern;
+        setName(name);
+        setPower(power);
+        setCurrentHealth(maxHealth);
+        setStunRoundLeft(0);
+        setVenomRoundLeft(0);
+        setImage(image);
+        setMovePattern(movePattern);
+        setAtkPattern(atkPattern);
     }
 
     public abstract void upgrade();
