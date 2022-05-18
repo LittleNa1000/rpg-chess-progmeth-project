@@ -176,6 +176,7 @@ public class GameLogic {
                 if (boardPotions[i][j] != null) {
                     System.out.println("POTION AGE" + i + " " + j + " " + boardPotions[i][j].getAge());
                     boardPotions[i][j].setAge(boardPotions[i][j].getAge() - 1);
+                    boardPane.getAllSquares()[i][j].addPotion(boardPotions[i][j]);
                     if (boardPotions[i][j].getAge() <= 0) {
                         boardState[i][j] = SquareOwnerState.EMPTY;
                         boardPotions[i][j] = null;
