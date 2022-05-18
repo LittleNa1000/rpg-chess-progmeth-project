@@ -123,7 +123,8 @@ public class GameLogic {
         boardUnits[selectedXPosition][selectedYPosition] = null;
         // boardPane.move(xPosition, yPosition);
         boardPane.getAllSquares()[GameLogic.getSelectedXPosition()][GameLogic.getSelectedYPosition()].setUnit(null);
-
+        GameLogic.getActionPane().getStatsPane().showUnitStats(GameLogic.getBoardUnits()[xPosition][yPosition],
+                xPosition, yPosition);
         toggleCurrentPlayer();
         AudioUtil.playSound("move.wav");
     }
@@ -151,6 +152,8 @@ public class GameLogic {
             Buffable healer = (Buffable) selectedUnit;
             healer.buffUnit(targetUnit);
         }
+        GameLogic.getActionPane().getStatsPane().showUnitStats(GameLogic.getBoardUnits()[xPosition][yPosition],
+                xPosition, yPosition);
         toggleCurrentPlayer();
     }
 
