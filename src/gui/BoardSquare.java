@@ -31,6 +31,8 @@ public class BoardSquare extends VBox {
         imageView = new ImageView();
         imageView.setFitHeight(50);
         imageView.setFitWidth(50);
+        // setStyle(StringUtil.getCss());
+        // setStyle(StringUtil.getCss());
         setSquareState(SquarePreviewState.NONE);
         setxPosition(x);
         setyPosition(y);
@@ -54,20 +56,23 @@ public class BoardSquare extends VBox {
                 StringUtil.getCss(
                         "-fx-background-image: url('" + StringUtil.getImageUrl("brick-bg.jpg") + "');",
                         "-fx-background-size: 100% 100%;",
-                        "-fx-background-position: center center;", "-fx-background-repeat: stretch;"));
+                        "-fx-background-position: center center;", "-fx-background-repeat: stretch;",
+                        "-fx-border-color: white;"));
     }
 
     private void setBackgroundImage(String fileName) {
         this.setStyle(
                 StringUtil.getCss("-fx-background-image: url('" + StringUtil.getImageUrl(fileName) + "');",
-                        "-fx-background-size: 100% 100%;"));
+                        "-fx-background-size: 100% 100%;",
+                        "-fx-border-color: white;"));
     }
 
     public void removeUnit() {
         this.getChildren().clear();
         this.setStyle(
                 StringUtil.getCss("-fx-background-image: url('" + StringUtil.getImageUrl("brick-bg.jpg") + "');",
-                        "-fx-background-size: 100% 100%;"));
+                        "-fx-background-size: 100% 100%;",
+                        "-fx-border-color: white;"));
     }
 
     private void setOnClickHandler() {
