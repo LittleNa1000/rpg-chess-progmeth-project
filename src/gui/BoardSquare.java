@@ -76,19 +76,25 @@ public class BoardSquare extends VBox {
             if (GameLogic.getBoardUnits()[xPosition][yPosition] != null)
                 GameLogic.getActionPane().getStatsPane().showStats(GameLogic.getBoardUnits()[xPosition][yPosition],
                         xPosition, yPosition);
+
+            if (this.squareState == SquarePreviewState.MOVE
+                    && GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.EMPTY) {
+                GameLogic.move(xPosition, yPosition);
+                return;
+            }
+
+            if (this.squareState == SquarePreviewState.ATTACK
+                    && (GameLogic.getBoardState()[xPosition][yPosition] != GameLogic.getCurrentPlayer()
+                            || (GameLogic.getBoardState()[xPosition][yPosition] == GameLogic.getCurrentPlayer()
+                                    && GameLogic.getSelectedUnit() instanceof Buffable))
+                    && GameLogic.getBoardState()[xPosition][yPosition] != SquareOwnerState.EMPTY) {
+                GameLogic.attack(xPosition, yPosition);
+                return;
+            }
+
             if (button == MouseButton.PRIMARY) {
                 System.out.println("CLICK PRIMARY" + xPosition + yPosition);
-                if (this.squareState == SquarePreviewState.MOVE
-                        && GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.EMPTY) {
-                    GameLogic.move(xPosition, yPosition);
-                } else if (this.squareState == SquarePreviewState.ATTACK
-                        && (GameLogic.getBoardState()[xPosition][yPosition] != GameLogic.getCurrentPlayer()
-                                || (GameLogic.getBoardState()[xPosition][yPosition] == GameLogic.getCurrentPlayer()
-                                        && GameLogic.getSelectedUnit() instanceof Buffable))
-                        && GameLogic.getBoardState()[xPosition][yPosition] != SquareOwnerState.EMPTY) {
-                    GameLogic.attack(xPosition, yPosition);
-                } else
-                    GameLogic.movePreview(xPosition, yPosition);
+                GameLogic.movePreview(xPosition, yPosition);
             } else if (button == MouseButton.SECONDARY) {
                 GameLogic.attackPreview(xPosition, yPosition);
                 System.out.println("CLICK SECONDARY" + xPosition + yPosition);
