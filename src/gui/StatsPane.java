@@ -1,5 +1,6 @@
 package gui;
 
+import base.BasePotion;
 import base.BaseUnit;
 import constant.BoardConstant;
 import javafx.geometry.Insets;
@@ -16,6 +17,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import logic.SquareOwnerState;
+import potion.BuffPotion;
+import potion.HealingPotion;
+import potion.ToxicPotion;
 import logic.GameLogic;
 import unit.FlyingUnit;
 import unit.FreezerUnit;
@@ -37,7 +41,34 @@ public class StatsPane extends HBox {
   private Text ability;
   private Text debuffs;
 
-  public void showStats(BaseUnit unit, int xPosition, int yPosition) {
+  public void showPotionStats(BasePotion potion, int xPosition, int yPosition) {
+    image.setImage(potion.getImage());
+    movePtrn.setImage(null);
+    atkPtrn.setImage(null);
+    name.setText("[" + String.valueOf(xPosition) + " , " + String
+        .valueOf(yPosition) + "] " + potion.getName());
+    hp.setText("");
+    double progress = ((double) potion.getAge()) / ((double) potion.getMaxAge());
+    hBar.setStyle(StringUtil.getCss("-fx-accent: blue;"));
+    hBar.setEffect(new SepiaTone(0));
+    hBar.setProgress(progress);
+    hBar.setVisible(true);
+    String mainStatString = "Age: " + String.valueOf(potion.getAge()) + " / " + String.valueOf(potion.getMaxAge())
+        + " (" + String.valueOf(Math.round(progress * 100)) + "%)\t";
+    mainStats.setText(mainStatString);
+    debuffs.setText("");
+    String abilityString = "Effect: ";
+    if (potion instanceof BuffPotion) {
+      abilityString += "Increase a unit's\nability or attack power\npermanently";
+    } else if (potion instanceof ToxicPotion) {
+      abilityString += "Deals " + String.valueOf(((ToxicPotion) potion).getToxicPower()) + " damage\nto a unit";
+    } else if (potion instanceof HealingPotion) {
+      abilityString += "Heals " + String.valueOf(((HealingPotion) potion).getHealingPoint()) + " hp\nto a unit";
+    }
+    ability.setText(abilityString);
+  }
+
+  public void showUnitStats(BaseUnit unit, int xPosition, int yPosition) {
     image.setImage(unit.getImage());
     movePtrn.setImage(unit.getMovePattern());
     atkPtrn.setImage(unit.getAtkPattern());

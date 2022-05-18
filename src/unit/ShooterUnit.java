@@ -5,6 +5,7 @@ import base.BaseUnit;
 import constant.PotionConstant;
 import constant.UnitConstant;
 import logic.SquareOwnerState;
+import util.AudioUtil;
 
 public class ShooterUnit extends BaseUnit implements Attackable {
     public ShooterUnit(SquareOwnerState state) {
@@ -22,7 +23,7 @@ public class ShooterUnit extends BaseUnit implements Attackable {
     @Override
     public void attackUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
-
         unit.reduceHealth(this.getPower());
+        AudioUtil.playSound("attack-ranged.wav", 0.3);
     }
 }

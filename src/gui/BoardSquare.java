@@ -80,9 +80,13 @@ public class BoardSquare extends VBox {
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             MouseButton button = event.getButton();
             if (GameLogic.getBoardUnits()[xPosition][yPosition] != null)
-                GameLogic.getActionPane().getStatsPane().showStats(GameLogic.getBoardUnits()[xPosition][yPosition],
+                GameLogic.getActionPane().getStatsPane().showUnitStats(GameLogic.getBoardUnits()[xPosition][yPosition],
                         xPosition, yPosition);
-
+            else if (GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.POTION) {
+                System.out.println("SHOW POTION");
+                GameLogic.getActionPane().getStatsPane()
+                        .showPotionStats(GameLogic.getBoardPotions()[xPosition][yPosition], xPosition, yPosition);
+            }
             if (this.squareState == SquarePreviewState.MOVE
                     && (GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.EMPTY
                             || GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.POTION)) {

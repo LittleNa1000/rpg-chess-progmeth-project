@@ -5,6 +5,7 @@ import base.BaseUnit;
 import constant.PotionConstant;
 import constant.UnitConstant;
 import logic.SquareOwnerState;
+import util.AudioUtil;
 
 public class FlyingUnit extends BaseUnit implements Attackable {
     public FlyingUnit(SquareOwnerState state) {
@@ -23,5 +24,6 @@ public class FlyingUnit extends BaseUnit implements Attackable {
     public void attackUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
         unit.reduceHealth(this.getPower());
+        AudioUtil.playSound("attack-ranged.wav", 0.3);
     }
 }

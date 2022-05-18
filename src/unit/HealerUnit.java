@@ -5,6 +5,7 @@ import base.Buffable;
 import constant.PotionConstant;
 import constant.UnitConstant;
 import logic.SquareOwnerState;
+import util.AudioUtil;
 
 public class HealerUnit extends BaseUnit implements Buffable {
     private int healingPoint;
@@ -26,6 +27,7 @@ public class HealerUnit extends BaseUnit implements Buffable {
     public void buffUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
         unit.setCurrentHealth(Math.min(unit.getMaxHealth(), unit.getCurrentHealth() + healingPoint));
+        AudioUtil.playSound("heal.wav", 0.5);
     }
 
     public int getHealingPoint() {

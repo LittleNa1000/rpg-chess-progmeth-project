@@ -1,10 +1,6 @@
 package constant;
 
-import base.BasePotion;
 import javafx.scene.image.Image;
-import potion.BuffPotion;
-import potion.HealingPotion;
-import potion.ToxicPotion;
 import util.StringUtil;
 
 public class PotionConstant {
