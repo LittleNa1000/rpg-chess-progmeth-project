@@ -135,11 +135,6 @@ public class GameLogic {
         if (selectedUnit instanceof Attackable) {
             Attackable attacker = (Attackable) selectedUnit;
             attacker.attackUnit(targetUnit);
-            if (selectedUnit instanceof NormalUnit) {
-                AudioUtil.playSound("attack-melee.wav");
-            } else {
-                AudioUtil.playSound("attack-ranged.wav", 0.5);
-            }
             if (targetUnit.getCurrentHealth() <= 0) {
                 selectedUnit.upgrade();
                 AudioUtil.playSound("upgrade.wav");
@@ -148,20 +143,12 @@ public class GameLogic {
         if (selectedUnit instanceof Debuffable) {
             Debuffable attacker = (Debuffable) selectedUnit;
             attacker.debuffUnit(targetUnit);
-            if (selectedUnit instanceof VenomUnit) {
-                AudioUtil.playSound("poison.wav");
-            } else if (selectedUnit instanceof FreezerUnit) {
-                AudioUtil.playSound("freeze.wav", 0.5);
-            }
         }
         if (selectedUnit instanceof Buffable) {
             if (boardState[xPosition][yPosition] != currentPlayer)
                 return;
             Buffable healer = (Buffable) selectedUnit;
             healer.buffUnit(targetUnit);
-            if (selectedUnit instanceof HealerUnit) {
-                AudioUtil.playSound("heal.wav", 0.5);
-            }
         }
         toggleCurrentPlayer();
     }
@@ -253,19 +240,14 @@ public class GameLogic {
                 }
                 if (Timer.isTimeOver() && isGameActive()) {
                     Platform.runLater(new Runnable() {
-
                         @Override
                         public void run() {
-                            // gameOver();
                             toggleCurrentPlayer();
                         }
                     });
                 }
-            } catch (
-
-            InterruptedException e) {
-                // e.printStackTrace();
-                System.out.println("Timer Thread Interrupted");
+            } catch (InterruptedException e) {
+                // System.out.println("Timer Thread Interrupted");
             }
         });
         thread.start();
@@ -404,5 +386,13 @@ public class GameLogic {
 
     public static void setPotionCounter(int potionCounter) {
         GameLogic.potionCounter = potionCounter;
+    }
+
+    public static BasePotion[][] getBoardPotions() {
+        return boardPotions;
+    }
+
+    public static void setBoardPotions(BasePotion[][] boardPotions) {
+        GameLogic.boardPotions = boardPotions;
     }
 }

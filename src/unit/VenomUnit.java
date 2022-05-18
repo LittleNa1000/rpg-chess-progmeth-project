@@ -5,6 +5,7 @@ import base.Debuffable;
 import constant.PotionConstant;
 import constant.UnitConstant;
 import logic.SquareOwnerState;
+import util.AudioUtil;
 
 public class VenomUnit extends BaseUnit implements Debuffable {
     private static final int poisonPower = UnitConstant.VENOM_UNIT_POISON_POWER;
@@ -27,6 +28,7 @@ public class VenomUnit extends BaseUnit implements Debuffable {
     public void debuffUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
         unit.setVenomRoundLeft(poisonRound);
+        AudioUtil.playSound("poison.wav");
     }
 
     public static int getPoisonpower() {

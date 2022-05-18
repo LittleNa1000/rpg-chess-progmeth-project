@@ -3,12 +3,14 @@ package potion;
 import base.BasePotion;
 import base.BaseUnit;
 import constant.PotionConstant;
+import util.AudioUtil;
 
 public class ToxicPotion extends BasePotion {
     private final int toxicPower;
 
     public ToxicPotion() {
-        super(PotionConstant.TOXIC_POTION_NAME, PotionConstant.TOXIC_POTION_IMAGE, PotionConstant.TOXIC_POTION_AGE);
+        super(PotionConstant.TOXIC_POTION_NAME, PotionConstant.TOXIC_POTION_IMAGE, PotionConstant.TOXIC_POTION_AGE,
+                PotionConstant.TOXIC_POTION_AGE);
         this.toxicPower = PotionConstant.TOXIC_POTION_ABLILITY;
     }
 
@@ -20,5 +22,6 @@ public class ToxicPotion extends BasePotion {
     public void consume(BaseUnit unit) {
         // TODO Auto-generated method stub
         unit.reduceHealth(toxicPower);
+        AudioUtil.playSound("poison.wav");
     }
 }

@@ -5,6 +5,7 @@ import base.Debuffable;
 import constant.PotionConstant;
 import constant.UnitConstant;
 import logic.SquareOwnerState;
+import util.AudioUtil;
 
 public class FreezerUnit extends BaseUnit implements Debuffable {
     private int stunRound;
@@ -26,6 +27,7 @@ public class FreezerUnit extends BaseUnit implements Debuffable {
     public void debuffUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
         unit.setStunRoundLeft(Math.max(unit.getStunRoundLeft(), this.stunRound + 1));
+        AudioUtil.playSound("freeze.wav", 0.3);
     }
 
     public int getStunRound() {

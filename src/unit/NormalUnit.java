@@ -5,6 +5,7 @@ import base.BaseUnit;
 import constant.PotionConstant;
 import constant.UnitConstant;
 import logic.SquareOwnerState;
+import util.AudioUtil;
 
 public class NormalUnit extends BaseUnit implements Attackable {
 
@@ -23,7 +24,9 @@ public class NormalUnit extends BaseUnit implements Attackable {
     @Override
     public void attackUnit(BaseUnit unit) {
         // TODO Auto-generated method stub
-        if (!(unit instanceof FlyingUnit))
+        if (!(unit instanceof FlyingUnit)) {
             unit.reduceHealth(this.getPower());
+            AudioUtil.playSound("attack-melee.wav");
+        }
     }
 }
