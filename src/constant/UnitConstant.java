@@ -47,7 +47,7 @@ public class UnitConstant {
 
         static final public String VENOM_UNIT_NAME = "VENOM UNIT";
         static final public int VENOM_UNIT_MAX_HP = 18;
-        static final public int VENOM_UNIT_POISON_POWER = 1;
+        static final public int VENOM_UNIT_POISON_POWER = 3;
         static final public int VENOM_UNIT_POISON_ROUND = 3;
         static final public Image VENOM_UNIT_IMAGE_1 = new Image(StringUtil.getImageUrl("venom-unit.jpg"));
         static final public Image VENOM_UNIT_IMAGE_2 = new Image(StringUtil.getImageUrl("venom-unit.jpg"));

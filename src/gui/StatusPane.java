@@ -47,7 +47,9 @@ public class StatusPane extends VBox {
     } else if (state == SquareOwnerState.PLAYER2) {
       player2Pane.reduceUnit();
     }
-    if (player1Pane.getUnitCount() <= 0) {
+    if (player1Pane.getUnitCount() <= 0 && player2Pane.getUnitCount() <= 0) {
+      GameLogic.setWinner(SquareOwnerState.EMPTY);
+    } else if (player1Pane.getUnitCount() <= 0) {
       GameLogic.setWinner(SquareOwnerState.PLAYER2);
     } else if (player2Pane.getUnitCount() <= 0) {
       GameLogic.setWinner(SquareOwnerState.PLAYER1);
