@@ -123,6 +123,10 @@ public class GameLogic {
             } else {
                 AudioUtil.playSound("attack-ranged.wav", 0.5);
             }
+            if (targetUnit.getCurrentHealth() <= 0) {
+                selectedUnit.upgrade();
+                AudioUtil.playSound("death.wav");
+            }
         }
         if (selectedUnit instanceof Debuffable) {
             Debuffable attacker = (Debuffable) selectedUnit;

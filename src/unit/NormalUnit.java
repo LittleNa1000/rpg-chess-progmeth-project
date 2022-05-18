@@ -2,6 +2,7 @@ package unit;
 
 import base.Attackable;
 import base.BaseUnit;
+import constant.PotionConstant;
 import constant.UnitConstant;
 import logic.SquareOwnerState;
 
@@ -12,6 +13,11 @@ public class NormalUnit extends BaseUnit implements Attackable {
                 state == SquareOwnerState.PLAYER1 ? UnitConstant.NORMAL_UNIT_IMAGE_1
                         : UnitConstant.NORMAL_UNIT_IMAGE_2,
                 UnitConstant.NORMAL_UNIT_IMAGE_MOVE, UnitConstant.NORMAL_UNIT_IMAGE_ATTACK);
+    }
+
+    @Override
+    public void upgrade() {
+        setPower(getPower() + PotionConstant.BUFF_POTION_POWER);
     }
 
     @Override
