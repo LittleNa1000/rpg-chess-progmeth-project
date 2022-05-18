@@ -32,7 +32,7 @@ public class UnitConstant {
 
         static final public String SHOOTER_UNIT_NAME = "SHOOTER UNIT";
         static final public int SHOOTER_UNIT_MAX_HP = 18;
-        static final public int SHOOTER_UNIT_POWER = 3;
+        static final public int SHOOTER_UNIT_POWER = 30;
         static final public Image SHOOTER_UNIT_IMAGE_1 = new Image(StringUtil.getImageUrl("shooter-unit.png"));
         static final public Image SHOOTER_UNIT_IMAGE_2 = new Image(StringUtil.getImageUrl("shooter-unit.png"));
         static final public Image SHOOTER_UNIT_IMAGE_MOVE = new Image(StringUtil.getImageUrl("move-4.jpg"), 125, 125,
