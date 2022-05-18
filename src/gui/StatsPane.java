@@ -2,10 +2,10 @@ package gui;
 
 import base.BaseUnit;
 import constant.BoardConstant;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.SepiaTone;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -39,10 +39,8 @@ public class StatsPane extends HBox {
 
   public void showStats(BaseUnit unit, int xPosition, int yPosition) {
     image.setImage(unit.getImage());
-    movePtrn.setImage(new Image(StringUtil.getImageUrl("normal-unit-move.jpg"),
-        125, 125, false, false));
-    atkPtrn.setImage(new Image(StringUtil.getImageUrl("normal-unit-attack.jpg"),
-        125, 125, false, false));
+    movePtrn.setImage(unit.getMovePattern());
+    atkPtrn.setImage(unit.getAtkPattern());
     name.setText("[" + String.valueOf(xPosition) + " , " + String
         .valueOf(yPosition) + "] " + unit.getName());
     double progress = ((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth());
@@ -62,7 +60,7 @@ public class StatsPane extends HBox {
     hBar.setVisible(true);
     String mainStatString = "Stats:\nPower: " + String.valueOf(unit.getPower());
     mainStats.setText(mainStatString);
-    String debuffsString = "Debuffs:";
+    String debuffsString = "Debuffs:     ";
     if (unit.getStunRoundLeft() > 0) {
       debuffsString += "\nFrozen: " + String.valueOf(unit.getStunRoundLeft());
     }
@@ -117,6 +115,7 @@ public class StatsPane extends HBox {
     detailsPane.getChildren().addAll(header, hBar, allStats);
     setPrefWidth(780);
     setSpacing(10);
+    setPadding(new Insets(0, 0, 0, 15));
     setAlignment(Pos.CENTER_LEFT);
     setBackground(new Background(new BackgroundFill(Color.ORANGE, null, null)));
     getChildren().addAll(image, detailsPane, movePtrn, atkPtrn);
