@@ -42,8 +42,6 @@ public class GameLogic {
         }
         initPlayer(SquareOwnerState.PLAYER1);
         initPlayer(SquareOwnerState.PLAYER2);
-        // setBoardSquare(new NormalUnit(BoardSquareState.PLAYER1),
-        // BoardSquareState.PLAYER1, 3, 4);
     }
 
     private static void initPlayer(SquareOwnerState state) {
@@ -73,8 +71,8 @@ public class GameLogic {
             return;
         } else {
             boardPane.movePreview(xPosition, yPosition);
-            selectedXPosition = xPosition;
-            selectedYPosition = yPosition;
+            setSelectedXPosition(xPosition);
+            setSelectedYPosition(yPosition);
             setCurrentPlayerState(CurrentPlayerState.PREVIEW_MOVE);
         }
     }
@@ -90,16 +88,14 @@ public class GameLogic {
             return;
         } else {
             boardPane.attackPreview(xPosition, yPosition);
-            selectedXPosition = xPosition;
-            selectedYPosition = yPosition;
+            setSelectedXPosition(xPosition);
+            setSelectedYPosition(yPosition);
             setCurrentPlayerState(CurrentPlayerState.PREVIEW_ATTACK);
         }
     }
 
     public static void move(int xPosition, int yPosition) {
-        System.out.println("MOVE");
-        if (boardState[xPosition][yPosition] != SquareOwnerState.EMPTY)
-            return;
+        System.out.println("MOVE" + xPosition + yPosition);
         boardState[xPosition][yPosition] = boardState[selectedXPosition][selectedYPosition];
         boardState[selectedXPosition][selectedYPosition] = SquareOwnerState.EMPTY;
         boardUnits[xPosition][yPosition] = boardUnits[selectedXPosition][selectedYPosition];
@@ -166,17 +162,29 @@ public class GameLogic {
     // setCurrentPlayerState(SquarePreviewState.NONE);
 
     // }
+    private static void removeDeadUnits() {
+        for (int i = 0; i < BoardConstant.ROW_NUMBER; i++)
+            for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
+                if (boardUnits[i][j] != null && boardUnits[i][j].getCurrentHealth() <= 0) {
+                    statusPane.reduceUnit(boardState[i][j]);
+                    boardState[i][j] = SquareOwnerState.EMPTY;
+                    boardUnits[i][j] = null;
+                    boardPane.updateUnit(i, j);
+                }
+            }
+    }
 
     public static void toggleCurrentPlayer() {
-        selectedXPosition = -1;
-        selectedYPosition = -1;
+        setSelectedXPosition(-1);
+        setSelectedYPosition(-1);
         boardPane.resetAllPreviewState();
-        GameLogic.setTimerActive(false);
-        Timer.setTimer(TimeConstant.TIME_PER_TURN);
+        removeDeadUnits();
         if (currentPlayer == SquareOwnerState.PLAYER1)
             GameLogic.currentPlayer = SquareOwnerState.PLAYER2;
         else
             GameLogic.currentPlayer = SquareOwnerState.PLAYER1;
+        GameLogic.setTimerActive(false);
+        Timer.setTimer(TimeConstant.TIME_PER_TURN);
         GameLogic.setTimerActive(true);
         getStatusPane().toggleTurn();
     }
@@ -197,6 +205,7 @@ public class GameLogic {
                 }
                 if (Timer.isTimeOver() && isGameActive()) {
                     Platform.runLater(new Runnable() {
+
                         @Override
                         public void run() {
                             // gameOver();
@@ -204,7 +213,9 @@ public class GameLogic {
                         }
                     });
                 }
-            } catch (InterruptedException e) {
+            } catch (
+
+            InterruptedException e) {
                 // e.printStackTrace();
                 System.out.println("Timer Thread Interrupted");
             }
@@ -300,6 +311,14 @@ public class GameLogic {
 
     public static void setStatusPane(StatusPane sPane) {
         statusPane = sPane;
+    }
+
+    public static void setSelectedXPosition(int selectedXPosition) {
+        GameLogic.selectedXPosition = selectedXPosition;
+    }
+
+    public static void setSelectedYPosition(int selectedYPosition) {
+        GameLogic.selectedYPosition = selectedYPosition;
     }
 
     public static BaseUnit getSelectedUnit() {
