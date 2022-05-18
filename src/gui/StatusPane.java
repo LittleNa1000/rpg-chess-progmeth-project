@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -32,6 +33,7 @@ public class StatusPane extends VBox {
   private Text currentTurn;
   private PlayerInfoPane player1Pane;
   private PlayerInfoPane player2Pane;
+  private Label turnCount;
 
   public Button getToggleTimerBtn() {
     return toggleTimerBtn;
@@ -64,6 +66,7 @@ public class StatusPane extends VBox {
       currentTurn.setText(BoardConstant.PLAYER2_NAME);
       currentTurn.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
     }
+    turnCount.setText("Turn " + String.valueOf(GameLogic.getRoundCounter()));
   }
 
   private void initSkipTurnBtn() {
@@ -115,9 +118,13 @@ public class StatusPane extends VBox {
     currentTurn = new Text(BoardConstant.PLAYER1_NAME);
     currentTurn.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
     currentTurn.setFont(new Font(36));
+    turnCount = new Label("Turn 0");
+    turnCount.setPrefWidth(200);
+    turnCount.setAlignment(Pos.CENTER);
+    turnCount.setFont(new Font(18));
     Text text = new Text("Current turn:");
-    text.setFont(new Font(20));
-    displayCurrentTurn.getChildren().addAll(text, currentTurn);
+    text.setFont(new Font(22));
+    displayCurrentTurn.getChildren().addAll(turnCount, text, currentTurn);
   }
 
   public StatusPane() {

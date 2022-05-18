@@ -397,4 +397,12 @@ public class GameLogic {
     public static void setBoardPotions(BasePotion[][] boardPotions) {
         GameLogic.boardPotions = boardPotions;
     }
+
+    public static int getRoundCounter() {
+        return roundCounter;
+    }
+
+    public static void setRoundCounter(int roundCounter) {
+        GameLogic.roundCounter = roundCounter;
+    }
 }
