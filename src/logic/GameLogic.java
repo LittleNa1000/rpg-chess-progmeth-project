@@ -61,13 +61,14 @@ public class GameLogic {
     private static void initPlayer(SquareOwnerState state) {
         int row = state == SquareOwnerState.PLAYER1 ? 0 : BoardConstant.ROW_NUMBER - 1;
         setBoardSquare(new NormalUnit(state), state, row, 0);
-        setBoardSquare(new FlyingUnit(state), state, row, 1);
-        setBoardSquare(new ShooterUnit(state), state, row, 2);
-        setBoardSquare(new HealerUnit(state), state, row, 3);
-        setBoardSquare(new VenomUnit(state), state, row, 4);
-        setBoardSquare(new FreezerUnit(state), state, row, 5);
-        setBoardSquare(new NormalUnit(state), state, row, 6);
+        setBoardSquare(new NormalUnit(state), state, row, 1);
+        setBoardSquare(new FlyingUnit(state), state, row, 2);
+        setBoardSquare(new ShooterUnit(state), state, row, 3);
+        setBoardSquare(new HealerUnit(state), state, row, 4);
+        setBoardSquare(new VenomUnit(state), state, row, 5);
+        setBoardSquare(new FreezerUnit(state), state, row, 6);
         setBoardSquare(new NormalUnit(state), state, row, 7);
+        setBoardSquare(new NormalUnit(state), state, row, 8);
     }
 
     private static void setBoardSquare(BaseUnit unit, SquareOwnerState state, int xPosition, int yPosition) {
@@ -189,7 +190,7 @@ public class GameLogic {
     }
 
     private static void generatePotion() {
-        int xPosition = (BoardConstant.ROW_NUMBER / 2) - new Random().nextInt(2);
+        int xPosition = (BoardConstant.ROW_NUMBER / 2) - (new Random().nextInt(3) - 1);
         int yPosition = new Random().nextInt(BoardConstant.COLOUMN_NUMBER);
         int randomIndex = new Random().nextInt(PotionConstant.POTION_TYPES);
         BasePotion randomPotion = randomIndex == 0 ? new HealingPotion()
