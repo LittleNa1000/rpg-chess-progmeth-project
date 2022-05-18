@@ -72,6 +72,8 @@ public abstract class BaseUnit {
     }
 
     public void setStunRoundLeft(int stunRoundLeft) {
+        if (stunRoundLeft < 0)
+            stunRoundLeft = 0;
         this.stunRoundLeft = stunRoundLeft;
     }
 

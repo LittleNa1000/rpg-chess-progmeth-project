@@ -66,7 +66,8 @@ public class GameLogic {
         System.out.println("MOVEPRVIEW");
         if ((selectedXPosition == xPosition && selectedYPosition == yPosition
                 && currentPlayerState == CurrentPlayerState.PREVIEW_MOVE)
-                || (boardState[xPosition][yPosition] != currentPlayer)) {
+                || (boardState[xPosition][yPosition] != currentPlayer)
+                || boardUnits[xPosition][yPosition].getStunRoundLeft() > 0) {
             setCurrentPlayerState(CurrentPlayerState.PENDING);
             return;
         } else {
@@ -83,7 +84,8 @@ public class GameLogic {
 
         if ((selectedXPosition == xPosition && selectedYPosition == yPosition
                 && currentPlayerState == CurrentPlayerState.PREVIEW_ATTACK)
-                || (boardState[xPosition][yPosition] != currentPlayer)) {
+                || (boardState[xPosition][yPosition] != currentPlayer)
+                || boardUnits[xPosition][yPosition].getStunRoundLeft() > 0) {
             setCurrentPlayerState(CurrentPlayerState.PENDING);
             return;
         } else {
@@ -144,10 +146,13 @@ public class GameLogic {
     private static void updateAllUnits() {
         for (int i = 0; i < BoardConstant.ROW_NUMBER; i++)
             for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
-                if (boardUnits[i][j] != null && boardUnits[i][j].getCurrentHealth() <= 0) {
-                    statusPane.reduceUnit(boardState[i][j]);
-                    boardState[i][j] = SquareOwnerState.EMPTY;
-                    boardUnits[i][j] = null;
+                if (boardUnits[i][j] != null) {
+                    if (boardUnits[i][j].getCurrentHealth() <= 0) {
+                        statusPane.reduceUnit(boardState[i][j]);
+                        boardState[i][j] = SquareOwnerState.EMPTY;
+                        boardUnits[i][j] = null;
+                    }
+                    boardUnits[i][j].setStunRoundLeft(boardUnits[i][j].getStunRoundLeft() - 1);
                     boardPane.updateUnit(i, j);
                 }
             }

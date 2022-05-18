@@ -52,6 +52,8 @@ public class BoardSquare extends VBox {
         // BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
         if (unit.getStunRoundLeft() > 0) {
             hpBar.setEffect(new SepiaTone(0.75));
+        } else {
+            hpBar.setEffect(new SepiaTone(0));
         }
         this.getChildren().clear();
         imageView.setImage(unit.getImage());
