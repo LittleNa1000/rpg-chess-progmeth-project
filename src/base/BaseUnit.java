@@ -78,6 +78,8 @@ public abstract class BaseUnit {
     }
 
     public void setVenomRoundLeft(int venomRoundLeft) {
+        if (venomRoundLeft < 0)
+            venomRoundLeft = 0;
         this.venomRoundLeft = venomRoundLeft;
     }
 }

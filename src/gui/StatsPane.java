@@ -76,7 +76,7 @@ public class StatsPane extends HBox {
     } else if (unit instanceof HealerUnit) {
       abilityString += "Heal an\nally for " + String.valueOf(((HealerUnit) unit).getHealingPoint()) + " hp";
     } else if (unit instanceof VenomUnit) {
-      abilityString += "Deals " + String.valueOf(((VenomUnit) unit).getPoisonPower()) + "";
+      abilityString += "Deals " + String.valueOf((VenomUnit.getPoisonpower())) + "";
       abilityString += "\ndamage to an\nenemy for " + String.valueOf(((VenomUnit) unit).getPoisonRound()) + " turn(s)";
     } else if (unit instanceof FlyingUnit) {
       abilityString += "Dodge\nNormal Unit's\nAttack";

@@ -152,7 +152,13 @@ public class GameLogic {
                         boardState[i][j] = SquareOwnerState.EMPTY;
                         boardUnits[i][j] = null;
                     }
-                    boardUnits[i][j].setStunRoundLeft(boardUnits[i][j].getStunRoundLeft() - 1);
+                    if (boardUnits[i][j].getStunRoundLeft() > 0) {
+                        boardUnits[i][j].setStunRoundLeft(boardUnits[i][j].getStunRoundLeft() - 1);
+                    }
+                    if (boardUnits[i][j].getVenomRoundLeft() > 0) {
+                        boardUnits[i][j].setVenomRoundLeft(boardUnits[i][j].getVenomRoundLeft() - 1);
+                        boardUnits[i][j].reduceHealth(VenomUnit.getPoisonpower());
+                    }
                     boardPane.updateUnit(i, j);
                 }
             }
