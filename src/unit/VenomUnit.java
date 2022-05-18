@@ -2,6 +2,7 @@ package unit;
 
 import base.BaseUnit;
 import base.Debuffable;
+import constant.PotionConstant;
 import constant.UnitConstant;
 import logic.SquareOwnerState;
 
@@ -15,6 +16,11 @@ public class VenomUnit extends BaseUnit implements Debuffable {
                         : UnitConstant.VENOM_UNIT_IMAGE_2,
                 UnitConstant.VENOM_UNIT_IMAGE_MOVE, UnitConstant.VENOM_UNIT_IMAGE_ATTACK);
         this.poisonRound = UnitConstant.VENOM_UNIT_POISON_ROUND;
+    }
+
+    @Override
+    public void upgrade() {
+        poisonRound += PotionConstant.BUFF_POTION_POISON_ROUND;
     }
 
     @Override

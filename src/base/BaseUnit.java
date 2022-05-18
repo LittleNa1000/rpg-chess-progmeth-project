@@ -25,6 +25,8 @@ public abstract class BaseUnit {
         this.atkPattern = atkPattern;
     }
 
+    public abstract void upgrade();
+
     public int getCurrentHealth() {
         return currentHealth;
     }
