@@ -139,7 +139,6 @@ public class GameLogic {
                 AudioUtil.playSound("heal.wav", 0.5);
             }
         }
-        boardPane.updateUnit(xPosition, yPosition);
         toggleCurrentPlayer();
     }
 
