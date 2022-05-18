@@ -1,10 +1,14 @@
 package logic;
 
+import java.util.Random;
+
 import base.Attackable;
+import base.BasePotion;
 import base.BaseUnit;
 import base.Buffable;
 import base.Debuffable;
 import constant.BoardConstant;
+import constant.PotionConstant;
 import constant.TimeConstant;
 import gui.ActionPane;
 import gui.BoardPane;
@@ -29,15 +33,18 @@ public class GameLogic {
     private static StatusPane statusPane;
     private static SquareOwnerState[][] boardState = new SquareOwnerState[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
     private static BaseUnit[][] boardUnits = new BaseUnit[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
+    private static BasePotion[][] boardPotions = new BasePotion[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
     private static boolean gameActive = false;
     private static boolean timerActive = false;
     private static Thread thread = null;
+    private static int roundCounter = 1;
 
     public static void init() {
         for (int i = 0; i < BoardConstant.ROW_NUMBER; i++) {
             for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
                 boardState[i][j] = SquareOwnerState.EMPTY;
                 boardUnits[i][j] = null;
+                boardPotions[i][j] = null;
             }
         }
         initPlayer(SquareOwnerState.PLAYER1);
@@ -98,11 +105,17 @@ public class GameLogic {
 
     public static void move(int xPosition, int yPosition) {
         System.out.println("MOVE" + xPosition + yPosition);
+        if (boardState[xPosition][yPosition] == SquareOwnerState.POTION) {
+            boardPotions[xPosition][yPosition].consume(boardUnits[xPosition][yPosition]);
+            boardPotions[xPosition][yPosition] = null;
+        }
         boardState[xPosition][yPosition] = boardState[selectedXPosition][selectedYPosition];
         boardState[selectedXPosition][selectedYPosition] = SquareOwnerState.EMPTY;
         boardUnits[xPosition][yPosition] = boardUnits[selectedXPosition][selectedYPosition];
         boardUnits[selectedXPosition][selectedYPosition] = null;
-        boardPane.move(xPosition, yPosition);
+        // boardPane.move(xPosition, yPosition);
+        boardPane.getAllSquares()[GameLogic.getSelectedXPosition()][GameLogic.getSelectedYPosition()].setUnit(null);
+
         toggleCurrentPlayer();
         AudioUtil.playSound("move.wav");
     }
@@ -163,11 +176,26 @@ public class GameLogic {
             }
     }
 
+    private static void generatePotion() {
+        int xPosition = (BoardConstant.ROW_NUMBER / 2) - new Random().nextInt(2);
+        int yPosition = new Random().nextInt(BoardConstant.COLOUMN_NUMBER);
+        BasePotion randomPotion = PotionConstant.ALL_POTIONS[new Random().nextInt(PotionConstant.ALL_POTIONS.length)];
+        System.out.println(xPosition + " " + yPosition + " " + (BoardConstant.ROW_NUMBER / 2) + xPosition);
+        if (boardState[xPosition][yPosition] == SquareOwnerState.EMPTY) {
+            boardPane.getAllSquares()[xPosition][yPosition].addPotion(randomPotion);
+            boardPotions[xPosition][yPosition] = randomPotion;
+            boardState[xPosition][yPosition] = SquareOwnerState.POTION;
+        }
+    }
+
     public static void toggleCurrentPlayer() {
         setSelectedXPosition(-1);
         setSelectedYPosition(-1);
         boardPane.resetAllPreviewState();
         updateAllUnits();
+        if (roundCounter % 3 == 0) {
+            generatePotion();
+        }
         if (currentPlayer == SquareOwnerState.PLAYER1)
             GameLogic.currentPlayer = SquareOwnerState.PLAYER2;
         else
@@ -176,6 +204,8 @@ public class GameLogic {
         Timer.setTimer(TimeConstant.TIME_PER_TURN);
         GameLogic.setTimerActive(true);
         getStatusPane().toggleTurn();
+        roundCounter++;
+
     }
 
     // TIMER

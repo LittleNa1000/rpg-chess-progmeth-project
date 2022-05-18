@@ -1,5 +1,6 @@
 package gui;
 
+import base.BasePotion;
 import base.BaseUnit;
 import constant.BoardConstant;
 
@@ -120,19 +121,10 @@ public class BoardPane extends GridPane {
     }
   }
 
-  public void move(int xPosition, int yPosition) {
-
-    System.out.println(GameLogic.getBoardUnits()[0][0]);
-    // System.out.println(GameLogic.getSelectedXPosition() + " " +
-    // GameLogic.getSelectedYPosition());
-    // System.out.println("MOVE" + selectedUnit + " TO " + xPosition + " " +
-    // yPosition);
-
-    allSquares[GameLogic.getSelectedXPosition()][GameLogic.getSelectedYPosition()].setUnit(null);
-    // removeItem(GameLogic.getSelectedXPosition(),
-    // GameLogic.getSelectedYPosition());
-    allSquares[xPosition][yPosition].setUnit(GameLogic.getBoardUnits()[xPosition][yPosition]);
-  }
+  // public void move(int xPosition, int yPosition) {
+  // allSquares[GameLogic.getSelectedXPosition()][GameLogic.getSelectedYPosition()].setUnit(null);
+  // allSquares[xPosition][yPosition].setUnit(GameLogic.getBoardUnits()[xPosition][yPosition]);
+  // }
 
   public void resetAllPreviewState() {
     for (int i = 0; i < BoardConstant.ROW_NUMBER; i++)
@@ -143,5 +135,13 @@ public class BoardPane extends GridPane {
 
   public void updateUnit(int xPosition, int yPosition) {
     allSquares[xPosition][yPosition].updateUnit();
+  }
+
+  public BoardSquare[][] getAllSquares() {
+    return allSquares;
+  }
+
+  public void generatePotion(int xPosition, int yPosition, BasePotion potion) {
+    allSquares[xPosition][yPosition].addPotion(potion);
   }
 }
