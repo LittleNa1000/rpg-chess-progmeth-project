@@ -147,17 +147,17 @@ public class GameLogic {
         for (int i = 0; i < BoardConstant.ROW_NUMBER; i++)
             for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
                 if (boardUnits[i][j] != null) {
-                    if (boardUnits[i][j].getCurrentHealth() <= 0) {
-                        statusPane.reduceUnit(boardState[i][j]);
-                        boardState[i][j] = SquareOwnerState.EMPTY;
-                        boardUnits[i][j] = null;
-                    }
                     if (boardUnits[i][j].getStunRoundLeft() > 0) {
                         boardUnits[i][j].setStunRoundLeft(boardUnits[i][j].getStunRoundLeft() - 1);
                     }
                     if (boardUnits[i][j].getVenomRoundLeft() > 0) {
                         boardUnits[i][j].setVenomRoundLeft(boardUnits[i][j].getVenomRoundLeft() - 1);
                         boardUnits[i][j].reduceHealth(VenomUnit.getPoisonpower());
+                    }
+                    if (boardUnits[i][j].getCurrentHealth() <= 0) {
+                        statusPane.reduceUnit(boardState[i][j]);
+                        boardState[i][j] = SquareOwnerState.EMPTY;
+                        boardUnits[i][j] = null;
                     }
                     boardPane.updateUnit(i, j);
                 }
