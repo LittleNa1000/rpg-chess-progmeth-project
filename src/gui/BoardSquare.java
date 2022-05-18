@@ -1,6 +1,7 @@
 package gui;
 
 import base.BaseUnit;
+import base.Buffable;
 import constant.BoardConstant;
 
 import javafx.geometry.Insets;
@@ -100,7 +101,9 @@ public class BoardSquare extends VBox {
                         && GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.EMPTY) {
                     GameLogic.move(xPosition, yPosition);
                 } else if (this.squareState == SquarePreviewState.ATTACK
-                        && GameLogic.getBoardState()[xPosition][yPosition] != GameLogic.getCurrentPlayer()
+                        && (GameLogic.getBoardState()[xPosition][yPosition] != GameLogic.getCurrentPlayer()
+                                || (GameLogic.getBoardState()[xPosition][yPosition] == GameLogic.getCurrentPlayer()
+                                        && GameLogic.getSelectedUnit() instanceof Buffable))
                         && GameLogic.getBoardState()[xPosition][yPosition] != SquareOwnerState.EMPTY) {
                     GameLogic.attack(xPosition, yPosition);
                 } else

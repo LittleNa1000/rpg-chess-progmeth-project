@@ -111,8 +111,6 @@ public class GameLogic {
         System.out.println("ATK" + selectedUnit);
 
         if (selectedUnit instanceof Attackable) {
-            // if (boardState[xPosition][yPosition] == currentPlayer)
-            // return;
             Attackable attacker = (Attackable) selectedUnit;
             attacker.attackUnit(targetUnit);
             if (selectedUnit instanceof NormalUnit) {
@@ -122,8 +120,6 @@ public class GameLogic {
             }
         }
         if (selectedUnit instanceof Debuffable) {
-            // if (boardState[xPosition][yPosition] == currentPlayer)
-            // return;
             Debuffable attacker = (Debuffable) selectedUnit;
             attacker.debuffUnit(targetUnit);
             if (selectedUnit instanceof VenomUnit) {
@@ -145,24 +141,7 @@ public class GameLogic {
         toggleCurrentPlayer();
     }
 
-    // public static void resetSelectedAndRerender() {
-    // // Remove dead unit
-    // for (int i = 0; i < BoardConstant.ROW_NUMBER; i++) {
-    // for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
-    // if (boardUnits[i][j] != null && boardUnits[i][j].getCurrentHealth() <= 0) {
-    // statusPane.reduceUnit(boardState[i][j]);
-    // boardState[i][j] = SquareOwnerState.EMPTY;
-    // boardUnits[i][j] = null;
-    // boardPane.removeItem(i, j);
-    // }
-    // }
-    // }
-    // selectedXPosition = -1;
-    // selectedYPosition = -1;
-    // setCurrentPlayerState(SquarePreviewState.NONE);
-
-    // }
-    private static void removeDeadUnits() {
+    private static void updateAllUnits() {
         for (int i = 0; i < BoardConstant.ROW_NUMBER; i++)
             for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
                 if (boardUnits[i][j] != null && boardUnits[i][j].getCurrentHealth() <= 0) {
@@ -178,7 +157,7 @@ public class GameLogic {
         setSelectedXPosition(-1);
         setSelectedYPosition(-1);
         boardPane.resetAllPreviewState();
-        removeDeadUnits();
+        updateAllUnits();
         if (currentPlayer == SquareOwnerState.PLAYER1)
             GameLogic.currentPlayer = SquareOwnerState.PLAYER2;
         else

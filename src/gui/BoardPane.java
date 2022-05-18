@@ -110,7 +110,6 @@ public class BoardPane extends GridPane {
   }
 
   private void previewHelper(int[][] directionArrays, SquarePreviewState state, int unitX, int unitY) {
-    BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
     for (int i = 0; i < directionArrays.length; i++) {
       int xPosition = unitX + directionArrays[i][0];
       int yPosition = unitY + directionArrays[i][1];
