@@ -3,12 +3,12 @@ package unit;
 import base.Attackable;
 import base.BaseUnit;
 import constant.UnitConstant;
-import logic.BoardSquareState;
+import logic.SquareOwnerState;
 
 public class FlyingUnit extends BaseUnit implements Attackable {
-    public FlyingUnit(BoardSquareState state) {
+    public FlyingUnit(SquareOwnerState state) {
         super(UnitConstant.FLYING_UNIT_NAME, UnitConstant.FLYING_UNIT_MAX_HP, UnitConstant.FLYING_UNIT_POWER,
-                state == BoardSquareState.PLAYER1 ? UnitConstant.FLYING_UNIT_IMAGE_URL_1
+                state == SquareOwnerState.PLAYER1 ? UnitConstant.FLYING_UNIT_IMAGE_URL_1
                         : UnitConstant.FLYING_UNIT_IMAGE_URL_2);
     }
 

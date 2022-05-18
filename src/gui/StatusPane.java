@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import logic.BoardSquareState;
+import logic.SquareOwnerState;
 import logic.GameLogic;
 import util.StringUtil;
 
@@ -37,16 +37,16 @@ public class StatusPane extends VBox {
     return toggleTimerBtn;
   }
 
-  public void reduceUnit(BoardSquareState state) {
-    if (state == BoardSquareState.PLAYER1) {
+  public void reduceUnit(SquareOwnerState state) {
+    if (state == SquareOwnerState.PLAYER1) {
       player1Pane.reduceUnit();
-    } else if (state == BoardSquareState.PLAYER2) {
+    } else if (state == SquareOwnerState.PLAYER2) {
       player2Pane.reduceUnit();
     }
   }
 
   public void toggleTurn() {
-    if (GameLogic.getCurrentPlayer() == BoardSquareState.PLAYER1) {
+    if (GameLogic.getCurrentPlayer() == SquareOwnerState.PLAYER1) {
       currentTurn.setText(BoardConstant.PLAYER1_NAME);
       currentTurn.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
     } else {
@@ -119,8 +119,8 @@ public class StatusPane extends VBox {
     initToggleTimerBtn();
     initSkipTurnBtn();
     initDisplayCurrentTurn();
-    player1Pane = new PlayerInfoPane(BoardSquareState.PLAYER1);
-    player2Pane = new PlayerInfoPane(BoardSquareState.PLAYER2);
+    player1Pane = new PlayerInfoPane(SquareOwnerState.PLAYER1);
+    player2Pane = new PlayerInfoPane(SquareOwnerState.PLAYER2);
     getChildren().addAll(displayCurrentTurn, toggleTimerBtn, skipTurnBtn, quitBtn, player1Pane, player2Pane);
   }
 }
