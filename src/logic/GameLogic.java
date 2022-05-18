@@ -24,6 +24,9 @@ import util.Timer;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import potion.BuffPotion;
+import potion.HealingPotion;
+import potion.ToxicPotion;
 
 public class GameLogic {
     private static SquareOwnerState currentPlayer = SquareOwnerState.PLAYER1;
@@ -180,10 +183,19 @@ public class GameLogic {
                         boardState[i][j] = SquareOwnerState.EMPTY;
                         boardUnits[i][j] = null;
                     }
+
                     boardPane.updateUnit(i, j);
                 }
-                if (boardPotions[i][j] != null)
-                    potions++;
+                if (boardPotions[i][j] != null) {
+                    System.out.println("POTION AGE" + i + " " + j + " " + boardPotions[i][j].getAge());
+                    boardPotions[i][j].setAge(boardPotions[i][j].getAge() - 1);
+                    if (boardPotions[i][j].getAge() <= 0) {
+                        boardState[i][j] = SquareOwnerState.EMPTY;
+                        boardPotions[i][j] = null;
+                        boardPane.updateUnit(i, j);
+                    } else
+                        potions++;
+                }
             }
         setPotionCounter(potions);
     }
@@ -191,7 +203,9 @@ public class GameLogic {
     private static void generatePotion() {
         int xPosition = (BoardConstant.ROW_NUMBER / 2) - new Random().nextInt(2);
         int yPosition = new Random().nextInt(BoardConstant.COLOUMN_NUMBER);
-        BasePotion randomPotion = PotionConstant.ALL_POTIONS[new Random().nextInt(PotionConstant.ALL_POTIONS.length)];
+        int randomIndex = new Random().nextInt(PotionConstant.POTION_TYPES);
+        BasePotion randomPotion = randomIndex == 0 ? new HealingPotion()
+                : randomIndex == 1 ? new ToxicPotion() : new BuffPotion();
         System.out.println(xPosition + " " + yPosition + " " + (BoardConstant.ROW_NUMBER / 2) + xPosition);
         if (boardState[xPosition][yPosition] == SquareOwnerState.EMPTY) {
             boardPane.getAllSquares()[xPosition][yPosition].addPotion(randomPotion);
@@ -205,7 +219,8 @@ public class GameLogic {
         setSelectedYPosition(-1);
         boardPane.resetAllPreviewState();
         updateAllUnits();
-        if (roundCounter % 3 == 0 && getPotionCounter() < 3) {
+        if (roundCounter % PotionConstant.ROUND_PER_POTION == 0
+                && getPotionCounter() < PotionConstant.MAX_POTION_ON_BOARD) {
             generatePotion();
         }
         if (winner != null) {
