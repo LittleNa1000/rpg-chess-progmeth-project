@@ -131,8 +131,8 @@ public class GameLogic {
             }
         }
         if (selectedUnit instanceof Buffable) {
-            // if (boardState[xPosition][yPosition] != currentPlayer)
-            // return;
+            if (boardState[xPosition][yPosition] != currentPlayer)
+                return;
             Buffable healer = (Buffable) selectedUnit;
             healer.buffUnit(targetUnit);
             if (selectedUnit instanceof HealerUnit) {

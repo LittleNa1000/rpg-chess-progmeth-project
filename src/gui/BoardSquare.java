@@ -43,13 +43,6 @@ public class BoardSquare extends VBox {
 
     private void draw(BaseUnit unit) {
         updateHpBar();
-        // if (GameLogic.getBoardState()[xPosition][yPosition] ==
-        // SquareOwnerState.PLAYER1)
-        // hpBar.setStyle(StringUtil.getCss("-fx-accent: " +
-        // BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
-        // else
-        // hpBar.setStyle(StringUtil.getCss("-fx-accent: " +
-        // BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
         if (unit.getStunRoundLeft() > 0) {
             hpBar.setEffect(new SepiaTone(0.75));
         } else {
@@ -60,7 +53,6 @@ public class BoardSquare extends VBox {
         this.getChildren().addAll(hpBar, imageView);
         this.setStyle(
                 StringUtil.getCss(
-
                         "-fx-background-image: url('" + StringUtil.getImageUrl("brick-bg.jpg") + "');",
                         "-fx-background-size: 100% 100%;",
                         "-fx-background-position: center center;", "-fx-background-repeat: stretch;"));
@@ -72,20 +64,8 @@ public class BoardSquare extends VBox {
                         "-fx-background-size: 100% 100%;"));
     }
 
-    public void setBackgroundColor(String color) {
-        this.getStyleClass().remove("-fx-background-image");
-        this.setStyle(
-                StringUtil.getCss("-fx-background-color: " + color,
-                        // "-fx-background-image: url('" + StringUtil.getImageUrl("brick-bg.jpg") +
-                        // "');",
-                        // "-fx-background-size: 100% 100%;",
-                        "-fx-background-opacity: 0.5"));
-    }
-
     public void removeUnit() {
         this.getChildren().clear();
-        // this.setStyle(
-        // StringUtil.getCss("-fx-background-color: " + ColorConstant.BASE_COLOR));
         this.setStyle(
                 StringUtil.getCss("-fx-background-image: url('" + StringUtil.getImageUrl("brick-bg.jpg") + "');",
                         "-fx-background-size: 100% 100%;"));
