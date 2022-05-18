@@ -2,24 +2,13 @@ package gui;
 
 import base.BaseUnit;
 import constant.BoardConstant;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.SepiaTone;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import logic.BoardSquareState;
 import logic.GameLogic;
 import logic.PlayerState;
@@ -28,6 +17,7 @@ import util.StringUtil;
 public class BoardSquare extends VBox {
     private int xPosition;
     private int yPosition;
+    private static int drawCnt = 0;
 
     // Empty Square
     public BoardSquare(int x, int y, PlayerState state) {
@@ -69,16 +59,20 @@ public class BoardSquare extends VBox {
     }
 
     private void draw(BaseUnit unit, String color) {
-        ProgressBar hBar = new ProgressBar(((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth()));
+        ProgressBar hBar = new ProgressBar(((double) unit.getCurrentHealth()) /
+                ((double) unit.getMaxHealth()));
         if (unit.getStunRoundLeft() > 0) {
             hBar.setEffect(new SepiaTone(0.75));
         }
         if (GameLogic.getBoardState()[xPosition][yPosition] == BoardSquareState.PLAYER1) {
-            hBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
+            hBar.setStyle(StringUtil.getCss("-fx-accent: " +
+                    BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
         } else {
-            hBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
+            hBar.setStyle(StringUtil.getCss("-fx-accent: " +
+                    BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
         }
-
+        System.out.println("DRAW" + String.valueOf(drawCnt));
+        drawCnt += 1;
         hBar.setPrefWidth(70);
         hBar.setPrefHeight(12);
         hBar.setMinHeight(12);

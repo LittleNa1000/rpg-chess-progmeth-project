@@ -1,22 +1,12 @@
 package gui;
 
-import java.util.ArrayList;
-
 import base.BaseUnit;
 import constant.BoardConstant;
 import constant.UnitConstant;
 import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
 import logic.GameLogic;
 import logic.PlayerState;
 import unit.FlyingUnit;
