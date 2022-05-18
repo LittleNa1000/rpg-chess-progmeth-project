@@ -40,6 +40,7 @@ public class GameLogic {
     private static boolean timerActive = false;
     private static Thread thread = null;
     private static int roundCounter = 1;
+    private static int potionCounter = 0;
     private static SquareOwnerState winner = null;
 
     public static void init() {
@@ -109,12 +110,12 @@ public class GameLogic {
     public static void move(int xPosition, int yPosition) {
         System.out.println("MOVE" + xPosition + yPosition);
         if (boardState[xPosition][yPosition] == SquareOwnerState.POTION) {
-            boardPotions[xPosition][yPosition].consume(boardUnits[xPosition][yPosition]);
+            boardPotions[xPosition][yPosition].consume(getSelectedUnit());
             boardPotions[xPosition][yPosition] = null;
         }
         boardState[xPosition][yPosition] = boardState[selectedXPosition][selectedYPosition];
         boardState[selectedXPosition][selectedYPosition] = SquareOwnerState.EMPTY;
-        boardUnits[xPosition][yPosition] = boardUnits[selectedXPosition][selectedYPosition];
+        boardUnits[xPosition][yPosition] = getSelectedUnit();
         boardUnits[selectedXPosition][selectedYPosition] = null;
         // boardPane.move(xPosition, yPosition);
         boardPane.getAllSquares()[GameLogic.getSelectedXPosition()][GameLogic.getSelectedYPosition()].setUnit(null);
@@ -124,7 +125,7 @@ public class GameLogic {
     }
 
     public static void attack(int xPosition, int yPosition) {
-        BaseUnit selectedUnit = boardUnits[selectedXPosition][selectedYPosition];
+        BaseUnit selectedUnit = getSelectedUnit();
         BaseUnit targetUnit = boardUnits[xPosition][yPosition];
         System.out.println("ATK" + selectedUnit);
 
@@ -163,6 +164,7 @@ public class GameLogic {
     }
 
     private static void updateAllUnits() {
+        int potions = 0;
         for (int i = 0; i < BoardConstant.ROW_NUMBER; i++)
             for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
                 if (boardUnits[i][j] != null) {
@@ -180,7 +182,10 @@ public class GameLogic {
                     }
                     boardPane.updateUnit(i, j);
                 }
+                if (boardPotions[i][j] != null)
+                    potions++;
             }
+        setPotionCounter(potions);
     }
 
     private static void generatePotion() {
@@ -200,7 +205,7 @@ public class GameLogic {
         setSelectedYPosition(-1);
         boardPane.resetAllPreviewState();
         updateAllUnits();
-        if (roundCounter % 3 == 0) {
+        if (roundCounter % 3 == 0 && getPotionCounter() < 3) {
             generatePotion();
         }
         if (winner != null) {
@@ -373,5 +378,13 @@ public class GameLogic {
 
     public static SquareOwnerState getWinner() {
         return winner;
+    }
+
+    public static int getPotionCounter() {
+        return potionCounter;
+    }
+
+    public static void setPotionCounter(int potionCounter) {
+        GameLogic.potionCounter = potionCounter;
     }
 }

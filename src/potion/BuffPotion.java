@@ -13,6 +13,6 @@ public class BuffPotion extends BasePotion {
     @Override
     public void consume(BaseUnit unit) {
         // TODO Auto-generated method stub
-
+        unit.upgrade();
     }
 }

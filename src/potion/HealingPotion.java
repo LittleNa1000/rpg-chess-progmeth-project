@@ -19,6 +19,6 @@ public class HealingPotion extends BasePotion {
     @Override
     public void consume(BaseUnit unit) {
         // TODO Auto-generated method stub
-
+        unit.setCurrentHealth(Math.min(unit.getMaxHealth(), unit.getCurrentHealth() + healingPoint));
     }
 }
