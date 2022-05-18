@@ -3,20 +3,10 @@ package gui;
 import base.BaseUnit;
 import base.Buffable;
 import constant.BoardConstant;
-<<<<<<< HEAD
-=======
-
->>>>>>> ae1899ef354426a33f858967d5411cb741c52ec2
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.SepiaTone;
-<<<<<<< HEAD
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import logic.BoardSquareState;
-=======
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -24,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import logic.SquareOwnerState;
->>>>>>> ae1899ef354426a33f858967d5411cb741c52ec2
 import logic.GameLogic;
 import logic.SquarePreviewState;
 import util.StringUtil;
@@ -32,14 +21,10 @@ import util.StringUtil;
 public class BoardSquare extends VBox {
     private int xPosition;
     private int yPosition;
-<<<<<<< HEAD
-    private static int drawCnt = 0;
-=======
     private BaseUnit unit;
     private SquarePreviewState squareState;
     private ProgressBar hpBar;
     private ImageView imageView;
->>>>>>> ae1899ef354426a33f858967d5411cb741c52ec2
 
     public BoardSquare(int x, int y, BaseUnit unit) {
         hpBar = new ProgressBar();
@@ -55,27 +40,6 @@ public class BoardSquare extends VBox {
         setOnClickHandler();
     }
 
-<<<<<<< HEAD
-    private void draw(BaseUnit unit, String color) {
-        ProgressBar hBar = new ProgressBar(((double) unit.getCurrentHealth()) /
-                ((double) unit.getMaxHealth()));
-        if (unit.getStunRoundLeft() > 0) {
-            hBar.setEffect(new SepiaTone(0.75));
-        }
-        if (GameLogic.getBoardState()[xPosition][yPosition] == BoardSquareState.PLAYER1) {
-            hBar.setStyle(StringUtil.getCss("-fx-accent: " +
-                    BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
-        } else {
-            hBar.setStyle(StringUtil.getCss("-fx-accent: " +
-                    BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
-        }
-        System.out.println("DRAW" + String.valueOf(drawCnt));
-        drawCnt += 1;
-        hBar.setPrefWidth(70);
-        hBar.setPrefHeight(12);
-        hBar.setMinHeight(12);
-        this.getChildren().add(hBar);
-=======
     private void draw(BaseUnit unit) {
         updateHpBar();
         if (unit.getStunRoundLeft() > 0) {
@@ -94,7 +58,6 @@ public class BoardSquare extends VBox {
     }
 
     private void setBackgroundImage(String fileName) {
->>>>>>> ae1899ef354426a33f858967d5411cb741c52ec2
         this.setStyle(
                 StringUtil.getCss("-fx-background-image: url('" + StringUtil.getImageUrl(fileName) + "');",
                         "-fx-background-size: 100% 100%;"));
