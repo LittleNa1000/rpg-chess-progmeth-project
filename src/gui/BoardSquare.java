@@ -24,11 +24,11 @@ public class BoardSquare extends VBox {
     private int yPosition;
     private BaseUnit unit;
     private SquarePreviewState squareState;
-    private ProgressBar hpBar;
+    private ProgressBar hBar;
     private ImageView imageView;
 
     public BoardSquare(int x, int y, BaseUnit unit) {
-        hpBar = new ProgressBar();
+        hBar = new ProgressBar();
         imageView = new ImageView();
         imageView.setFitHeight(50);
         imageView.setFitWidth(50);
@@ -43,16 +43,11 @@ public class BoardSquare extends VBox {
         setOnClickHandler();
     }
 
-    private void draw(BaseUnit unit) {
+    private void draw() {
         updateHpBar();
-        if (unit.getVenomRoundLeft() > 0) {
-            hpBar.setEffect(new SepiaTone(0.75));
-        } else {
-            hpBar.setEffect(new SepiaTone(0));
-        }
         this.getChildren().clear();
         imageView.setImage(unit.getImage());
-        this.getChildren().addAll(hpBar, imageView);
+        this.getChildren().addAll(hBar, imageView);
         this.setStyle(
                 StringUtil.getCss(
                         "-fx-background-image: url('" + StringUtil.getImageUrl("brick-bg.jpg") + "');",
@@ -146,7 +141,7 @@ public class BoardSquare extends VBox {
         if (unit == null)
             removeUnit();
         else
-            draw(unit);
+            draw();
     }
 
     public SquarePreviewState getSquareState() {
@@ -163,20 +158,37 @@ public class BoardSquare extends VBox {
 
     public void updateHpBar() {
         if (unit != null) {
-            hpBar.setProgress(((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth()));
+            hBar.setProgress(((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth()));
             if (GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.PLAYER1)
-                hpBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
+                hBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
             else
-                hpBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
-            hpBar.setPrefWidth(70);
-            hpBar.setPrefHeight(12);
-            hpBar.setMinHeight(12);
+                hBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
+
+            if (unit.getVenomRoundLeft() > 0)
+                hBar.setEffect(new SepiaTone(0.75));
+            else
+                hBar.setEffect(new SepiaTone(0));
+
+            hBar.setPrefWidth(70);
+            hBar.setPrefHeight(12);
+            hBar.setMinHeight(12);
         }
+    }
+
+    public void updateHpBar(BasePotion potion) {
+        System.out.println("AGE  " + ((double) potion.getAge()) / ((double) potion.getMaxAge()));
+        hBar.setProgress(((double) potion.getAge()) / ((double) potion.getMaxAge()));
+        hBar.setStyle(StringUtil.getCss("-fx-accent: blue;"));
+        hBar.setEffect(new SepiaTone(0));
+        hBar.setPrefWidth(70);
+        hBar.setPrefHeight(12);
+        hBar.setMinHeight(12);
     }
 
     public void addPotion(BasePotion potion) {
         this.getChildren().clear();
         imageView.setImage(potion.getImage());
-        this.getChildren().add(imageView);
+        updateHpBar(potion);
+        this.getChildren().addAll(hBar, imageView);
     }
 }
