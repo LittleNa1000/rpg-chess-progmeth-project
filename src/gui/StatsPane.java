@@ -46,7 +46,7 @@ public class StatsPane extends HBox {
     double progress = ((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth());
     hp.setText("HP: " + String.valueOf(unit.getCurrentHealth()) + " / " + String.valueOf(unit.getMaxHealth()) + " ("
         + String.valueOf(Math.round(progress * 100)) + "%)");
-    if (unit.getStunRoundLeft() > 0) {
+    if (unit.getVenomRoundLeft() > 0) {
       hBar.setEffect(new SepiaTone(0.75));
     } else {
       hBar.setEffect(new SepiaTone(0));
