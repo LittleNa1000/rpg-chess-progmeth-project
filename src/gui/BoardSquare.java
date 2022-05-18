@@ -1,5 +1,6 @@
 package gui;
 
+import base.BasePotion;
 import base.BaseUnit;
 import base.Buffable;
 import constant.BoardConstant;
@@ -83,7 +84,8 @@ public class BoardSquare extends VBox {
                         xPosition, yPosition);
 
             if (this.squareState == SquarePreviewState.MOVE
-                    && GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.EMPTY) {
+                    && (GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.EMPTY
+                            || GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.POTION)) {
                 GameLogic.move(xPosition, yPosition);
                 return;
             }
@@ -92,7 +94,8 @@ public class BoardSquare extends VBox {
                     && (GameLogic.getBoardState()[xPosition][yPosition] != GameLogic.getCurrentPlayer()
                             || (GameLogic.getBoardState()[xPosition][yPosition] == GameLogic.getCurrentPlayer()
                                     && GameLogic.getSelectedUnit() instanceof Buffable))
-                    && GameLogic.getBoardState()[xPosition][yPosition] != SquareOwnerState.EMPTY) {
+                    && GameLogic.getBoardState()[xPosition][yPosition] != SquareOwnerState.EMPTY
+                    && GameLogic.getBoardState()[xPosition][yPosition] != SquareOwnerState.POTION) {
                 GameLogic.attack(xPosition, yPosition);
                 return;
             }
@@ -165,5 +168,11 @@ public class BoardSquare extends VBox {
             hpBar.setPrefHeight(12);
             hpBar.setMinHeight(12);
         }
+    }
+
+    public void addPotion(BasePotion potion) {
+        this.getChildren().clear();
+        imageView.setImage(potion.getImage());
+        this.getChildren().add(imageView);
     }
 }
