@@ -276,6 +276,9 @@ public class GameLogic {
         statusPane.getToggleTimerBtn().setDisable(true);
         String winnerAnnounce = "The winner is " + (winner == SquareOwnerState.PLAYER1 ? BoardConstant.PLAYER1_NAME
                 : BoardConstant.PLAYER2_NAME) + "!!!";
+        if (winner == SquareOwnerState.EMPTY) {
+            winnerAnnounce = "The result is DRAW";
+        }
         Alert alert = new Alert(AlertType.INFORMATION, winnerAnnounce);
         alert.setTitle("End");
         alert.setHeaderText(null);
