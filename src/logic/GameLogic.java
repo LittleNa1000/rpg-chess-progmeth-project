@@ -22,6 +22,8 @@ import unit.VenomUnit;
 import util.AudioUtil;
 import util.Timer;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class GameLogic {
     private static SquareOwnerState currentPlayer = SquareOwnerState.PLAYER1;
@@ -38,6 +40,7 @@ public class GameLogic {
     private static boolean timerActive = false;
     private static Thread thread = null;
     private static int roundCounter = 1;
+    private static SquareOwnerState winner = null;
 
     public static void init() {
         for (int i = 0; i < BoardConstant.ROW_NUMBER; i++) {
@@ -133,6 +136,10 @@ public class GameLogic {
             } else {
                 AudioUtil.playSound("attack-ranged.wav", 0.5);
             }
+            if (targetUnit.getCurrentHealth() <= 0) {
+                selectedUnit.upgrade();
+                AudioUtil.playSound("upgrade.wav");
+            }
         }
         if (selectedUnit instanceof Debuffable) {
             Debuffable attacker = (Debuffable) selectedUnit;
@@ -196,6 +203,9 @@ public class GameLogic {
         if (roundCounter % 3 == 0) {
             generatePotion();
         }
+        if (winner != null) {
+            gameOver();
+        }
         if (currentPlayer == SquareOwnerState.PLAYER1)
             GameLogic.currentPlayer = SquareOwnerState.PLAYER2;
         else
@@ -205,7 +215,6 @@ public class GameLogic {
         GameLogic.setTimerActive(true);
         getStatusPane().toggleTurn();
         roundCounter++;
-
     }
 
     // TIMER
@@ -255,6 +264,17 @@ public class GameLogic {
         setGameActive(false);
         currentPlayer = SquareOwnerState.PLAYER1;
         System.out.println("Game Over");
+        if (winner == null) {
+            return;
+        }
+        statusPane.getSkipTurnBtn().setDisable(true);
+        statusPane.getToggleTimerBtn().setDisable(true);
+        String winnerAnnounce = "The winner is " + (winner == SquareOwnerState.PLAYER1 ? BoardConstant.PLAYER1_NAME
+                : BoardConstant.PLAYER2_NAME) + "!!!";
+        Alert alert = new Alert(AlertType.INFORMATION, winnerAnnounce);
+        alert.setTitle("End");
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 
     // GETTER & SETTER
@@ -347,4 +367,11 @@ public class GameLogic {
         return boardUnits[selectedXPosition][selectedYPosition];
     }
 
+    public static void setWinner(SquareOwnerState state) {
+        winner = state;
+    }
+
+    public static SquareOwnerState getWinner() {
+        return winner;
+    }
 }

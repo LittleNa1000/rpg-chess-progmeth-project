@@ -20,4 +20,9 @@ public class PotionConstant {
     static final public Image BUFF_POTION_IMAGE = new Image(StringUtil.getImageUrl("potion/buff-potion.png"));
 
     static final public BasePotion[] ALL_POTIONS = { new HealingPotion(), new ToxicPotion(), new BuffPotion() };
+
+    static final public int BUFF_POTION_POWER = 3;
+    static final public int BUFF_POTION_HEALING_POINT = 3;
+    static final public int BUFF_POTION_STUN_ROUND = 2;
+    static final public int BUFF_POTION_POISON_ROUND = 2;
 }

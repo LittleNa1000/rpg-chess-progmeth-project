@@ -25,6 +25,10 @@ public class PlayerInfoPane extends VBox {
     pBar.setProgress(((double) unitCount) / ((double) BoardConstant.TOTAL_UNIT));
   }
 
+  public int getUnitCount() {
+    return unitCount;
+  }
+
   public PlayerInfoPane(SquareOwnerState state) {
     if (state == SquareOwnerState.PLAYER1) {
       player = new Text("Player 1");

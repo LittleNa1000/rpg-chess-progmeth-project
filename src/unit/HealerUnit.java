@@ -2,6 +2,7 @@ package unit;
 
 import base.BaseUnit;
 import base.Buffable;
+import constant.PotionConstant;
 import constant.UnitConstant;
 import logic.SquareOwnerState;
 
@@ -14,6 +15,11 @@ public class HealerUnit extends BaseUnit implements Buffable {
                         : UnitConstant.HEALER_UNIT_IMAGE_2,
                 UnitConstant.HEALER_UNIT_IMAGE_MOVE, UnitConstant.HEALER_UNIT_IMAGE_ATTACK);
         this.healingPoint = UnitConstant.HEALER_UNIT_HEALING_POINT;
+    }
+
+    @Override
+    public void upgrade() {
+        healingPoint += PotionConstant.BUFF_POTION_HEALING_POINT;
     }
 
     @Override

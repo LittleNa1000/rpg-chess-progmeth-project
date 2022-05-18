@@ -2,6 +2,7 @@ package unit;
 
 import base.BaseUnit;
 import base.Debuffable;
+import constant.PotionConstant;
 import constant.UnitConstant;
 import logic.SquareOwnerState;
 
@@ -14,6 +15,11 @@ public class FreezerUnit extends BaseUnit implements Debuffable {
                         : UnitConstant.FREEZER_UNIT_IMAGE_2,
                 UnitConstant.FREEZER_UNIT_IMAGE_MOVE, UnitConstant.FREEZER_UNIT_IMAGE_ATTACK);
         this.stunRound = UnitConstant.FREEZER_UNIT_STUN_ROUND;
+    }
+
+    @Override
+    public void upgrade() {
+        stunRound += PotionConstant.BUFF_POTION_STUN_ROUND;
     }
 
     @Override

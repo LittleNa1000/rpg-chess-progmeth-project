@@ -37,11 +37,20 @@ public class StatusPane extends VBox {
     return toggleTimerBtn;
   }
 
+  public Button getSkipTurnBtn() {
+    return skipTurnBtn;
+  }
+
   public void reduceUnit(SquareOwnerState state) {
     if (state == SquareOwnerState.PLAYER1) {
       player1Pane.reduceUnit();
     } else if (state == SquareOwnerState.PLAYER2) {
       player2Pane.reduceUnit();
+    }
+    if (player1Pane.getUnitCount() <= 0) {
+      GameLogic.setWinner(SquareOwnerState.PLAYER2);
+    } else if (player2Pane.getUnitCount() <= 0) {
+      GameLogic.setWinner(SquareOwnerState.PLAYER1);
     }
   }
 

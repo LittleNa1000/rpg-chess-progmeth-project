@@ -43,7 +43,7 @@ public class BoardSquare extends VBox {
 
     private void draw(BaseUnit unit) {
         updateHpBar();
-        if (unit.getStunRoundLeft() > 0) {
+        if (unit.getVenomRoundLeft() > 0) {
             hpBar.setEffect(new SepiaTone(0.75));
         } else {
             hpBar.setEffect(new SepiaTone(0));
@@ -159,7 +159,6 @@ public class BoardSquare extends VBox {
                 hpBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
             else
                 hpBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
-
             hpBar.setPrefWidth(70);
             hpBar.setPrefHeight(12);
             hpBar.setMinHeight(12);

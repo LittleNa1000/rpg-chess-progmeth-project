@@ -46,7 +46,7 @@ public class StatsPane extends HBox {
     double progress = ((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth());
     hp.setText("HP: " + String.valueOf(unit.getCurrentHealth()) + " / " + String.valueOf(unit.getMaxHealth()) + " ("
         + String.valueOf(Math.round(progress * 100)) + "%)");
-    if (unit.getStunRoundLeft() > 0) {
+    if (unit.getVenomRoundLeft() > 0) {
       hBar.setEffect(new SepiaTone(0.75));
     } else {
       hBar.setEffect(new SepiaTone(0));
@@ -58,9 +58,9 @@ public class StatsPane extends HBox {
     }
     hBar.setProgress(progress);
     hBar.setVisible(true);
-    String mainStatString = "Stats:\nPower: " + String.valueOf(unit.getPower());
+    String mainStatString = "Stats:       \nPower: " + String.valueOf(unit.getPower());
     mainStats.setText(mainStatString);
-    String debuffsString = "Debuffs:     ";
+    String debuffsString = "Debuffs:      ";
     if (unit.getStunRoundLeft() > 0) {
       debuffsString += "\nFrozen: " + String.valueOf(unit.getStunRoundLeft());
     }
@@ -107,7 +107,7 @@ public class StatsPane extends HBox {
     debuffs.setFont(new Font(16));
     ability = new Text();
     ability.setFont(new Font(16));
-    allStats.setSpacing(40);
+    allStats.setSpacing(20);
     allStats.getChildren().addAll(mainStats, debuffs, ability);
     header.setLeft(name);
     header.setRight(hp);
