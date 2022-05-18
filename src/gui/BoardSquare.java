@@ -26,6 +26,7 @@ public class BoardSquare extends VBox {
     private SquarePreviewState squareState;
     private ProgressBar hBar;
     private ImageView imageView;
+    private boolean isFrozen;
 
     public BoardSquare(int x, int y, BaseUnit unit) {
         hBar = new ProgressBar();
@@ -41,6 +42,7 @@ public class BoardSquare extends VBox {
         setPadding(new Insets(3));
         setUnit(unit);
         setOnClickHandler();
+        setFrozen(false);
     }
 
     private void draw() {
@@ -50,7 +52,9 @@ public class BoardSquare extends VBox {
         this.getChildren().addAll(hBar, imageView);
         this.setStyle(
                 StringUtil.getCss(
-                        "-fx-background-image: url('" + StringUtil.getImageUrl("brick-bg.jpg") + "');",
+                        "-fx-background-image: url('" + StringUtil.getImageUrl(
+                                isFrozen ? "brick-freeze-bg.jpg" : "brick-bg.jpg")
+                                + "');",
                         "-fx-background-size: 100% 100%;",
                         "-fx-background-position: center center;", "-fx-background-repeat: stretch;",
                         "-fx-border-color: white;"));
@@ -127,7 +131,10 @@ public class BoardSquare extends VBox {
 
     public void setSquareState(SquarePreviewState squareState) {
         this.squareState = squareState;
-        if (squareState == SquarePreviewState.NONE) {
+
+        if (isFrozen) {
+            setBackgroundImage("brick-freeze-bg.jpg");
+        } else if (squareState == SquarePreviewState.NONE) {
             setBackgroundImage("brick-bg.jpg");
         } else if (squareState == SquarePreviewState.MOVE) {
             setBackgroundImage("brick-moveable-bg.jpg");
@@ -140,8 +147,13 @@ public class BoardSquare extends VBox {
         this.unit = unit;
         if (unit == null)
             removeUnit();
-        else
+        else {
+            if (unit.getStunRoundLeft() > 0)
+                setFrozen(true);
+            else
+                setFrozen(false);
             draw();
+        }
     }
 
     public SquarePreviewState getSquareState() {
@@ -190,5 +202,13 @@ public class BoardSquare extends VBox {
         imageView.setImage(potion.getImage());
         updateHpBar(potion);
         this.getChildren().addAll(hBar, imageView);
+    }
+
+    public void setFrozen(boolean isFrozen) {
+        this.isFrozen = isFrozen;
+    }
+
+    public boolean isFrozen() {
+        return isFrozen;
     }
 }
