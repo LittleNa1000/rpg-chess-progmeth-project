@@ -3,7 +3,6 @@ package gui;
 import base.BaseUnit;
 import base.Buffable;
 import constant.BoardConstant;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
