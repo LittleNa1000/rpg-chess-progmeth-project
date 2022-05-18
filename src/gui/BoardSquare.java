@@ -4,6 +4,7 @@ import base.BasePotion;
 import base.BaseUnit;
 import base.Buffable;
 import constant.BoardConstant;
+import constant.ColorConstant;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
@@ -33,8 +34,6 @@ public class BoardSquare extends VBox {
         imageView = new ImageView();
         imageView.setFitHeight(50);
         imageView.setFitWidth(50);
-        // setStyle(StringUtil.getCss());
-        // setStyle(StringUtil.getCss());
         setSquareState(SquarePreviewState.NONE);
         setxPosition(x);
         setyPosition(y);
@@ -57,14 +56,14 @@ public class BoardSquare extends VBox {
                                 + "');",
                         "-fx-background-size: 100% 100%;",
                         "-fx-background-position: center center;", "-fx-background-repeat: stretch;",
-                        "-fx-border-color: white;"));
+                        "-fx-border-color: " + ColorConstant.PALETTE_1 + ";"));
     }
 
     private void setBackgroundImage(String fileName) {
         this.setStyle(
                 StringUtil.getCss("-fx-background-image: url('" + StringUtil.getImageUrl(fileName) + "');",
                         "-fx-background-size: 100% 100%;",
-                        "-fx-border-color: white;"));
+                        "-fx-border-color: " + ColorConstant.PALETTE_1 + ";"));
     }
 
     public void removeUnit() {
@@ -72,7 +71,7 @@ public class BoardSquare extends VBox {
         this.setStyle(
                 StringUtil.getCss("-fx-background-image: url('" + StringUtil.getImageUrl("brick-bg.jpg") + "');",
                         "-fx-background-size: 100% 100%;",
-                        "-fx-border-color: white;"));
+                        "-fx-border-color: " + ColorConstant.PALETTE_1 + ";"));
     }
 
     private void setOnClickHandler() {
@@ -82,7 +81,6 @@ public class BoardSquare extends VBox {
                 GameLogic.getActionPane().getStatsPane().showUnitStats(GameLogic.getBoardUnits()[xPosition][yPosition],
                         xPosition, yPosition);
             else if (GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.POTION) {
-                System.out.println("SHOW POTION");
                 GameLogic.getActionPane().getStatsPane()
                         .showPotionStats(GameLogic.getBoardPotions()[xPosition][yPosition], xPosition, yPosition);
             }

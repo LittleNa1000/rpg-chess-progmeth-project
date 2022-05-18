@@ -3,6 +3,7 @@ package gui;
 import java.util.Optional;
 
 import constant.BoardConstant;
+import constant.ColorConstant;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -115,6 +116,7 @@ public class StatusPane extends VBox {
     displayCurrentTurn.setBackground(new Background(new BackgroundFill(Color.LIGHTSALMON, null, null)));
     displayCurrentTurn.setAlignment(Pos.CENTER_LEFT);
     displayCurrentTurn.setPadding(new Insets(10, 10, 10, 10));
+    displayCurrentTurn.setStyle(StringUtil.getCss("-fx-background-color: " + ColorConstant.PALETTE_1 + ";"));
     currentTurn = new Text(BoardConstant.PLAYER1_NAME);
     currentTurn.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
     currentTurn.setFont(new Font(36));
@@ -130,15 +132,19 @@ public class StatusPane extends VBox {
   public StatusPane() {
     super();
     setPrefWidth(200);
-    setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
-    setSpacing(10);
-    setAlignment(Pos.TOP_CENTER);
+    setAlignment(Pos.BOTTOM_CENTER);
     initQuitBtn();
     initToggleTimerBtn();
     initSkipTurnBtn();
     initDisplayCurrentTurn();
+    VBox btnPane = new VBox();
+    btnPane.setSpacing(10);
+    btnPane.setAlignment(Pos.CENTER);
+    btnPane.getChildren().addAll(toggleTimerBtn, skipTurnBtn, quitBtn);
     player1Pane = new PlayerInfoPane(SquareOwnerState.PLAYER1);
     player2Pane = new PlayerInfoPane(SquareOwnerState.PLAYER2);
-    getChildren().addAll(displayCurrentTurn, toggleTimerBtn, skipTurnBtn, quitBtn, player1Pane, player2Pane);
+    setStyle(StringUtil.getCss("-fx-background-color: " + ColorConstant.PALETTE_3 + ";"));
+    getChildren().addAll(displayCurrentTurn, btnPane, player1Pane, player2Pane);
+    setMargin(btnPane, new Insets(20, 0, 20, 0));
   }
 }

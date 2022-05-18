@@ -3,17 +3,15 @@ package gui;
 import base.BasePotion;
 import base.BaseUnit;
 import constant.BoardConstant;
+import constant.ColorConstant;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import logic.SquareOwnerState;
@@ -53,8 +51,7 @@ public class StatsPane extends HBox {
     hBar.setEffect(new SepiaTone(0));
     hBar.setProgress(progress);
     hBar.setVisible(true);
-    String mainStatString = "Age: " + String.valueOf(potion.getAge()) + " / " + String.valueOf(potion.getMaxAge())
-        + " (" + String.valueOf(Math.round(progress * 100)) + "%)\t";
+    String mainStatString = "Disappears in\n" + String.valueOf(potion.getAge()) + " turn(s)\t";
     mainStats.setText(mainStatString);
     debuffs.setText("");
     String abilityString = "Effect: ";
@@ -89,7 +86,7 @@ public class StatsPane extends HBox {
     }
     hBar.setProgress(progress);
     hBar.setVisible(true);
-    String mainStatString = "Stats:       \nPower: " + String.valueOf(unit.getPower());
+    String mainStatString = "Stats:\t\nPower: " + String.valueOf(unit.getPower());
     mainStats.setText(mainStatString);
     String debuffsString = "Debuffs:      ";
     if (unit.getStunRoundLeft() > 0) {
@@ -110,7 +107,7 @@ public class StatsPane extends HBox {
     } else if (unit instanceof FlyingUnit) {
       abilityString += "Dodge\nNormal Unit's\nAttack";
     } else {
-      abilityString += "\nNone";
+      abilityString += "None";
     }
     ability.setText(abilityString);
   }
@@ -148,7 +145,7 @@ public class StatsPane extends HBox {
     setSpacing(10);
     setPadding(new Insets(0, 0, 0, 15));
     setAlignment(Pos.CENTER_LEFT);
-    setBackground(new Background(new BackgroundFill(Color.ORANGE, null, null)));
+    setStyle(StringUtil.getCss("-fx-background-color: " + ColorConstant.PALETTE_5 + ";"));
     getChildren().addAll(image, detailsPane, movePtrn, atkPtrn);
   }
 }

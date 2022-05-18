@@ -1,6 +1,7 @@
 package gui;
 
 import constant.BoardConstant;
+import constant.ColorConstant;
 import javafx.geometry.Insets;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Background;
@@ -48,7 +49,7 @@ public class PlayerInfoPane extends VBox {
     pBar.setPrefWidth(180);
     pBar.setPrefHeight(40);
     setPadding(new Insets(10, 10, 10, 10));
-    setBackground(new Background(new BackgroundFill(Color.LIGHTSALMON, null, null)));
+    setStyle(StringUtil.getCss("-fx-background-color: " + ColorConstant.PALETTE_2 + ";"));
     getChildren().addAll(player, name, unitLeft, pBar);
   }
 }

@@ -47,6 +47,9 @@ public class GameLogic {
     private static SquareOwnerState winner = null;
 
     public static void init() {
+        winner = null;
+        roundCounter = 1;
+        potionCounter = 0;
         for (int i = 0; i < BoardConstant.ROW_NUMBER; i++) {
             for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
                 boardState[i][j] = SquareOwnerState.EMPTY;
@@ -60,15 +63,16 @@ public class GameLogic {
 
     private static void initPlayer(SquareOwnerState state) {
         int row = state == SquareOwnerState.PLAYER1 ? 0 : BoardConstant.ROW_NUMBER - 1;
-        setBoardSquare(new NormalUnit(state), state, row, 0);
-        setBoardSquare(new NormalUnit(state), state, row, 1);
-        setBoardSquare(new FlyingUnit(state), state, row, 2);
-        setBoardSquare(new ShooterUnit(state), state, row, 3);
-        setBoardSquare(new HealerUnit(state), state, row, 4);
+        int row2 = Math.abs(row - 1);
+        setBoardSquare(new NormalUnit(state), state, row2, 1);
+        setBoardSquare(new HealerUnit(state), state, row, 2);
+        setBoardSquare(new NormalUnit(state), state, row2, 3);
+        setBoardSquare(new FlyingUnit(state), state, row, 3);
+        setBoardSquare(new ShooterUnit(state), state, row, 4);
+        setBoardSquare(new NormalUnit(state), state, row2, 5);
         setBoardSquare(new VenomUnit(state), state, row, 5);
         setBoardSquare(new FreezerUnit(state), state, row, 6);
-        setBoardSquare(new NormalUnit(state), state, row, 7);
-        setBoardSquare(new NormalUnit(state), state, row, 8);
+        setBoardSquare(new NormalUnit(state), state, row2, 7);
     }
 
     private static void setBoardSquare(BaseUnit unit, SquareOwnerState state, int xPosition, int yPosition) {
@@ -212,7 +216,7 @@ public class GameLogic {
         boardPane.resetAllPreviewState();
         updateAllUnits();
         if (roundCounter % PotionConstant.ROUND_PER_POTION == 0
-                && getPotionCounter() < PotionConstant.MAX_POTION_ON_BOARD) {
+                && potionCounter < PotionConstant.MAX_POTION_ON_BOARD) {
             generatePotion();
         }
         if (winner != null) {
