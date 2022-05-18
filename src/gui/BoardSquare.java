@@ -132,10 +132,11 @@ public class BoardSquare extends VBox {
     public void setSquareState(SquarePreviewState squareState) {
         this.squareState = squareState;
 
-        if (isFrozen) {
-            setBackgroundImage("brick-freeze-bg.jpg");
-        } else if (squareState == SquarePreviewState.NONE) {
+        if (squareState == SquarePreviewState.NONE) {
             setBackgroundImage("brick-bg.jpg");
+            if (isFrozen) {
+                setBackgroundImage("brick-freeze-bg.jpg");
+            }
         } else if (squareState == SquarePreviewState.MOVE) {
             setBackgroundImage("brick-moveable-bg.jpg");
         } else if (squareState == SquarePreviewState.ATTACK) {
@@ -145,9 +146,10 @@ public class BoardSquare extends VBox {
 
     public void setUnit(BaseUnit unit) {
         this.unit = unit;
-        if (unit == null)
+        if (unit == null) {
+            setFrozen(false);
             removeUnit();
-        else {
+        } else {
             if (unit.getStunRoundLeft() > 0)
                 setFrozen(true);
             else
