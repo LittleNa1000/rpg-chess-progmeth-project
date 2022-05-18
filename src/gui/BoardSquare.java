@@ -2,110 +2,111 @@ package gui;
 
 import base.BaseUnit;
 import constant.BoardConstant;
-import javafx.event.EventHandler;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.SepiaTone;
-import javafx.scene.image.Image;
+
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import logic.BoardSquareState;
+
+import logic.SquareOwnerState;
 import logic.GameLogic;
-import logic.PlayerState;
+import logic.SquarePreviewState;
 import util.StringUtil;
 
 public class BoardSquare extends VBox {
     private int xPosition;
     private int yPosition;
+    private BaseUnit unit;
+    private SquarePreviewState squareState;
+    private ProgressBar hpBar;
+    private ImageView imageView;
 
-    // Empty Square
-    public BoardSquare(int x, int y, PlayerState state) {
-        setxPosition(x);
-        setyPosition(y);
-        if (state == PlayerState.MOVE) {
-            draw("#33FF8A");
-            this.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                GameLogic.move(xPosition, yPosition);
-            });
-        } else if (state == PlayerState.ATTACK) {
-            draw("#FFB233");
-        } else if (state == PlayerState.NONE) {
-            this.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                GameLogic.resetSelectedAndRerender();
-            });
-            draw("#FFEED1");
-        }
-    }
-
-    // Unit Square
-    public BoardSquare(int x, int y, BaseUnit unit, PlayerState state) {
+    public BoardSquare(int x, int y, BaseUnit unit) {
+        hpBar = new ProgressBar();
+        imageView = new ImageView();
+        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
+        setSquareState(SquarePreviewState.NONE);
         setxPosition(x);
         setyPosition(y);
         setAlignment(Pos.TOP_CENTER);
         setPadding(new Insets(3));
-        if (state == PlayerState.MOVE) {
-            draw(unit, "#33FF8A");
-            initPreviewHandler();
-        } else if (state == PlayerState.ATTACK) {
-            draw(unit, "#FFB233");
-            this.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                GameLogic.attack(xPosition, yPosition);
-            });
-        } else {
-            draw(unit, "#FFEED1");
-            initPreviewHandler();
-        }
+        setUnit(unit);
+        setOnClickHandler();
     }
 
-    private void draw(BaseUnit unit, String color) {
-        ProgressBar hBar = new ProgressBar(((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth()));
+    private void draw(BaseUnit unit) {
+        updateHpBar();
+        // if (GameLogic.getBoardState()[xPosition][yPosition] ==
+        // SquareOwnerState.PLAYER1)
+        // hpBar.setStyle(StringUtil.getCss("-fx-accent: " +
+        // BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
+        // else
+        // hpBar.setStyle(StringUtil.getCss("-fx-accent: " +
+        // BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
         if (unit.getStunRoundLeft() > 0) {
-            hBar.setEffect(new SepiaTone(0.75));
+            hpBar.setEffect(new SepiaTone(0.75));
         }
-        if (GameLogic.getBoardState()[xPosition][yPosition] == BoardSquareState.PLAYER1) {
-            hBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
-        } else {
-            hBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
-        }
-
-        hBar.setPrefWidth(70);
-        hBar.setPrefHeight(12);
-        hBar.setMinHeight(12);
-        this.getChildren().add(hBar);
+        this.getChildren().clear();
+        imageView.setImage(unit.getImage());
+        this.getChildren().addAll(hpBar, imageView);
         this.setStyle(
-                StringUtil.getCss("-fx-background-image: url('" + unit.getImageUrl() + "');",
-                        "-fx-background-size: 75% 75%;",
-                        "-fx-background-position: center center;", "-fx-background-repeat: stretch;",
-                        "-fx-background-color: " + color + ";"));
+                StringUtil.getCss(
+
+                        "-fx-background-image: url('" + StringUtil.getImageUrl("brick-bg.jpg") + "');",
+                        "-fx-background-size: 100% 100%;",
+                        "-fx-background-position: center center;", "-fx-background-repeat: stretch;"));
     }
 
-    private void draw(String color) {
+    private void setBackgroundImage(String fileName) {
         this.setStyle(
-                StringUtil.getCss("-fx-background-color: " + color));
+                StringUtil.getCss("-fx-background-image: url('" + StringUtil.getImageUrl(fileName) + "');",
+                        "-fx-background-size: 100% 100%;"));
     }
 
-    private void initPreviewHandler() {
+    public void setBackgroundColor(String color) {
+        this.getStyleClass().remove("-fx-background-image");
+        this.setStyle(
+                StringUtil.getCss("-fx-background-color: " + color,
+                        // "-fx-background-image: url('" + StringUtil.getImageUrl("brick-bg.jpg") +
+                        // "');",
+                        // "-fx-background-size: 100% 100%;",
+                        "-fx-background-opacity: 0.5"));
+    }
+
+    public void removeUnit() {
+        this.getChildren().clear();
+        // this.setStyle(
+        // StringUtil.getCss("-fx-background-color: " + ColorConstant.BASE_COLOR));
+        this.setStyle(
+                StringUtil.getCss("-fx-background-image: url('" + StringUtil.getImageUrl("brick-bg.jpg") + "');",
+                        "-fx-background-size: 100% 100%;"));
+    }
+
+    private void setOnClickHandler() {
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             MouseButton button = event.getButton();
-            GameLogic.getActionPane().getStatsPane().showStats(GameLogic.getBoardUnits()[xPosition][yPosition],
-                    xPosition, yPosition);
+            if (GameLogic.getBoardUnits()[xPosition][yPosition] != null)
+                GameLogic.getActionPane().getStatsPane().showStats(GameLogic.getBoardUnits()[xPosition][yPosition],
+                        xPosition, yPosition);
             if (button == MouseButton.PRIMARY) {
-                GameLogic.movePreview(xPosition, yPosition);
                 System.out.println("CLICK PRIMARY" + xPosition + yPosition);
+                if (this.squareState == SquarePreviewState.MOVE
+                        && GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.EMPTY) {
+                    GameLogic.move(xPosition, yPosition);
+                } else if (this.squareState == SquarePreviewState.ATTACK
+                        && GameLogic.getBoardState()[xPosition][yPosition] != GameLogic.getCurrentPlayer()
+                        && GameLogic.getBoardState()[xPosition][yPosition] != SquareOwnerState.EMPTY) {
+                    GameLogic.attack(xPosition, yPosition);
+                } else
+                    GameLogic.movePreview(xPosition, yPosition);
             } else if (button == MouseButton.SECONDARY) {
                 GameLogic.attackPreview(xPosition, yPosition);
-
                 System.out.println("CLICK SECONDARY" + xPosition + yPosition);
             }
         });
@@ -125,5 +126,50 @@ public class BoardSquare extends VBox {
 
     public int getyPosition() {
         return yPosition;
+    }
+
+    public void setSquareState(SquarePreviewState squareState) {
+        this.squareState = squareState;
+        if (squareState == SquarePreviewState.NONE) {
+            setBackgroundImage("brick-bg.jpg");
+        } else if (squareState == SquarePreviewState.MOVE) {
+            setBackgroundImage("brick-moveable-bg.jpg");
+        } else if (squareState == SquarePreviewState.ATTACK) {
+            setBackgroundImage("brick-attackable-bg.jpg");
+        }
+    }
+
+    public void setUnit(BaseUnit unit) {
+        this.unit = unit;
+        if (unit == null)
+            removeUnit();
+        else
+            draw(unit);
+    }
+
+    public SquarePreviewState getSquareState() {
+        return squareState;
+    }
+
+    public BaseUnit getUnit() {
+        return unit;
+    }
+
+    public void updateUnit() {
+        setUnit(GameLogic.getBoardUnits()[xPosition][yPosition]);
+    }
+
+    public void updateHpBar() {
+        if (unit != null) {
+            hpBar.setProgress(((double) unit.getCurrentHealth()) / ((double) unit.getMaxHealth()));
+            if (GameLogic.getBoardState()[xPosition][yPosition] == SquareOwnerState.PLAYER1)
+                hpBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
+            else
+                hpBar.setStyle(StringUtil.getCss("-fx-accent: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
+
+            hpBar.setPrefWidth(70);
+            hpBar.setPrefHeight(12);
+            hpBar.setMinHeight(12);
+        }
     }
 }

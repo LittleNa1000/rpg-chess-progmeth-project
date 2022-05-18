@@ -1,6 +1,6 @@
 package logic;
 
-public enum BoardSquareState {
+public enum SquareOwnerState {
     PLAYER1,
     PLAYER2,
     EMPTY,

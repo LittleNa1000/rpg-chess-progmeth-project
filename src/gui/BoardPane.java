@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import base.BaseUnit;
 import constant.BoardConstant;
+
 import constant.UnitConstant;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
@@ -18,7 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import logic.GameLogic;
-import logic.PlayerState;
+import logic.SquarePreviewState;
 import unit.FlyingUnit;
 import unit.FreezerUnit;
 import unit.HealerUnit;
@@ -52,12 +53,21 @@ public class BoardPane extends GridPane {
       rowConst.setPercentHeight(100.0 / BoardConstant.ROW_NUMBER);
       getRowConstraints().add(rowConst);
     }
-    resetBoard();
+    initBoard();
     // setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
   }
 
+  private void initBoard() {
+    BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
+    for (int i = 0; i < BoardConstant.ROW_NUMBER; i++)
+      for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
+        BoardSquare boardSquare = new BoardSquare(i, j, boardUnits[i][j]);
+        allSquares[i][j] = boardSquare;
+        this.add(boardSquare, j, i);
+      }
+  }
+
   public void movePreview(int unitX, int unitY) {
-    resetBoard();
     BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
     BaseUnit unit = boardUnits[unitX][unitY];
     int[][] directionArrays;
@@ -75,11 +85,10 @@ public class BoardPane extends GridPane {
       directionArrays = UnitConstant.FREEZER_UNIT_MOVE;
     else
       return;
-    previewHelper(directionArrays, PlayerState.MOVE, unitX, unitY);
+    previewHelper(directionArrays, SquarePreviewState.MOVE, unitX, unitY);
   }
 
   public void attackPreview(int unitX, int unitY) {
-    resetBoard();
     BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
     BaseUnit unit = boardUnits[unitX][unitY];
     int[][] directionArrays;
@@ -97,26 +106,10 @@ public class BoardPane extends GridPane {
       directionArrays = UnitConstant.FREEZER_UNIT_FREEZE_RANGE;
     else
       return;
-    previewHelper(directionArrays, PlayerState.ATTACK, unitX, unitY);
+    previewHelper(directionArrays, SquarePreviewState.ATTACK, unitX, unitY);
   }
 
-  public void resetBoard() {
-    BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
-    for (int i = 0; i < BoardConstant.ROW_NUMBER; i++)
-      for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
-        BoardSquare boardSquare;
-        if (boardUnits[i][j] != null)
-          boardSquare = new BoardSquare(i, j, boardUnits[i][j], PlayerState.NONE);
-        else
-          boardSquare = new BoardSquare(i, j, PlayerState.NONE);
-
-        allSquares[i][j] = boardSquare;
-        this.getChildren().removeAll();
-        this.add(boardSquare, j, i);
-      }
-  }
-
-  private void previewHelper(int[][] directionArrays, PlayerState state, int unitX, int unitY) {
+  private void previewHelper(int[][] directionArrays, SquarePreviewState state, int unitX, int unitY) {
     BaseUnit[][] boardUnits = GameLogic.getBoardUnits();
     for (int i = 0; i < directionArrays.length; i++) {
       int xPosition = unitX + directionArrays[i][0];
@@ -124,13 +117,42 @@ public class BoardPane extends GridPane {
       if (xPosition < 0 || xPosition >= BoardConstant.ROW_NUMBER || yPosition < 0
           || yPosition >= BoardConstant.COLOUMN_NUMBER)
         continue;
-      this.getChildren().remove(allSquares[xPosition][yPosition]);
-      BoardSquare boardSquare;
-      if (boardUnits[xPosition][yPosition] != null)
-        boardSquare = new BoardSquare(xPosition, yPosition, boardUnits[xPosition][yPosition], state);
-      else
-        boardSquare = new BoardSquare(xPosition, yPosition, state);
-      this.add(boardSquare, yPosition, xPosition);
+      // this.getChildren().remove(allSquares[xPosition][yPosition]);
+      // BoardSquare boardSquare;
+      // if (boardUnits[xPosition][yPosition] != null)
+      // boardSquare = new BoardSquare(xPosition, yPosition,
+      // boardUnits[xPosition][yPosition], state);
+      // else
+      // boardSquare = new BoardSquare(xPosition, yPosition, state);
+      // this.add(boardSquare, yPosition, xPosition);
+
+      allSquares[xPosition][yPosition].setSquareState(state);
+
     }
+  }
+
+  public void move(int xPosition, int yPosition) {
+
+    System.out.println(GameLogic.getBoardUnits()[0][0]);
+    // System.out.println(GameLogic.getSelectedXPosition() + " " +
+    // GameLogic.getSelectedYPosition());
+    // System.out.println("MOVE" + selectedUnit + " TO " + xPosition + " " +
+    // yPosition);
+
+    allSquares[GameLogic.getSelectedXPosition()][GameLogic.getSelectedYPosition()].setUnit(null);
+    // removeItem(GameLogic.getSelectedXPosition(),
+    // GameLogic.getSelectedYPosition());
+    allSquares[xPosition][yPosition].setUnit(GameLogic.getBoardUnits()[xPosition][yPosition]);
+  }
+
+  public void resetAllPreviewState() {
+    for (int i = 0; i < BoardConstant.ROW_NUMBER; i++)
+      for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
+        allSquares[i][j].setSquareState(SquarePreviewState.NONE);
+      }
+  }
+
+  public void updateUnit(int xPosition, int yPosition) {
+    allSquares[xPosition][yPosition].updateUnit();
   }
 }

@@ -20,14 +20,14 @@ import util.Timer;
 import javafx.application.Platform;
 
 public class GameLogic {
-    private static BoardSquareState currentPlayer = BoardSquareState.PLAYER1;
+    private static SquareOwnerState currentPlayer = SquareOwnerState.PLAYER1;
     private static int selectedXPosition = -1;
     private static int selectedYPosition = -1;
-    private static PlayerState currentPlayerState = PlayerState.NONE;
+    private static CurrentPlayerState currentPlayerState = CurrentPlayerState.PENDING;
     private static BoardPane boardPane;
     private static ActionPane actionPane;
     private static StatusPane statusPane;
-    private static BoardSquareState[][] boardState = new BoardSquareState[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
+    private static SquareOwnerState[][] boardState = new SquareOwnerState[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
     private static BaseUnit[][] boardUnits = new BaseUnit[BoardConstant.ROW_NUMBER][BoardConstant.COLOUMN_NUMBER];
     private static boolean gameActive = false;
     private static boolean timerActive = false;
@@ -36,17 +36,18 @@ public class GameLogic {
     public static void init() {
         for (int i = 0; i < BoardConstant.ROW_NUMBER; i++) {
             for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
-                boardState[i][j] = BoardSquareState.EMPTY;
+                boardState[i][j] = SquareOwnerState.EMPTY;
                 boardUnits[i][j] = null;
             }
         }
-        initPlayer(BoardSquareState.PLAYER1);
-        initPlayer(BoardSquareState.PLAYER2);
-        setBoardSquare(new NormalUnit(BoardSquareState.PLAYER1), BoardSquareState.PLAYER1, 3, 4);
+        initPlayer(SquareOwnerState.PLAYER1);
+        initPlayer(SquareOwnerState.PLAYER2);
+        // setBoardSquare(new NormalUnit(BoardSquareState.PLAYER1),
+        // BoardSquareState.PLAYER1, 3, 4);
     }
 
-    private static void initPlayer(BoardSquareState state) {
-        int row = state == BoardSquareState.PLAYER1 ? 0 : BoardConstant.ROW_NUMBER - 1;
+    private static void initPlayer(SquareOwnerState state) {
+        int row = state == SquareOwnerState.PLAYER1 ? 0 : BoardConstant.ROW_NUMBER - 1;
         setBoardSquare(new NormalUnit(state), state, row, 0);
         setBoardSquare(new FlyingUnit(state), state, row, 1);
         setBoardSquare(new ShooterUnit(state), state, row, 2);
@@ -57,40 +58,53 @@ public class GameLogic {
         setBoardSquare(new NormalUnit(state), state, row, 7);
     }
 
-    private static void setBoardSquare(BaseUnit unit, BoardSquareState state, int xPosition, int yPosition) {
+    private static void setBoardSquare(BaseUnit unit, SquareOwnerState state, int xPosition, int yPosition) {
         boardState[xPosition][yPosition] = state;
         boardUnits[xPosition][yPosition] = unit;
     }
 
     public static void movePreview(int xPosition, int yPosition) {
-        if ((selectedXPosition == xPosition && selectedYPosition == yPosition)
+        boardPane.resetAllPreviewState();
+        System.out.println("MOVEPRVIEW");
+        if ((selectedXPosition == xPosition && selectedYPosition == yPosition
+                && currentPlayerState == CurrentPlayerState.PREVIEW_MOVE)
                 || (boardState[xPosition][yPosition] != currentPlayer)) {
-            resetSelectedAndRerender();
+            setCurrentPlayerState(CurrentPlayerState.PENDING);
+            return;
         } else {
             boardPane.movePreview(xPosition, yPosition);
             selectedXPosition = xPosition;
             selectedYPosition = yPosition;
-            setCurrentPlayerState(PlayerState.MOVE);
+            setCurrentPlayerState(CurrentPlayerState.PREVIEW_MOVE);
         }
     }
 
     public static void attackPreview(int xPosition, int yPosition) {
-        if ((selectedXPosition == xPosition && selectedYPosition == yPosition)
+        boardPane.resetAllPreviewState();
+        System.out.println("ATKPRVIEW");
+
+        if ((selectedXPosition == xPosition && selectedYPosition == yPosition
+                && currentPlayerState == CurrentPlayerState.PREVIEW_ATTACK)
                 || (boardState[xPosition][yPosition] != currentPlayer)) {
-            resetSelectedAndRerender();
+            setCurrentPlayerState(CurrentPlayerState.PENDING);
+            return;
         } else {
             boardPane.attackPreview(xPosition, yPosition);
             selectedXPosition = xPosition;
             selectedYPosition = yPosition;
-            setCurrentPlayerState(PlayerState.ATTACK);
+            setCurrentPlayerState(CurrentPlayerState.PREVIEW_ATTACK);
         }
     }
 
     public static void move(int xPosition, int yPosition) {
+        System.out.println("MOVE");
+        if (boardState[xPosition][yPosition] != SquareOwnerState.EMPTY)
+            return;
         boardState[xPosition][yPosition] = boardState[selectedXPosition][selectedYPosition];
-        boardState[selectedXPosition][selectedYPosition] = BoardSquareState.EMPTY;
+        boardState[selectedXPosition][selectedYPosition] = SquareOwnerState.EMPTY;
         boardUnits[xPosition][yPosition] = boardUnits[selectedXPosition][selectedYPosition];
         boardUnits[selectedXPosition][selectedYPosition] = null;
+        boardPane.move(xPosition, yPosition);
         toggleCurrentPlayer();
         AudioUtil.playSound("move.wav");
     }
@@ -98,11 +112,11 @@ public class GameLogic {
     public static void attack(int xPosition, int yPosition) {
         BaseUnit selectedUnit = boardUnits[selectedXPosition][selectedYPosition];
         BaseUnit targetUnit = boardUnits[xPosition][yPosition];
-        System.out.println("atkk" + selectedUnit);
+        System.out.println("ATK" + selectedUnit);
 
         if (selectedUnit instanceof Attackable) {
-            if (boardState[xPosition][yPosition] == currentPlayer)
-                return;
+            // if (boardState[xPosition][yPosition] == currentPlayer)
+            // return;
             Attackable attacker = (Attackable) selectedUnit;
             attacker.attackUnit(targetUnit);
             if (selectedUnit instanceof NormalUnit) {
@@ -112,8 +126,8 @@ public class GameLogic {
             }
         }
         if (selectedUnit instanceof Debuffable) {
-            if (boardState[xPosition][yPosition] == currentPlayer)
-                return;
+            // if (boardState[xPosition][yPosition] == currentPlayer)
+            // return;
             Debuffable attacker = (Debuffable) selectedUnit;
             attacker.debuffUnit(targetUnit);
             if (selectedUnit instanceof VenomUnit) {
@@ -123,42 +137,46 @@ public class GameLogic {
             }
         }
         if (selectedUnit instanceof Buffable) {
-            if (boardState[xPosition][yPosition] != currentPlayer)
-                return;
+            // if (boardState[xPosition][yPosition] != currentPlayer)
+            // return;
             Buffable healer = (Buffable) selectedUnit;
             healer.buffUnit(targetUnit);
             if (selectedUnit instanceof HealerUnit) {
                 AudioUtil.playSound("heal.wav", 0.5);
             }
         }
+        boardPane.updateUnit(xPosition, yPosition);
         toggleCurrentPlayer();
     }
 
-    public static void resetSelectedAndRerender() {
-        // Remove dead unit
-        for (int i = 0; i < BoardConstant.ROW_NUMBER; i++) {
-            for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
-                if (boardUnits[i][j] != null && boardUnits[i][j].getCurrentHealth() <= 0) {
-                    statusPane.reduceUnit(boardState[i][j]);
-                    boardState[i][j] = BoardSquareState.EMPTY;
-                    boardUnits[i][j] = null;
-                }
-            }
-        }
-        selectedXPosition = -1;
-        selectedYPosition = -1;
-        setCurrentPlayerState(PlayerState.NONE);
-        boardPane.resetBoard();
-    }
+    // public static void resetSelectedAndRerender() {
+    // // Remove dead unit
+    // for (int i = 0; i < BoardConstant.ROW_NUMBER; i++) {
+    // for (int j = 0; j < BoardConstant.COLOUMN_NUMBER; j++) {
+    // if (boardUnits[i][j] != null && boardUnits[i][j].getCurrentHealth() <= 0) {
+    // statusPane.reduceUnit(boardState[i][j]);
+    // boardState[i][j] = SquareOwnerState.EMPTY;
+    // boardUnits[i][j] = null;
+    // boardPane.removeItem(i, j);
+    // }
+    // }
+    // }
+    // selectedXPosition = -1;
+    // selectedYPosition = -1;
+    // setCurrentPlayerState(SquarePreviewState.NONE);
+
+    // }
 
     public static void toggleCurrentPlayer() {
-        resetSelectedAndRerender();
+        selectedXPosition = -1;
+        selectedYPosition = -1;
+        boardPane.resetAllPreviewState();
         GameLogic.setTimerActive(false);
         Timer.setTimer(TimeConstant.TIME_PER_TURN);
-        if (currentPlayer == BoardSquareState.PLAYER1)
-            GameLogic.currentPlayer = BoardSquareState.PLAYER2;
+        if (currentPlayer == SquareOwnerState.PLAYER1)
+            GameLogic.currentPlayer = SquareOwnerState.PLAYER2;
         else
-            GameLogic.currentPlayer = BoardSquareState.PLAYER1;
+            GameLogic.currentPlayer = SquareOwnerState.PLAYER1;
         GameLogic.setTimerActive(true);
         getStatusPane().toggleTurn();
     }
@@ -209,7 +227,7 @@ public class GameLogic {
     }
 
     // GETTER & SETTER
-    public static BoardSquareState[][] getBoardState() {
+    public static SquareOwnerState[][] getBoardState() {
         return boardState;
     }
 
@@ -221,7 +239,7 @@ public class GameLogic {
         return boardPane;
     }
 
-    public static BoardSquareState getCurrentPlayer() {
+    public static SquareOwnerState getCurrentPlayer() {
         return currentPlayer;
     }
 
@@ -237,11 +255,11 @@ public class GameLogic {
         GameLogic.boardPane = boardPane;
     }
 
-    public static PlayerState getCurrentPlayerState() {
+    public static CurrentPlayerState getCurrentPlayerState() {
         return currentPlayerState;
     }
 
-    public static void setCurrentPlayerState(PlayerState currentPlayerState) {
+    public static void setCurrentPlayerState(CurrentPlayerState currentPlayerState) {
         GameLogic.currentPlayerState = currentPlayerState;
     }
 
@@ -283,4 +301,11 @@ public class GameLogic {
     public static void setStatusPane(StatusPane sPane) {
         statusPane = sPane;
     }
+
+    public static BaseUnit getSelectedUnit() {
+        if (selectedXPosition == -1 || selectedYPosition == -1)
+            return null;
+        return boardUnits[selectedXPosition][selectedYPosition];
+    }
+
 }

@@ -1,6 +1,6 @@
 package logic;
 
-public enum PlayerState {
+public enum SquarePreviewState {
     MOVE,
     ATTACK,
     NONE,

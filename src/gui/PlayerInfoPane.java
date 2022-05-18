@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import logic.BoardSquareState;
+import logic.SquareOwnerState;
 import util.StringUtil;
 
 public class PlayerInfoPane extends VBox {
@@ -25,8 +25,8 @@ public class PlayerInfoPane extends VBox {
     pBar.setProgress(((double) unitCount) / ((double) BoardConstant.TOTAL_UNIT));
   }
 
-  public PlayerInfoPane(BoardSquareState state) {
-    if (state == BoardSquareState.PLAYER1) {
+  public PlayerInfoPane(SquareOwnerState state) {
+    if (state == SquareOwnerState.PLAYER1) {
       player = new Text("Player 1");
       name = new Text(BoardConstant.PLAYER1_NAME);
       name.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
