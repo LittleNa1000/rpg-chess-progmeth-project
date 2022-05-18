@@ -8,8 +8,9 @@ import logic.SquareOwnerState;
 public class FlyingUnit extends BaseUnit implements Attackable {
     public FlyingUnit(SquareOwnerState state) {
         super(UnitConstant.FLYING_UNIT_NAME, UnitConstant.FLYING_UNIT_MAX_HP, UnitConstant.FLYING_UNIT_POWER,
-                state == SquareOwnerState.PLAYER1 ? UnitConstant.FLYING_UNIT_IMAGE_URL_1
-                        : UnitConstant.FLYING_UNIT_IMAGE_URL_2);
+                state == SquareOwnerState.PLAYER1 ? UnitConstant.FLYING_UNIT_IMAGE_1
+                        : UnitConstant.FLYING_UNIT_IMAGE_2,
+                UnitConstant.FLYING_UNIT_IMAGE_MOVE, UnitConstant.FLYING_UNIT_IMAGE_ATTACK);
     }
 
     @Override

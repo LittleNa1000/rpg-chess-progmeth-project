@@ -10,8 +10,9 @@ public class HealerUnit extends BaseUnit implements Buffable {
 
     public HealerUnit(SquareOwnerState state) {
         super(UnitConstant.HEALER_UNIT_NAME, UnitConstant.HEALER_UNIT_MAX_HP, 0,
-                state == SquareOwnerState.PLAYER1 ? UnitConstant.HEALER_UNIT_IMAGE_URL_1
-                        : UnitConstant.HEALER_UNIT_IMAGE_URL_2);
+                state == SquareOwnerState.PLAYER1 ? UnitConstant.HEALER_UNIT_IMAGE_1
+                        : UnitConstant.HEALER_UNIT_IMAGE_2,
+                UnitConstant.HEALER_UNIT_IMAGE_MOVE, UnitConstant.HEALER_UNIT_IMAGE_ATTACK);
         this.healingPoint = UnitConstant.HEALER_UNIT_HEALING_POINT;
     }
 
