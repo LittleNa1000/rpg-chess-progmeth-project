@@ -178,8 +178,7 @@ public class GameLogic {
                         boardState[i][j] = SquareOwnerState.EMPTY;
                         boardUnits[i][j] = null;
                     }
-
-                    boardPane.updateUnit(i, j);
+                    boardPane.getAllSquares()[i][j].updateUnit();
                 }
                 if (boardPotions[i][j] != null) {
                     System.out.println("POTION AGE" + i + " " + j + " " + boardPotions[i][j].getAge());
@@ -188,7 +187,7 @@ public class GameLogic {
                     if (boardPotions[i][j].getAge() <= 0) {
                         boardState[i][j] = SquareOwnerState.EMPTY;
                         boardPotions[i][j] = null;
-                        boardPane.updateUnit(i, j);
+                        boardPane.getAllSquares()[i][j].updateUnit();
                     } else
                         potions++;
                 }

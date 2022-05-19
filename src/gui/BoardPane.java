@@ -25,14 +25,9 @@ public class BoardPane extends GridPane {
   public BoardPane() {
     super();
     GameLogic.init();
-
     setPadding(new Insets(5));
     setStyle(StringUtil.getCss("-fx-border-color: " + ColorConstant.PALETTE_4 + ";",
         "-fx-border-width: 4;", "-fx-background-color: " + ColorConstant.PALETTE_1 + ";"));
-    // setPadding(new Insets(15, 15, 15, 15));
-    // setBorder(new Border(
-    // new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-    // BorderWidths.DEFAULT)));
 
     for (int i = 0; i < BoardConstant.COLOUMN_NUMBER; i++) {
       ColumnConstraints colConst = new ColumnConstraints();
@@ -45,7 +40,6 @@ public class BoardPane extends GridPane {
       getRowConstraints().add(rowConst);
     }
     initBoard();
-    // setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
   }
 
   private void initBoard() {
@@ -107,24 +101,9 @@ public class BoardPane extends GridPane {
       if (xPosition < 0 || xPosition >= BoardConstant.ROW_NUMBER || yPosition < 0
           || yPosition >= BoardConstant.COLOUMN_NUMBER)
         continue;
-      // this.getChildren().remove(allSquares[xPosition][yPosition]);
-      // BoardSquare boardSquare;
-      // if (boardUnits[xPosition][yPosition] != null)
-      // boardSquare = new BoardSquare(xPosition, yPosition,
-      // boardUnits[xPosition][yPosition], state);
-      // else
-      // boardSquare = new BoardSquare(xPosition, yPosition, state);
-      // this.add(boardSquare, yPosition, xPosition);
-
       allSquares[xPosition][yPosition].setSquareState(state);
-
     }
   }
-
-  // public void move(int xPosition, int yPosition) {
-  // allSquares[GameLogic.getSelectedXPosition()][GameLogic.getSelectedYPosition()].setUnit(null);
-  // allSquares[xPosition][yPosition].setUnit(GameLogic.getBoardUnits()[xPosition][yPosition]);
-  // }
 
   public void resetAllPreviewState() {
     for (int i = 0; i < BoardConstant.ROW_NUMBER; i++)
@@ -133,15 +112,7 @@ public class BoardPane extends GridPane {
       }
   }
 
-  public void updateUnit(int xPosition, int yPosition) {
-    allSquares[xPosition][yPosition].updateUnit();
-  }
-
   public BoardSquare[][] getAllSquares() {
     return allSquares;
-  }
-
-  public void generatePotion(int xPosition, int yPosition, BasePotion potion) {
-    allSquares[xPosition][yPosition].addPotion(potion);
   }
 }
