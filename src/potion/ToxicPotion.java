@@ -11,7 +11,7 @@ public class ToxicPotion extends BasePotion {
     public ToxicPotion() {
         super(PotionConstant.TOXIC_POTION_NAME, PotionConstant.TOXIC_POTION_IMAGE, PotionConstant.TOXIC_POTION_AGE,
                 PotionConstant.TOXIC_POTION_AGE);
-        this.TOXIC_POWER = PotionConstant.TOXIC_POTION_ABLILITY;
+        this.TOXIC_POWER = PotionConstant.TOXIC_POTION_ABILITY;
     }
 
     public int getToxicPower() {
