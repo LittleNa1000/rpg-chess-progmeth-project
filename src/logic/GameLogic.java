@@ -64,14 +64,14 @@ public class GameLogic {
     private static void initPlayer(SquareOwnerState state) {
         int row = state == SquareOwnerState.PLAYER1 ? 0 : BoardConstant.ROW_NUMBER - 1;
         int row2 = Math.abs(row - 1);
+        setBoardSquare(new FlyingUnit(state), state, row, 2);
+        setBoardSquare(new VenomUnit(state), state, row, 3);
+        setBoardSquare(new FreezerUnit(state), state, row, 4);
+        setBoardSquare(new HealerUnit(state), state, row, 5);
+        setBoardSquare(new ShooterUnit(state), state, row, 6);
         setBoardSquare(new NormalUnit(state), state, row2, 1);
-        setBoardSquare(new HealerUnit(state), state, row, 2);
         setBoardSquare(new NormalUnit(state), state, row2, 3);
-        setBoardSquare(new FlyingUnit(state), state, row, 3);
-        setBoardSquare(new ShooterUnit(state), state, row, 4);
         setBoardSquare(new NormalUnit(state), state, row2, 5);
-        setBoardSquare(new VenomUnit(state), state, row, 5);
-        setBoardSquare(new FreezerUnit(state), state, row, 6);
         setBoardSquare(new NormalUnit(state), state, row2, 7);
     }
 
