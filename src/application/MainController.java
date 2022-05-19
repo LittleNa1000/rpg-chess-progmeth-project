@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import util.AudioUtil;
 
 public class MainController implements Initializable {
   private String[] heading = { "Objectives", "How to Play" };
@@ -52,12 +53,14 @@ public class MainController implements Initializable {
     }
     idx -= 1;
     loadInfo();
+    AudioUtil.playSound("click.wav", 0.3);
   }
 
   public void nextInfo(ActionEvent e) {
     idx += 1;
     idx %= heading.length;
     loadInfo();
+    AudioUtil.playSound("click.wav", 0.3);
   }
 
   public void exit(ActionEvent e) {

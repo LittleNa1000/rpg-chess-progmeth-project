@@ -31,7 +31,7 @@ public class StatusPane extends VBox {
   private Button toggleTimerBtn;
   private Button skipTurnBtn;
   private VBox displayCurrentTurn;
-  private Text currentTurn;
+  private Label currentTurn;
   private PlayerInfoPane player1Pane;
   private PlayerInfoPane player2Pane;
   private Label turnCount;
@@ -62,10 +62,14 @@ public class StatusPane extends VBox {
   public void toggleTurn() {
     if (GameLogic.getCurrentPlayer() == SquareOwnerState.PLAYER1) {
       currentTurn.setText(BoardConstant.PLAYER1_NAME);
-      currentTurn.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
+      currentTurn.setStyle(StringUtil.getCss(
+          "-fx-border-color: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";",
+          "-fx-border-width: 5;"));
     } else {
       currentTurn.setText(BoardConstant.PLAYER2_NAME);
-      currentTurn.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";"));
+      currentTurn.setStyle(StringUtil.getCss(
+          "-fx-border-color: " + BoardConstant.PLAYER2_HEALTH_BAR_COLOR + ";",
+          "-fx-border-width: 5;"));
     }
     turnCount.setText("Turn " + String.valueOf(GameLogic.getRoundCounter()));
   }
@@ -74,6 +78,8 @@ public class StatusPane extends VBox {
     skipTurnBtn = new Button("Skip Turn");
     skipTurnBtn.setFont(new Font(24));
     skipTurnBtn.setWrapText(true);
+    skipTurnBtn.setTextFill(Color.WHITE);
+    skipTurnBtn.setStyle(StringUtil.getCss("-fx-background-color: " + ColorConstant.PALETTE_4 + ";"));
     skipTurnBtn.setOnAction(e -> {
       GameLogic.toggleCurrentPlayer();
     });
@@ -82,6 +88,8 @@ public class StatusPane extends VBox {
   private void initToggleTimerBtn() {
     toggleTimerBtn = new Button("Pause Timer");
     toggleTimerBtn.setFont(new Font(24));
+    toggleTimerBtn.setTextFill(Color.WHITE);
+    toggleTimerBtn.setStyle(StringUtil.getCss("-fx-background-color: " + ColorConstant.PALETTE_4 + ";"));
     toggleTimerBtn.setOnAction(e -> {
       GameLogic.setTimerActive(!GameLogic.isTimerActive());
     });
@@ -90,6 +98,8 @@ public class StatusPane extends VBox {
   private void initQuitBtn() {
     quitBtn = new Button("Quit");
     quitBtn.setFont(new Font(24));
+    quitBtn.setTextFill(Color.WHITE);
+    quitBtn.setStyle(StringUtil.getCss("-fx-background-color: " + ColorConstant.PALETTE_4 + ";"));
     quitBtn.setOnAction(e -> {
       Alert alert = new Alert(AlertType.CONFIRMATION, "Return to main menu?",
           ButtonType.NO, ButtonType.YES);
@@ -114,18 +124,25 @@ public class StatusPane extends VBox {
     displayCurrentTurn = new VBox();
     displayCurrentTurn.setPrefHeight(100);
     displayCurrentTurn.setBackground(new Background(new BackgroundFill(Color.LIGHTSALMON, null, null)));
-    displayCurrentTurn.setAlignment(Pos.CENTER_LEFT);
-    displayCurrentTurn.setPadding(new Insets(10, 10, 10, 10));
+    displayCurrentTurn.setAlignment(Pos.CENTER);
+    // displayCurrentTurn.setPadding(new Insets(10, 10, 10, 10));
     displayCurrentTurn.setStyle(StringUtil.getCss("-fx-background-color: " + ColorConstant.PALETTE_1 + ";"));
-    currentTurn = new Text(BoardConstant.PLAYER1_NAME);
-    currentTurn.setStyle(StringUtil.getCss("-fx-fill: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";"));
+    currentTurn = new Label(BoardConstant.PLAYER1_NAME);
     currentTurn.setFont(new Font(36));
+    currentTurn.setTextFill(Color.WHITE);
+    currentTurn.setPrefWidth(200);
+    currentTurn.setAlignment(Pos.CENTER);
+    currentTurn.setStyle(StringUtil.getCss("-fx-fill: white;",
+        "-fx-border-color: " + BoardConstant.PLAYER1_HEALTH_BAR_COLOR + ";",
+        "-fx-border-width: 5;"));
     turnCount = new Label("Turn 0");
     turnCount.setPrefWidth(200);
     turnCount.setAlignment(Pos.CENTER);
     turnCount.setFont(new Font(18));
-    Text text = new Text("Current turn:");
+    turnCount.setTextFill(Color.WHITE);
+    Text text = new Text("Current turn");
     text.setFont(new Font(22));
+    text.setFill(Color.WHITE);
     displayCurrentTurn.getChildren().addAll(turnCount, text, currentTurn);
   }
 
