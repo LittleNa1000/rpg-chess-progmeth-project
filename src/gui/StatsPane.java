@@ -4,6 +4,7 @@ import base.BasePotion;
 import base.BaseUnit;
 import constant.BoardConstant;
 import constant.ColorConstant;
+import constant.PotionConstant;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
@@ -47,7 +48,7 @@ public class StatsPane extends HBox {
         .valueOf(yPosition) + "] " + potion.getName());
     hp.setText("");
     double progress = ((double) potion.getAge()) / ((double) potion.getMaxAge());
-    hBar.setStyle(StringUtil.getCss("-fx-accent: blue;"));
+    hBar.setStyle(StringUtil.getCss("-fx-accent: " + PotionConstant.POTION_AGE_COLOR + ";"));
     hBar.setEffect(new SepiaTone(0));
     hBar.setProgress(progress);
     hBar.setVisible(true);

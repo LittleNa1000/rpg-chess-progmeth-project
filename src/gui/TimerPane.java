@@ -4,7 +4,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import util.StringUtil;
-import util.Timer;
+import util.TimerUtil;
 import constant.ColorConstant;
 import constant.TimeConstant;
 import javafx.geometry.Pos;
@@ -19,14 +19,14 @@ public class TimerPane extends BorderPane {
   }
 
   public void setTime() {
-    time.setText(Timer.getString());
+    time.setText(TimerUtil.getString());
   }
 
   public TimerPane() {
     super();
     setPrefWidth(200);
-    Timer.setTimer(TimeConstant.TIME_PER_TURN);
-    time = new Text(Timer.getString());
+    TimerUtil.setTimer(TimeConstant.TIME_PER_TURN);
+    time = new Text(TimerUtil.getString());
     time.setFont(new Font(36));
     time.setFill(Color.WHITE);
     timeLeft = new Text("Time Left");

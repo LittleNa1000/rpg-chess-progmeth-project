@@ -20,7 +20,7 @@ import unit.NormalUnit;
 import unit.ShooterUnit;
 import unit.VenomUnit;
 import util.AudioUtil;
-import util.Timer;
+import util.TimerUtil;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -82,7 +82,7 @@ public class GameLogic {
 
     public static void movePreview(int xPosition, int yPosition) {
         boardPane.resetAllPreviewState();
-        System.out.println("MOVEPRVIEW");
+        System.out.println("movePreview");
         if ((selectedXPosition == xPosition && selectedYPosition == yPosition
                 && currentPlayerState == CurrentPlayerState.PREVIEW_MOVE)
                 || (boardState[xPosition][yPosition] != currentPlayer)
@@ -99,7 +99,7 @@ public class GameLogic {
 
     public static void attackPreview(int xPosition, int yPosition) {
         boardPane.resetAllPreviewState();
-        System.out.println("ATKPRVIEW");
+        System.out.println("attackPreview");
 
         if ((selectedXPosition == xPosition && selectedYPosition == yPosition
                 && currentPlayerState == CurrentPlayerState.PREVIEW_ATTACK)
@@ -116,7 +116,7 @@ public class GameLogic {
     }
 
     public static void move(int xPosition, int yPosition) {
-        System.out.println("MOVE" + xPosition + yPosition);
+        System.out.println("MOVE: " + xPosition + " " + yPosition);
         if (boardState[xPosition][yPosition] == SquareOwnerState.POTION) {
             boardPotions[xPosition][yPosition].consume(getSelectedUnit());
             boardPotions[xPosition][yPosition] = null;
@@ -136,7 +136,7 @@ public class GameLogic {
     public static void attack(int xPosition, int yPosition) {
         BaseUnit selectedUnit = getSelectedUnit();
         BaseUnit targetUnit = boardUnits[xPosition][yPosition];
-        System.out.println("ATK" + selectedUnit);
+        System.out.println("ATTACK: " + selectedUnit);
 
         if (selectedUnit instanceof Attackable) {
             Attackable attacker = (Attackable) selectedUnit;
@@ -178,17 +178,15 @@ public class GameLogic {
                         boardState[i][j] = SquareOwnerState.EMPTY;
                         boardUnits[i][j] = null;
                     }
-
-                    boardPane.updateUnit(i, j);
+                    boardPane.getAllSquares()[i][j].updateUnit();
                 }
                 if (boardPotions[i][j] != null) {
-                    System.out.println("POTION AGE" + i + " " + j + " " + boardPotions[i][j].getAge());
                     boardPotions[i][j].setAge(boardPotions[i][j].getAge() - 1);
                     boardPane.getAllSquares()[i][j].addPotion(boardPotions[i][j]);
                     if (boardPotions[i][j].getAge() <= 0) {
                         boardState[i][j] = SquareOwnerState.EMPTY;
                         boardPotions[i][j] = null;
-                        boardPane.updateUnit(i, j);
+                        boardPane.getAllSquares()[i][j].updateUnit();
                     } else
                         potions++;
                 }
@@ -227,7 +225,7 @@ public class GameLogic {
         else
             GameLogic.currentPlayer = SquareOwnerState.PLAYER1;
         GameLogic.setTimerActive(false);
-        Timer.setTimer(TimeConstant.TIME_PER_TURN);
+        TimerUtil.setTimer(TimeConstant.TIME_PER_TURN);
         GameLogic.setTimerActive(true);
         getStatusPane().toggleTurn();
         roundCounter++;
@@ -237,17 +235,17 @@ public class GameLogic {
     public static void startTimer() {
         thread = new Thread(() -> {
             try {
-                while (!Timer.isTimeOver() && isTimerActive() && isGameActive()) {
+                while (!TimerUtil.isTimeOver() && isTimerActive() && isGameActive()) {
                     Thread.sleep(20);
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            Timer.setTimer(Timer.getTimer() - 20);
+                            TimerUtil.setTimer(TimerUtil.getTimer() - 20);
                             actionPane.getTimerPane().setTime();
                         }
                     });
                 }
-                if (Timer.isTimeOver() && isGameActive()) {
+                if (TimerUtil.isTimeOver() && isGameActive()) {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -256,7 +254,7 @@ public class GameLogic {
                     });
                 }
             } catch (InterruptedException e) {
-                // System.out.println("Timer Thread Interrupted");
+                System.out.println("Timer Thread Interrupted");
             }
         });
         thread.start();

@@ -5,6 +5,7 @@ import base.BaseUnit;
 import base.Buffable;
 import constant.BoardConstant;
 import constant.ColorConstant;
+import constant.PotionConstant;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
@@ -102,11 +103,11 @@ public class BoardSquare extends VBox {
             }
 
             if (button == MouseButton.PRIMARY) {
-                System.out.println("CLICK PRIMARY" + xPosition + yPosition);
+                System.out.println("LEFT CLICK: " + xPosition + " " + yPosition);
                 GameLogic.movePreview(xPosition, yPosition);
             } else if (button == MouseButton.SECONDARY) {
+                System.out.println("RIGHT CLICK: " + xPosition + " " + yPosition);
                 GameLogic.attackPreview(xPosition, yPosition);
-                System.out.println("CLICK SECONDARY" + xPosition + yPosition);
             }
         });
     }
@@ -188,9 +189,8 @@ public class BoardSquare extends VBox {
     }
 
     public void updateHpBar(BasePotion potion) {
-        System.out.println("AGE  " + ((double) potion.getAge()) / ((double) potion.getMaxAge()));
         hBar.setProgress(((double) potion.getAge()) / ((double) potion.getMaxAge()));
-        hBar.setStyle(StringUtil.getCss("-fx-accent: blue;"));
+        hBar.setStyle(StringUtil.getCss("-fx-accent: " + PotionConstant.POTION_AGE_COLOR + ";"));
         hBar.setEffect(new SepiaTone(0));
         hBar.setPrefWidth(70);
         hBar.setPrefHeight(12);
