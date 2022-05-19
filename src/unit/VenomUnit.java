@@ -8,7 +8,7 @@ import logic.SquareOwnerState;
 import util.AudioUtil;
 
 public class VenomUnit extends BaseUnit implements Debuffable {
-    private static final int poisonPower = UnitConstant.VENOM_UNIT_POISON_POWER;
+    private static final int POISON_POWER = UnitConstant.VENOM_UNIT_POISON_POWER;
     private int poisonRound;
 
     public VenomUnit(SquareOwnerState state) {
@@ -32,7 +32,7 @@ public class VenomUnit extends BaseUnit implements Debuffable {
     }
 
     public static int getPoisonpower() {
-        return poisonPower;
+        return POISON_POWER;
     }
 
     public int getPoisonRound() {

@@ -6,22 +6,22 @@ import constant.PotionConstant;
 import util.AudioUtil;
 
 public class HealingPotion extends BasePotion {
-    private final int healingPoint;
+    private final int HEALING_POINT;
 
     public HealingPotion() {
         super(PotionConstant.HEALING_POTION_NAME, PotionConstant.HEALING_POTION_IMAGE,
                 PotionConstant.HEALING_POTION_AGE, PotionConstant.HEALING_POTION_AGE);
-        this.healingPoint = PotionConstant.HEALING_POTION_ABLILITY;
+        this.HEALING_POINT = PotionConstant.HEALING_POTION_ABLILITY;
     }
 
     public int getHealingPoint() {
-        return healingPoint;
+        return HEALING_POINT;
     }
 
     @Override
     public void consume(BaseUnit unit) {
         // TODO Auto-generated method stub
-        unit.setCurrentHealth(Math.min(unit.getMaxHealth(), unit.getCurrentHealth() + healingPoint));
+        unit.setCurrentHealth(Math.min(unit.getMaxHealth(), unit.getCurrentHealth() + HEALING_POINT));
         AudioUtil.playSound("heal.wav", 0.5);
     }
 }
