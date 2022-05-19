@@ -3,7 +3,7 @@ package base;
 import javafx.scene.image.Image;
 
 public abstract class BaseUnit {
-    private final int maxHealth;
+    private final int MAX_HEALTH;
     private String name;
     private int power;
     private int currentHealth;
@@ -14,7 +14,7 @@ public abstract class BaseUnit {
     private Image atkPattern;
 
     public BaseUnit(String name, int maxHealth, int power, Image image, Image movePattern, Image atkPattern) {
-        this.maxHealth = maxHealth;
+        this.MAX_HEALTH = maxHealth;
         setName(name);
         setPower(power);
         setCurrentHealth(maxHealth);
@@ -36,7 +36,7 @@ public abstract class BaseUnit {
     }
 
     public int getMaxHealth() {
-        return maxHealth;
+        return MAX_HEALTH;
     }
 
     public String getName() {

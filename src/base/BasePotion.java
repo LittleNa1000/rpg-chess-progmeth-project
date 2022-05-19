@@ -6,13 +6,13 @@ public abstract class BasePotion {
     private String name;
     private Image image;
     private int age;
-    private int maxAge;
+    private final int MAX_AGE;
 
     public BasePotion(String name, Image image, int age, int maxAge) {
+        this.MAX_AGE = maxAge;
         setName(name);
         setImage(image);
         setAge(age);
-        setMaxAge(maxAge);
     }
 
     public Image getImage() {
@@ -42,11 +42,7 @@ public abstract class BasePotion {
     }
 
     public int getMaxAge() {
-        return maxAge;
-    }
-
-    public void setMaxAge(int maxAge) {
-        this.maxAge = maxAge;
+        return MAX_AGE;
     }
 
     public abstract void consume(BaseUnit unit);
