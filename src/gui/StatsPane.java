@@ -57,7 +57,7 @@ public class StatsPane extends HBox {
     debuffs.setText("");
     String abilityString = "Effect: ";
     if (potion instanceof BuffPotion) {
-      abilityString += "Increase a unit's\nability or attack power\npermanently";
+      abilityString += "Enhancing a unit's\nattack power or ability\npermanently";
     } else if (potion instanceof ToxicPotion) {
       abilityString += "Deals " + String.valueOf(((ToxicPotion) potion).getToxicPower()) + " damage\nto a unit";
     } else if (potion instanceof HealingPotion) {
@@ -97,7 +97,7 @@ public class StatsPane extends HBox {
       debuffsString += "\nPoisoned: " + String.valueOf(unit.getVenomRoundLeft());
     }
     debuffs.setText(debuffsString);
-    String abilityString = "Skill: ";
+    String abilityString = "Ability: ";
     if (unit instanceof FreezerUnit) {
       abilityString += "Freeze an\nenemy for " + String.valueOf(((FreezerUnit) unit).getStunRound()) + " turn(s)";
     } else if (unit instanceof HealerUnit) {
@@ -106,7 +106,7 @@ public class StatsPane extends HBox {
       abilityString += "Deals " + String.valueOf((VenomUnit.getPoisonpower())) + "";
       abilityString += "\ndamage to an\nenemy for " + String.valueOf(((VenomUnit) unit).getPoisonRound()) + " turn(s)";
     } else if (unit instanceof FlyingUnit) {
-      abilityString += "Dodge\nNormal Unit's\nAttack";
+      abilityString += "Dodge\nNormal Unit's\nAttack (Passive ability)";
     } else {
       abilityString += "None";
     }

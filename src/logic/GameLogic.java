@@ -254,7 +254,7 @@ public class GameLogic {
                     });
                 }
             } catch (InterruptedException e) {
-                System.out.println("Timer Thread Interrupted");
+                // System.out.println("Timer Thread Interrupted");
             }
         });
         thread.start();
