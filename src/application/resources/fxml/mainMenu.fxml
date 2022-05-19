@@ -11,11 +11,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" spacing="5.0" style="-fx-background-color: #703200;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="620.0" style="-fx-background-color: LightGrey;">
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="650.0" style="-fx-background-color: #bd5400;">
          <right>
-            <Button fx:id="nextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nextInfo" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="400.0" prefWidth="40.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER_LEFT">
+            <Button fx:id="nextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nextInfo" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="650.0" prefWidth="60.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER_LEFT">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="20.0" pickOnBounds="true">
                      <image>
@@ -26,7 +26,7 @@
             </Button>
          </right>
          <left>
-            <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backInfo" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="400.0" prefWidth="40.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER_LEFT">
+            <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backInfo" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="650.0" prefWidth="60.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER_LEFT">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="20.0" pickOnBounds="true" rotate="180.0">
                      <image>
@@ -37,9 +37,9 @@
             </Button>
          </left>
          <center>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="500.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="509.0" style="-fx-background-color: #ff8119;" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="imageInfo" fitHeight="214.0" fitWidth="212.0" layoutX="148.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="148.0">
+                  <ImageView fx:id="imageInfo" fitHeight="214.0" fitWidth="212.0" layoutX="153.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="144.0">
                      <image>
                         <Image url="@../images/objective.png" />
                      </image>
@@ -54,7 +54,7 @@
                         <Font size="24.0" />
                      </font>
                   </Text>
-                  <Text fx:id="page" fill="#e1e1e1" layoutX="246.0" layoutY="611.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                  <Text fx:id="page" fill="#e1e1e1" layoutX="390.0" layoutY="624.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -66,32 +66,37 @@
             </AnchorPane>
          </center>
          <HBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
          </HBox.margin>
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="5.0" top="5.0" />
          </padding>
       </BorderPane>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="290.0" spacing="50.0">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="290.0" spacing="40.0" style="-fx-background-color: #00a1bd;">
          <children>
-            <Text fx:id="title" fill="#8d3b3b" strokeType="OUTSIDE" strokeWidth="0.0" text="RPG Chess" textAlignment="CENTER">
+            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../resources/units/normal-unit-2.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="title" fill="#703200" strokeType="OUTSIDE" strokeWidth="0.0" text="RPG Chess" textAlignment="CENTER">
                <font>
-                  <Font size="36.0" />
+                  <Font name="System Bold" size="56.0" />
                </font>
             </Text>
-            <Button mnemonicParsing="false" onAction="#newGame" text="Start New Game">
+            <Button mnemonicParsing="false" onAction="#newGame" style="-fx-background-color: #006070;" text="Start New Game" textFill="WHITE">
                <font>
-                  <Font size="18.0" />
+                  <Font size="28.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#exit" text="Exit">
+            <Button mnemonicParsing="false" onAction="#exit" style="-fx-background-color: #006070;" text="Exit" textFill="WHITE">
                <font>
-                  <Font size="18.0" />
+                  <Font size="28.0" />
                </font>
             </Button>
          </children>
          <HBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
          </HBox.margin>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
