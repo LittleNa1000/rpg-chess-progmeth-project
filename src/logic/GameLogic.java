@@ -20,7 +20,7 @@ import unit.NormalUnit;
 import unit.ShooterUnit;
 import unit.VenomUnit;
 import util.AudioUtil;
-import util.Timer;
+import util.TimerUtil;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -225,7 +225,7 @@ public class GameLogic {
         else
             GameLogic.currentPlayer = SquareOwnerState.PLAYER1;
         GameLogic.setTimerActive(false);
-        Timer.setTimer(TimeConstant.TIME_PER_TURN);
+        TimerUtil.setTimer(TimeConstant.TIME_PER_TURN);
         GameLogic.setTimerActive(true);
         getStatusPane().toggleTurn();
         roundCounter++;
@@ -235,17 +235,17 @@ public class GameLogic {
     public static void startTimer() {
         thread = new Thread(() -> {
             try {
-                while (!Timer.isTimeOver() && isTimerActive() && isGameActive()) {
+                while (!TimerUtil.isTimeOver() && isTimerActive() && isGameActive()) {
                     Thread.sleep(20);
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            Timer.setTimer(Timer.getTimer() - 20);
+                            TimerUtil.setTimer(TimerUtil.getTimer() - 20);
                             actionPane.getTimerPane().setTime();
                         }
                     });
                 }
-                if (Timer.isTimeOver() && isGameActive()) {
+                if (TimerUtil.isTimeOver() && isGameActive()) {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {

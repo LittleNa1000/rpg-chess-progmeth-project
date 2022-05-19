@@ -1,6 +1,6 @@
 package util;
 
-public class Timer {
+public class TimerUtil {
   private static int ms;
 
   public static boolean isTimeOver() {
