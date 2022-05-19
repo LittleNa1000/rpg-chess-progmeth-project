@@ -18,7 +18,7 @@ public class PotionConstant {
     static final public int TOXIC_POTION_ABILITY = 3;
     static final public Image TOXIC_POTION_IMAGE = new Image(StringUtil.getImageUrl("potions/toxic-potion.png"));
 
-    static final public String BUFF_POTION_NAME = "BUFF POTION";
+    static final public String BUFF_POTION_NAME = "UPGRADE POTION";
     static final public int BUFF_POTION_AGE = 4;
     static final public Image BUFF_POTION_IMAGE = new Image(StringUtil.getImageUrl("potions/buff-potion.png"));
 
