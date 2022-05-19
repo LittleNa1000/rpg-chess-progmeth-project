@@ -26,4 +26,6 @@ public class PotionConstant {
     static final public int BUFF_POTION_HEALING_POINT = 3;
     static final public int BUFF_POTION_STUN_ROUND = 2;
     static final public int BUFF_POTION_POISON_ROUND = 2;
+
+    static final public String POTION_AGE_COLOR = "#6B885E";
 }
