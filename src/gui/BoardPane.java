@@ -1,6 +1,5 @@
 package gui;
 
-import base.BasePotion;
 import base.BaseUnit;
 import constant.BoardConstant;
 import constant.ColorConstant;

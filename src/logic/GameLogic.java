@@ -82,7 +82,7 @@ public class GameLogic {
 
     public static void movePreview(int xPosition, int yPosition) {
         boardPane.resetAllPreviewState();
-        System.out.println("MOVEPRVIEW");
+        System.out.println("movePreview");
         if ((selectedXPosition == xPosition && selectedYPosition == yPosition
                 && currentPlayerState == CurrentPlayerState.PREVIEW_MOVE)
                 || (boardState[xPosition][yPosition] != currentPlayer)
@@ -99,7 +99,7 @@ public class GameLogic {
 
     public static void attackPreview(int xPosition, int yPosition) {
         boardPane.resetAllPreviewState();
-        System.out.println("ATKPRVIEW");
+        System.out.println("attackPreview");
 
         if ((selectedXPosition == xPosition && selectedYPosition == yPosition
                 && currentPlayerState == CurrentPlayerState.PREVIEW_ATTACK)
@@ -116,7 +116,7 @@ public class GameLogic {
     }
 
     public static void move(int xPosition, int yPosition) {
-        System.out.println("MOVE" + xPosition + yPosition);
+        System.out.println("MOVE: " + xPosition + " " + yPosition);
         if (boardState[xPosition][yPosition] == SquareOwnerState.POTION) {
             boardPotions[xPosition][yPosition].consume(getSelectedUnit());
             boardPotions[xPosition][yPosition] = null;
@@ -136,7 +136,7 @@ public class GameLogic {
     public static void attack(int xPosition, int yPosition) {
         BaseUnit selectedUnit = getSelectedUnit();
         BaseUnit targetUnit = boardUnits[xPosition][yPosition];
-        System.out.println("ATK" + selectedUnit);
+        System.out.println("ATTACK: " + selectedUnit);
 
         if (selectedUnit instanceof Attackable) {
             Attackable attacker = (Attackable) selectedUnit;
@@ -181,7 +181,6 @@ public class GameLogic {
                     boardPane.getAllSquares()[i][j].updateUnit();
                 }
                 if (boardPotions[i][j] != null) {
-                    System.out.println("POTION AGE" + i + " " + j + " " + boardPotions[i][j].getAge());
                     boardPotions[i][j].setAge(boardPotions[i][j].getAge() - 1);
                     boardPane.getAllSquares()[i][j].addPotion(boardPotions[i][j]);
                     if (boardPotions[i][j].getAge() <= 0) {
@@ -255,7 +254,7 @@ public class GameLogic {
                     });
                 }
             } catch (InterruptedException e) {
-                // System.out.println("Timer Thread Interrupted");
+                System.out.println("Timer Thread Interrupted");
             }
         });
         thread.start();
